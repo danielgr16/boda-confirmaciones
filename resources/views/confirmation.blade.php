@@ -157,6 +157,7 @@
                 status.innerText = "Error al guardar";
             }
         }
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </script>
 </body>
 </html>

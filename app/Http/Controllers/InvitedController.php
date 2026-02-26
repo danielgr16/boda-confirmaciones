@@ -29,7 +29,7 @@ class InvitedController extends Controller
     public function index($uuid = null)
     {
         if (!$uuid) {
-            return view('welcome'); // Tu vista por defecto
+            return view('invitation'); // Tu vista por defecto
         }
 
         $invitados = $this->getData();
