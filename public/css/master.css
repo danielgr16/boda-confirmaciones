@@ -3,7 +3,7 @@
 }
 
 .font-sans {
-    font-family: 'Rambla', sans-serif !important;
+    font-family: 'Inter', sans-serif !important;
 }
 
 .spinner {
@@ -26,6 +26,10 @@
 
 .bg-primary {
     background-color: #3A4F31;
+}
+
+.border-primary {
+    border-color: #3A4F31;
 }
 
 .bg-secondary {
@@ -69,6 +73,24 @@
     }
     .btn-secondary:active {
         background-color: #3A4F31;
+        color: white;
+    }
+
+.border-greenlight {
+    border-color: #818A7C;
+}
+
+.btn-green {
+    background-color: #3A4F31;
+    color: white;
+}
+    .btn-green:hover {
+        background-color: #818A7Ccc;
+        box-shadow: inset 0 0 0 2px #818A7Ccc;
+        color: white;
+    }
+    .btn-green:active {
+        background-color: #818A7C;
         color: white;
     }
 
