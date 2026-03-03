@@ -94,6 +94,18 @@
         color: white;
     }
 
+    .end-text {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 1%, rgba(255, 255, 255, 64.973) 34%, rgb(255 255 255 / 100%) 83%, rgb(255, 255, 255) 100%)
+    }
+
+.confirm-container {
+    background-image: url(/img/confirm-cover.webp);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.main-card {
+    margin-top: 315px;
+}
 
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading .spinner { display: inline-block; }

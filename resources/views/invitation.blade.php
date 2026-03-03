@@ -27,12 +27,12 @@
                     <img src="{{ asset('img/logo.webp') }}" alt="logo" class="w-24 h-24 mx-auto">
                 </div>
 
-                <p class="mt-5 px-12 text-sm text-primary font-serif relative z-10">
+                <p class="mt-5 px-12  text-primary font-serif relative z-10">
                     <span class="italic font-medium">
                         “Ponme como un sello sobre tu corazón, como una marca sobre tu brazo; Porque fuerte es como la muerte el amor;” 
                     </span>
-                    <span class="font-bold">
-                        - Cantares 1:1
+                    <span class="font-bold block w-auto text-right">
+                        - Cantares 8:6
                     </span> 
                 </p>
             </div>
@@ -81,6 +81,15 @@
                         Sube el volumen
                     </span>
                 </div>
+            </div>
+
+            <div class="parents text-center mt-16">
+                <span class="mb-2 block font-bold text-sm text-secondary font-serif opacity-75">PADRES DE LA NOVIA</span>
+                <span class="block text-lg text-primary font-serif">Juan Zentella</span>
+                <span class="block text-lg text-primary font-serif">Lidia Mundo</span>
+                <span class="mt-5 mb-2 block font-bold text-sm text-secondary font-serif opacity-75">PADRES DEL NOVIO</span>
+                <span class="block text-lg text-primary font-serif">Daniel Remigio García Ramos</span>
+                <span class="block text-lg text-primary font-serif">Alejandra Rueda Montes</span>
             </div>
 
             {{-- Fecha --}}
@@ -154,7 +163,7 @@
                     Por favor, confirma tu asistencia <span class="font-bold">antes del 31 de marzo</span>.
                 </p>
     
-                <a class="btn btn-primary" href="{{ route('invitado.confirm') }}">CONFIRMA AQUÍ</a>
+                <a class="btn btn-primary" href="{{ route('invitado.view.confirm', ['uuid' => $uuid]) }}">CONFIRMA AQUÍ</a>
                 <div class="text-primary w-100 flex mt-7 mx-14">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#3A4F31" viewBox="0 0 256 256"><path d="M142,176a6,6,0,0,1-6,6,14,14,0,0,1-14-14V128a2,2,0,0,0-2-2,6,6,0,0,1,0-12,14,14,0,0,1,14,14v40a2,2,0,0,0,2,2A6,6,0,0,1,142,176ZM124,94a10,10,0,1,0-10-10A10,10,0,0,0,124,94Zm106,34A102,102,0,1,1,128,26,102.12,102.12,0,0,1,230,128Zm-12,0a90,90,0,1,0-90,90A90.1,90.1,0,0,0,218,128Z"></path></svg>
                     <span class="font-sans text-xs text-left ml-3">Puedes cambiar tu decisión en cualquier momento antes de la fecha limite</span>
@@ -377,7 +386,7 @@
                     </div>
                     <span class="block font-serif text-secondary font-bold mb-5">REGALOS</span>
                     <p class="mt-6 mb-10 font-serif text-sm px-8 text-primary">Su presencia en nuestra boda será el mejor regalo que podriamos decibir. Si deseas tener algun otro detalle con nosotros, dejamos a tu disposicion algunas opciones.</p>
-                    <a class="btn btn-secondary">Mesa de regalos</a>
+                    <a href="https://www.amazon.com.mx/wedding/share/danielyperla" class="btn btn-secondary">Mesa de regalos</a>
                     <div class="border-2 rounded-2xl border-gray-300 mt-6 m-5 p-4">
                         <span class="block font-sans text-primary font-bold mb-5">Depósito en cuenta</span>
                         <div class="flex justify-center gap-2 mt-3 font-sans text-sm">
@@ -404,7 +413,7 @@
                     <div class="border-2 rounded-2xl border-gray-300 mt-6 m-5 py-4 px-14 text-primary font-sans">
                         <span>Tendremos una caja para sobres el día del evento.</span>
                         <div class="text-center w-full">
-                            <img src="{{ asset('img/letter.png') }}" alt="" class="h-24 w-24 object-cover mx-auto mt-4">
+                            <img src="{{ asset('img/letter.png') }}" alt="" class="h-20 w-auto object-cover mx-auto mt-4">
                         </div>
                     </div>
                     <span class="block font-serif text-primary mt-5 mx-8">De antemano agradecemos su intención de apoyarnos en el inicio de nuestra vida como familia.</span>
@@ -452,7 +461,7 @@
             </div>    
 
             <div class="text-center mt-24">
-                <span class="block font-serif text-secondary font-bold mb-5 text-lg">ESPERAMOS CONTAR CON SU PRESENCIA</span>
+                <span class="block font-serif text-secondary font-bold mb-5 text-lg px-6">ESPERAMOS CONTAR CON SU PRESENCIA</span>
                 <p class="mt-6 mb-10 font-serif text-sm px-8 text-primary">
                     Por favor, confirma tu asistencia antes de la fecha liminte: 
                     <span class="font-bold">31 de marzo</span>.
@@ -468,11 +477,11 @@
             <div class="">
                 <span class="block font-serif text-secondary font-bold mb-5 text-3xl text-center italic relative z-10 mt-20">¡Nos vemos pronto!</span>
                 <img src="{{ asset('img/end.webp') }}" alt="Foto final" class="w-full object-cover -mt-20">
-                <div class="bg-primary border-4 border-greenlight font-serif text-white m-6 p-6 italic relative z-10 -mt-8 shadow-custom">
-                    <p class="text-lg">
+                <div class="end-text  border-greenlight font-serif my-6 p-10 pt-14 italic relative z-10 -mt-16">
+                    <p class="text-lg text-primary">
                         “Las muchas aguas no podrán apagar el amor, Ni lo ahogarán los ríos” 
                     </p>
-                    <span class="font-bold text-right w-100 block">-Cantares 8:7</span> 
+                    <span class="font-bold text-right w-100 block text-secondary">-Cantares 8:7</span> 
                 </div>
             </div>
 

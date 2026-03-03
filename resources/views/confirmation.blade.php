@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmación de Boda</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ asset('css/master.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         .spinner {
@@ -21,18 +22,30 @@
         .loading .btn-text { display: none; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+<body class="confirm-container bg-slate-50 min-h-screen flex items-center justify-center p-4">
 
-    <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+    <div class="main-card max-w-md w-full bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
         <div class="text-center mb-10">
-            <span class="text-rose-400 text-4xl mb-4 block">♥</span>
-            <h1 class="text-3xl font-serif text-gray-800 italic">Nuestra Boda</h1>
-            <p class="text-gray-500 mt-2 font-light">Invitación para: <strong>{{ $grupo['invitado'] }}</strong></p>
+            <span class="text-secondary font-serif mb-4 block">CONFIRMA TU ASISTENCIA</span>
+            <h1 class="text-3xl font-serif text-gray-800 italic">Perla & Daniel</h1>
+            <p class="text-gray-500 my-4 font-light">Invitación para: <strong>{{ $grupo['group'] }}</strong></p>
+        </div>
+
+        <p class="mt-6 text-gray-700 mb-3 text-sm">
+            Agradecemos que respondas lo mas pronto posible. Si no aparece tu nombre, por favor, verifica que abriste la invitación correcta.
+        </p>
+        <p class="mt-6 text-gray-700 mb-3 text-sm">
+            <span class="font-bold">IMPORTANTE:</span> Las invitaciones son individuales o por familia, no compartas tu invitación con quienes no aparezcan en esta lista, porque podrían modificar los datos de tu confirmación.
+        </p>
+
+        <div class="text-primary w-100 flex my-7">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#3A4F31" viewBox="0 0 256 256"><path d="M142,176a6,6,0,0,1-6,6,14,14,0,0,1-14-14V128a2,2,0,0,0-2-2,6,6,0,0,1,0-12,14,14,0,0,1,14,14v40a2,2,0,0,0,2,2A6,6,0,0,1,142,176ZM124,94a10,10,0,1,0-10-10A10,10,0,0,0,124,94Zm106,34A102,102,0,1,1,128,26,102.12,102.12,0,0,1,230,128Zm-12,0a90,90,0,1,0-90,90A90.1,90.1,0,0,0,218,128Z"></path></svg>
+            <span class="font-sans text-xs text-left ml-3">Puedes cambiar tu decisión en cualquier momento antes de la fecha limite (31 de marzo)</span>
         </div>
 
         <div id="app" class="space-y-10">
             <div class="group">
-                <p class="text-sm uppercase tracking-widest text-gray-400 mb-4 font-semibold">Invitado Principal</p>
+                <p class="text-sm uppercase tracking-widest text-gray-400 mb-4 font-semibold">Invitado</p>
                 <div class="flex items-center justify-between mb-3">
                     <span class="text-gray-700 font-medium">{{ $grupo['invitado'] }}</span>
                 </div>
@@ -44,7 +57,7 @@
                     </button>
                     <button onclick="confirmar('principal', '{{ $grupo['invitado'] }}', false, this)" 
                             class="flex-1 py-3 px-4 rounded-xl border flex justify-center items-center transition-all duration-300 btn-asistencia {{ $grupo['asistencia'] === false ? 'bg-rose-600 text-white border-rose-600' : 'bg-white text-gray-500 border-gray-200 hover:border-rose-400' }}">
-                        <span class="btn-text">No iré</span>
+                        <span class="btn-text">No asistiré</span>
                         <div class="spinner"></div>
                     </button>
                 </div>
@@ -76,17 +89,34 @@
             @endif
 
             <div class="pt-4">
-                <label class="block text-sm font-medium text-gray-600 mb-2 italic">Un mensaje para nosotros...</label>
+                <label class="block text-sm font-medium text-gray-600 mb-2 italic">Deja un mensaje para los novios...</label>
                 <textarea id="mensaje" onblur="guardarMensaje(this)" rows="3" 
                           class="w-full border-gray-100 bg-gray-50 rounded-2xl shadow-inner focus:ring-2 focus:ring-rose-300 focus:bg-white transition-all p-4 outline-none border text-gray-700" 
                           placeholder="Escribe aquí tu dedicatoria o comentario...">{{ $grupo['mensaje'] }}</textarea>
                 <p id="msg-status" class="text-right text-[10px] text-gray-400 mt-1 uppercase tracking-tighter"></p>
             </div>
         </div>
+
+        <div class="text-center mt-10 text-gray-700 mb-3 text-sm">
+            <p>
+                Cualquier duda, comentario o sugerencia, no dudes en comunicarte con nosotros.
+            </p>
+            <span class="block text-sm uppercase tracking-widest text-gray-400 my-5 font-semibold">CONTACTOS</span>
+            <div class="">
+                <span class="font-bold text-gray-400">Novia</span>
+                <span>664 765 6976</span>
+            </div>
+            <div class="">
+                <span class="font-bold text-gray-400">Novio</span>
+                <span>664 308 1523</span>
+            </div>
+        </div>
     </div>
 
     <script>
         async function confirmar(tipo, nombre, asistencia, btnElement) {
+            console.log('confirmar');
+            console.log([tipo, nombre, asistencia, btnElement]);
             const container = btnElement.parentElement;
             const buttons = container.querySelectorAll('.btn-asistencia');
             const uuid = "{{ $grupo['uuid'] }}";
@@ -99,7 +129,8 @@
             });
 
             try {
-                const response = await fetch("{{ route('invitado.confirmar') }}", {
+                console.log('try');
+                const response = await fetch("{{ route('invitado.confirm') }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -107,6 +138,7 @@
                     },
                     body: JSON.stringify({ uuid, tipo, nombre, asistencia })
                 });
+                console.log('response', response);
 
                 if (response.ok) {
                     // Resetear todos los botones del grupo actual
@@ -140,7 +172,7 @@
             status.innerText = "Guardando...";
             
             try {
-                await fetch("{{ route('invitado.confirmar') }}", {
+                await fetch("{{ route('invitado.confirm') }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -157,7 +189,6 @@
                 status.innerText = "Error al guardar";
             }
         }
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </script>
 </body>
 </html>

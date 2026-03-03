@@ -23,13 +23,17 @@ class InvitedController extends Controller
 
     private function saveData($data)
     {
+        \Log::info('Guardando datos');
         file_put_contents($this->path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        \Log::info('Datos guardados');
     }
 
     public function index($uuid = null)
     {
+        // return view('invitation', [
+        //     'uuid' => $uuid
+        // ]);
         if (!$uuid) {
-            return view('invitation'); // Tu vista por defecto
         }
 
         $invitados = $this->getData();
@@ -39,7 +43,10 @@ class InvitedController extends Controller
             return abort(404, 'Invitación no encontrada');
         }
 
-        return view('invitacion', compact('grupo'));
+        // return view('invitation', [
+        //     'uuid' => $uuid
+        // ]);
+        return view('invitation', compact('grupo', 'uuid'));
     }
 
     public function viewConfirm($uuid = null)
@@ -55,20 +62,29 @@ class InvitedController extends Controller
             return abort(404, 'Invitación no encontrada');
         }
 
-        return view('invitacion-confirm', compact('grupo'));
+        return view('confirmation', compact('grupo', 'uuid'));
     }
 
-    public function confirmar(Request $request)
+    public function confirm(Request $request)
     {
+        \Log::info('Confirmando invitado');
         $uuid = $request->uuid;
         $tipo = $request->tipo; // 'principal' o 'acompanante'
         $nombre = $request->nombre; // Para identificar al acompañante
         $asistencia = $request->asistencia; // true, false o null
         $mensaje = $request->mensaje;
 
+        \Log::info('$request->all()');
+        \Log::info($request->all());
+
         $invitados = $this->getData();
+
+        \Log::info('$invitados');
+        \Log::info($invitados);
         
         foreach ($invitados as &$item) {
+            \Log::info('$item');
+            \Log::info($item);
             if ($item['uuid'] === $uuid) {
                 if ($tipo === 'principal') {
                     $item['asistencia'] = $asistencia;
@@ -86,8 +102,9 @@ class InvitedController extends Controller
                 break;
             }
         }
-
+        \Log::info('$invitados');
         $this->saveData($invitados);
+        
 
         return response()->json(['success' => true]);
     }
