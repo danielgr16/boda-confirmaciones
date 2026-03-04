@@ -1,0 +1,1182 @@
+[
+    {
+        "uuid": "123",
+        "group": "Familia Pérez",
+        "invitado": "Juan Pérez",
+        "asistencia": false,
+        "mensaje": "hola que onda",
+        "acompanantes": [
+            {
+                "invitado": "Pedro Campos",
+                "asistencia": true
+            },
+            {
+                "invitado": "Ana Pérez",
+                "asistencia": true
+            }
+        ]
+    },
+    {
+        "uuid": "test-unique",
+        "group": "test ujnico",
+        "invitado": "Uniko Pérez",
+        "asistencia": false,
+        "mensaje": "hjola unico y detergente",
+        "acompanantes": []
+    },
+    {
+        "uuid": "test-company",
+        "group": "test compania",
+        "invitado": "Juan Pérez",
+        "asistencia": false,
+        "mensaje": "hola que onda assddffgdfgddsfsd",
+        "acompanantes": [
+            {
+                "invitado": "Acompañante 1",
+                "asistencia": true
+            },
+            {
+                "invitado": "Acompañante 2",
+                "asistencia": false
+            }
+        ]
+    },
+    {
+        "uuid": "test-fam",
+        "group": "Test familia",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "f",
+        "familia": [
+            {
+                "invitado": "Juan Perez",
+                "asistencia": false
+            },
+            {
+                "invitado": "Karen Perez",
+                "asistencia": false
+            }
+        ]
+    },
+    {
+        "uuid": "111",
+        "group": "Familia Lopez",
+        "invitado": "María López",
+        "asistencia": true,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "112",
+        "group": "Familia Lopez",
+        "invitado": "María López",
+        "asistencia": true,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "9896-31c345748850",
+        "group": "Daniel García",
+        "invitado": "Daniel García",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "880a-4b6da9b3eeec",
+        "group": "Alejandra Rueda",
+        "invitado": "Alejandra Rueda",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "92bf-736ce7bcbd21",
+        "group": "Danna García",
+        "invitado": "Danna García",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Derek Zueck",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "915e-60c9ba760398",
+        "group": "Gadiel García",
+        "invitado": "Gadiel García",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "a4cb-89a9f9bd9569",
+        "group": "Familia Rueda Navarro",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "familia": [
+            {
+                "invitado": "Samuel Rueda",
+                "asistencia": null
+            },
+            {
+                "invitado": "Karen Navarro",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "be93-b199a145a1dd",
+        "group": "Familia Rueda",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Paola Rueda",
+                "asistencia": null
+            },
+            {
+                "invitado": "Javier Rueda",
+                "asistencia": null
+            },
+            {
+                "invitado": "Alexandra Savoloskia",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "95f8-97cba8bb5404",
+        "group": "Jacobo Rueda",
+        "invitado": "Jacobo Rueda",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "bfd0-2ef91065e792",
+        "group": "Familia Rueda Navarro",
+        "invitado": "Asunción Rueda",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Erika Navarro",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "babc-2e9e9ab14c55",
+        "group": "Juana Rueda",
+        "invitado": "Juana Rueda",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Madaí Silva",
+                "asistencia": null
+            },
+            {
+                "invitado": "Liliana Silva",
+                "asistencia": null
+            },
+            {
+                "invitado": "Acompañante",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "9210-55dc615cbfb3",
+        "group": "Alejandro Silva",
+        "invitado": "Alejandro Silva",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "b057-232f07215dc3",
+        "group": "Erik Silva",
+        "invitado": "Erik Silva",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Acompañante",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "9433-cbf739c24277",
+        "group": "Familia García Meza",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Francisco García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Bertha Meza",
+                "asistencia": null
+            },
+            {
+                "invitado": "Uriel García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Acompañante (Uriel)",
+                "asistencia": null
+            },
+            {
+                "invitado": "Eliezer García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Acompañante (Eliezer)",
+                "asistencia": null
+            },
+            {
+                "invitado": "Emily García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Acompañante (Emily)",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "b4ce-353d6529b255",
+        "group": "Tello García",
+        "invitado": "Tello García",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "af73-f091994b3c9c",
+        "group": "Uziel García",
+        "invitado": "Uziel García",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Acompañante",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "a61a-7a2ab94e310a",
+        "group": "Familia García López",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Juan García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Chuyita Lopéz",
+                "asistencia": null
+            },
+            {
+                "invitado": "Miguel Garcia",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "8b95-d7e815fe240b",
+        "group": "Familia García Gonzalez",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Sidumy García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Alberto Gonzalez",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "9e06-a0a578dea704",
+        "group": "Familia García Angulo",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Rafael García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Angelica Ángulo",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "9484-c09021ef1319",
+        "group": "Maday García",
+        "invitado": "Maday García",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Elmer Higuera",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "a21c-52bca8c8b47e",
+        "group": "Fernanda García",
+        "invitado": "Fernanda García",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "9a6a-8db158e15216",
+        "group": "Familia Humarán García",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Sara García Ramos",
+                "asistencia": null
+            },
+            {
+                "invitado": "Manuel Humarán",
+                "asistencia": null
+            },
+            {
+                "invitado": "Dennise García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Ferdinan Pacheco",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "a6b6-33dee070dcf2",
+        "group": "Familia Flores García",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Claudia García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Martin Flores",
+                "asistencia": null
+            },
+            {
+                "invitado": "Karen Flores",
+                "asistencia": null
+            },
+            {
+                "invitado": "Eduardo Flores",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "8336-fa2a4251c343",
+        "group": "Katya Flores",
+        "invitado": "Katya Flores",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Daniel Chavez",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "aa11-9f04979d01e8",
+        "group": "Dolores García",
+        "invitado": "Dolores García",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "ae81-b307c239baca",
+        "group": "Familia Vázquez García",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Nohemí García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Juan Vázquez",
+                "asistencia": null
+            },
+            {
+                "invitado": "Alexis Payán",
+                "asistencia": null
+            },
+            {
+                "invitado": "Gabriela Vázquez",
+                "asistencia": null
+            },
+            {
+                "invitado": "Juan Vázquez Jr.",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "a317-acb944acc5a3",
+        "group": "Estefany García",
+        "invitado": "Estefany García",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Wilver Gómez",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "bd8f-93ec913710b4",
+        "group": "Familia Acuña García",
+        "invitado": "Rosy García",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "David Acuña",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "be7c-dfe6309edfdf",
+        "group": "Arturo Toledo",
+        "invitado": "Arturo Toledo",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "93cf-d662a11c8a57",
+        "group": "Cristaly Diaz",
+        "invitado": "Cristaly Diaz",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "b279-9bef3a2595cc",
+        "group": "Jennifer Rodriguez",
+        "invitado": "Jennifer Rodriguez",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Johan Rosas",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "86d6-de9c07c0861b",
+        "group": "Sara Ramos",
+        "invitado": "Sara Ramos",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "bc89-61ae645eaa8f",
+        "group": "Jesús Corona",
+        "invitado": "Jesús Corona",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Acompañante",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "9575-c90a3bd63dff",
+        "group": "Juan Zentella",
+        "invitado": "Juan Zentella",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "82b2-df47dacf2d97",
+        "group": "Lidia Mundo",
+        "invitado": "Lidia Mundo",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "a7cb-fef3437fc53c",
+        "group": "Dulce Zentella Mundo",
+        "invitado": "Dulce Zentella Mundo",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Gohan Ramirez Rangel",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "baf0-87475d0c9069",
+        "group": "Teresa Wu Feng",
+        "invitado": "Teresa Wu Feng",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "94db-59f692c4dde8",
+        "group": "Familia Mundo Zentella",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Daniel Mundo Cortes",
+                "asistencia": null
+            },
+            {
+                "invitado": "Luisa Zentella Hernandez",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "b155-79b77152fc51",
+        "group": "Daniela Mundo Zentella",
+        "invitado": "Daniela Mundo Zentella",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "a6f0-8c1702527c2a",
+        "group": "Daniel Mundo Zentella",
+        "invitado": "Daniel Mundo Zentella",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "9be0-a0ceac177ab0",
+        "group": "Oscar Mundo Zentella",
+        "invitado": "Oscar Mundo Zentella",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Melissa Olivas",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "a5d7-5923e3a485c6",
+        "group": "Porfirio Taracena",
+        "invitado": "Porfirio Taracena",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "8632-c0ac2c63e07c",
+        "group": "Elizabeth Mundo Cortes",
+        "invitado": "Elizabeth Mundo Cortes",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "b4ae-74cbdd27e0fb",
+        "group": "Bany Taracena Mundo",
+        "invitado": "Bany Taracena Mundo",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "b12f-119b42407aed",
+        "group": "Elisur Taracena Mundo",
+        "invitado": "Elisur Taracena Mundo",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "97e8-96890274204d",
+        "group": "Brisa Taracena Mundo",
+        "invitado": "Brisa Taracena Mundo",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "92c9-061dbd559d17",
+        "group": "Familia Mundo Santos",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Josue Mundo Cortes",
+                "asistencia": null
+            },
+            {
+                "invitado": "Monica Santos de Mundo",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "b691-f524b1a2ad0e",
+        "group": "Familia Mundo Chan",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Ismael Mundo Cortes",
+                "asistencia": null
+            },
+            {
+                "invitado": "Eloisa Chan de Mundo",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "a96e-51edd7a5634d",
+        "group": "Belen Mundo Arce",
+        "invitado": "Belen Mundo Arce",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Isaias Gonzales Morales",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "84e7-50273fd6b847",
+        "group": "Josue Mundo Arce",
+        "invitado": "Josue Mundo Arce",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "9f2f-9ce543172547",
+        "group": "Azarely Mundo Santos",
+        "invitado": "Azarely Mundo Santos",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "8b77-ba80c47da598",
+        "group": "Pricila Mundo Chan",
+        "invitado": "Pricila Mundo Chan",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "a322-98c9652e15c1",
+        "group": "Isai Mundo Chan",
+        "invitado": "Isai Mundo Chan",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "9d19-088df516a2fd",
+        "group": "Israel Mundo Chan",
+        "invitado": "Israel Mundo Chan",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "ac76-ba04276433db",
+        "group": "Ariana Escovedo",
+        "invitado": "Ariana Escovedo",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "8e39-ca220b74ccdd",
+        "group": "Familia Escovedo Mundo",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Alejandro Escovedo",
+                "asistencia": null
+            },
+            {
+                "invitado": "Marilu Mundo de Escovedo",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "835a-cd813ff18b08",
+        "group": "Mia Escovedo",
+        "invitado": "Mia Escovedo",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "be44-47623885d714",
+        "group": "Familia Martinez Ricardez",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Maria Olga Ricardez García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Ivan Martinez García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Joaquin Valente Rodas Ricardez",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "9e89-2288cf1813da",
+        "group": "Tomasa Cortes",
+        "invitado": "Tomasa Cortes",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "9e43-ce1961cf71b3",
+        "group": "Familia Velazquez Hernandez",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Daniela Hernandez",
+                "asistencia": null
+            },
+            {
+                "invitado": "Daniel Velazquez Espinoza",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "abe3-b7d9a8469b1d",
+        "group": "Jonatan Gabriel Ramirez Barriga",
+        "invitado": "Jonatan Gabriel Ramirez Barriga",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Miriam Lizbeth Fuentes Torres",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "babb-5fc43d84f191",
+        "group": "Familia Perez Vallejo",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Miguel Angel Pérez Lorenzo",
+                "asistencia": null
+            },
+            {
+                "invitado": "Silvia Vallejo Bolaños",
+                "asistencia": null
+            },
+            {
+                "invitado": "Sara Ximena Pérez Vallejo",
+                "asistencia": null
+            },
+            {
+                "invitado": "Miguel Angel Pérez Vallejo",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "9079-dc80311b2244",
+        "group": "Herlinda Orozco Mejia",
+        "invitado": "Herlinda Orozco Mejia",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Acompañante",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "8c46-37d3ad404b3b",
+        "group": "Familia Jimenez Guillen",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Jose Francisco Guillen Castro",
+                "asistencia": null
+            },
+            {
+                "invitado": "Martha Gricelda Jimenez Jimenez",
+                "asistencia": null
+            },
+            {
+                "invitado": "Paulina Paulette Guillen Jimenez",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "9209-82cc28b9cda8",
+        "group": "Familia Lucero Ahumada",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Marco A. Lucero",
+                "asistencia": null
+            },
+            {
+                "invitado": "Alegria Ahumada",
+                "asistencia": null
+            },
+            {
+                "invitado": "Erika Lucero Alegria",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "8472-2d1cff13aeee",
+        "group": "Familia Sotelo Escalante",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Minerva Escalante",
+                "asistencia": null
+            },
+            {
+                "invitado": "Ulises Sotelo",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "9675-aacf806f6a57",
+        "group": "Familia Mata",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Nahara Mata",
+                "asistencia": null
+            },
+            {
+                "invitado": "Cristian Lopez",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "a678-37de70948f20",
+        "group": "Familia Mata",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Brenda Mata",
+                "asistencia": null
+            },
+            {
+                "invitado": "Azael Ramirez",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "8b7e-aa0c47fafdb5",
+        "group": "Familia Vazquez Beltran",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Gerardo Vazquez",
+                "asistencia": null
+            },
+            {
+                "invitado": "Karla Beltran",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "83b0-19d573e53d3c",
+        "group": "Familia Rodriguez Limon",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Lupita Rodriguez",
+                "asistencia": null
+            },
+            {
+                "invitado": "Eunice Limon",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "80e6-0051feb2bddc",
+        "group": "Carlos Palmerin",
+        "invitado": "Carlos Palmerin",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "bd12-a55aaea58caa",
+        "group": "Familia Mendoza",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Edgar Mendoza",
+                "asistencia": null
+            },
+            {
+                "invitado": "Elena Mendoza",
+                "asistencia": null
+            },
+            {
+                "invitado": "Malenita Mendoza",
+                "asistencia": null
+            },
+            {
+                "invitado": "Josue Mendoza",
+                "asistencia": null
+            },
+            {
+                "invitado": "Raquel Mendoza",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "8ad2-4400651a19a8",
+        "group": "Familia Carreon Mundo",
+        "invitado": "",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [],
+        "familia": [
+            {
+                "invitado": "Erick Carreon García",
+                "asistencia": null
+            },
+            {
+                "invitado": "Mayra Janet Mundo Lira",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "a1a2-df879b440722",
+        "group": "Maghali Campos",
+        "invitado": "Maghali Campos",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "b570-64bbbb9306a7",
+        "group": "Valeria Mendez",
+        "invitado": "Valeria Mendez",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "bac4-26a319a7e60e",
+        "group": "Flora Rueda",
+        "invitado": "Flora Rueda",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "b6db-e0daf426dca2",
+        "group": "Cristina Rueda",
+        "invitado": "Cristina Rueda",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "8619-f85e706dfc72",
+        "group": "Teresa Barraza",
+        "invitado": "Teresa Barraza",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "af5c-c4bc97b21c8e",
+        "group": "Jesús Crespo",
+        "invitado": "Jesús Crespo",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Acompañante",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "824b-ea41f7ccecf7",
+        "group": "Irán Mendez",
+        "invitado": "Irán Mendez",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Acompañante",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "a071-a1e2d630bbe7",
+        "group": "Karla Loera",
+        "invitado": "Karla Loera",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Acompañante",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "8114-d69ad1452e37",
+        "group": "Jesus Gonzalez",
+        "invitado": "Jesus Gonzalez",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": [
+            {
+                "invitado": "Acompañante",
+                "asistencia": null
+            }
+        ]
+    },
+    {
+        "uuid": "87ce-3e7cbd4e6c47",
+        "group": "Efrain",
+        "invitado": "Efrain",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    },
+    {
+        "uuid": "8edf-2dc636b0ec82",
+        "group": "Itzel",
+        "invitado": "Itzel",
+        "asistencia": null,
+        "mensaje": "",
+        "acompanantes": []
+    }
+]

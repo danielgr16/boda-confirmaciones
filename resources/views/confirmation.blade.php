@@ -32,7 +32,12 @@
         </div>
 
         <p class="mt-6 text-gray-700 mb-3 text-sm">
-            Agradecemos que respondas lo mas pronto posible. Si no aparece tu nombre, por favor, verifica que abriste la invitación correcta.
+            Te agradeceremos confirmar tu asistencia <strong>antes del 31 de marzo</strong>. 
+            Si no recibimos tu confirmación para esa fecha, 
+            asumiremos que no podrás acompañarnos y podremos ofrecer el lugar a otro invitado.
+        </p>
+        <p class="mt-6 text-gray-700 mb-3 text-sm">
+            Si no aparece tu nombre, por favor, verifica que abriste la invitación correcta.
         </p>
         <p class="mt-6 text-gray-700 mb-3 text-sm">
             <span class="font-bold">IMPORTANTE:</span> Las invitaciones son individuales o por familia, no compartas tu invitación con quienes no aparezcan en esta lista, porque podrían modificar los datos de tu confirmación.
@@ -43,9 +48,41 @@
             <span class="font-sans text-xs text-left ml-3">Puedes cambiar tu decisión en cualquier momento antes de la fecha limite (31 de marzo)</span>
         </div>
 
+        @if(count($grupo['familia'] ?? []) > 0)
         <div id="app" class="space-y-10">
             <div class="group">
-                <p class="text-sm uppercase tracking-widest text-gray-400 mb-4 font-semibold">Invitado</p>
+                <p class="text-sm uppercase tracking-widest text-gray-400 mb-4 font-semibold text-center">Invitados</p>
+                
+                @foreach($grupo['familia'] as $acomp)
+                <div class="mb-4">
+                    <p class="text-gray-700 mb-3 text-sm">{{ $acomp['invitado'] }}</p>
+                    <div class="flex gap-2">
+                        <button onclick="confirmar('familiar', '{{ $acomp['invitado'] }}', true, this)" 
+                                class="flex-1 py-2 px-4 rounded-lg border flex justify-center items-center transition-all btn-asistencia {{ $acomp['asistencia'] === true ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-gray-500 border-gray-200' }}">
+                            <span class="btn-text text-sm">Asistiré</span>
+                            <div class="spinner"></div>
+                        </button>
+                        <button onclick="confirmar('familiar', '{{ $acomp['invitado'] }}', false, this)" 
+                                class="flex-1 py-2 px-4 rounded-lg border flex justify-center items-center transition-all btn-asistencia {{ $acomp['asistencia'] === false ? 'bg-rose-600 text-white border-rose-600' : 'bg-white text-gray-500 border-gray-200' }}">
+                            <span class="btn-text text-sm">No asistiré</span>
+                            <div class="spinner"></div>
+                        </button>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <div class="pt-4">
+                <label class="block text-sm font-medium text-gray-600 mb-2 italic">Deja un mensaje para los novios...</label>
+                <textarea id="mensaje" onblur="guardarMensaje(this)" rows="3" 
+                          class="w-full border-gray-100 bg-gray-50 rounded-2xl shadow-inner focus:ring-2 focus:ring-rose-300 focus:bg-white transition-all p-4 outline-none border text-gray-700" 
+                          placeholder="Escribe aquí tu dedicatoria o comentario...">{{ $grupo['mensaje'] }}</textarea>
+                <p id="msg-status" class="text-right text-[10px] text-gray-400 mt-1 uppercase tracking-tighter"></p>
+            </div>
+        </div>
+        @else
+        <div id="app" class="space-y-10">
+            <div class="group">
+                <p class="text-sm uppercase tracking-widest text-gray-400 mb-4 font-semibold text-center">Invitado</p>
                 <div class="flex items-center justify-between mb-3">
                     <span class="text-gray-700 font-medium">{{ $grupo['invitado'] }}</span>
                 </div>
@@ -96,10 +133,11 @@
                 <p id="msg-status" class="text-right text-[10px] text-gray-400 mt-1 uppercase tracking-tighter"></p>
             </div>
         </div>
+        @endif
 
         <div class="text-center mt-10 text-gray-700 mb-3 text-sm">
             <p>
-                Cualquier duda, comentario o sugerencia, no dudes en comunicarte con nosotros.
+                Si tienes alguna duda, comentario o sugerencia, con gusto puedes comunicarte con nosotros.
             </p>
             <span class="block text-sm uppercase tracking-widest text-gray-400 my-5 font-semibold">CONTACTOS</span>
             <div class="">

@@ -85,8 +85,8 @@
 
             <div class="parents text-center mt-16">
                 <span class="mb-2 block font-bold text-sm text-secondary font-serif opacity-75">PADRES DE LA NOVIA</span>
-                <span class="block text-lg text-primary font-serif">Juan Zentella</span>
-                <span class="block text-lg text-primary font-serif">Lidia Mundo</span>
+                <span class="block text-lg text-primary font-serif">Juan José Zentella Hernandez</span>
+                <span class="block text-lg text-primary font-serif">Lidia Mundo Cortes</span>
                 <span class="mt-5 mb-2 block font-bold text-sm text-secondary font-serif opacity-75">PADRES DEL NOVIO</span>
                 <span class="block text-lg text-primary font-serif">Daniel Remigio García Ramos</span>
                 <span class="block text-lg text-primary font-serif">Alejandra Rueda Montes</span>
@@ -129,7 +129,7 @@
                     <img 
                         src="{{ asset('img/album-1.webp') }}"
                         alt="Foto 1"
-                        class="w-full object-cover rounded shadow-custom mb-4"
+                        class="w-full object-cover rounded shadow-custom mb-4 img-gallery"
                     >
         
                     <img 
@@ -451,7 +451,7 @@
                         Cada recuerdo que capturemos juntos hara que este día sea más memorable.
                     </p>
                     <!-- QR -->
-                    <div class="px-10">
+                    <div class="px-14">
                         <a href="https://photos.app.goo.gl/8p6V6xzyhuWCdoxo6" class="">
                             <img src="{{ asset('img/qr.webp') }}" alt="QR" class="w-full object-cover mb-6">
                         </a>
@@ -467,7 +467,7 @@
                     <span class="font-bold">31 de marzo</span>.
                 </p>
     
-                <button class="btn btn-primary">CONFIRMA AQUI</button>
+                <a class="btn btn-primary" href="{{ route('invitado.view.confirm', ['uuid' => $uuid]) }}">CONFIRMA AQUÍ</a>
                 <div class="text-primary w-100 flex mt-5 mx-14">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#3A4F31" viewBox="0 0 256 256"><path d="M142,176a6,6,0,0,1-6,6,14,14,0,0,1-14-14V128a2,2,0,0,0-2-2,6,6,0,0,1,0-12,14,14,0,0,1,14,14v40a2,2,0,0,0,2,2A6,6,0,0,1,142,176ZM124,94a10,10,0,1,0-10-10A10,10,0,0,0,124,94Zm106,34A102,102,0,1,1,128,26,102.12,102.12,0,0,1,230,128Zm-12,0a90,90,0,1,0-90,90A90.1,90.1,0,0,0,218,128Z"></path></svg>
                     <span class="font-sans text-xs text-left ml-3">Puedes cambiar tu decisión en cualquier momento antes de la fecha limite</span>

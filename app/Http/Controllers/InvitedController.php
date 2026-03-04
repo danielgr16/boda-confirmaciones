@@ -23,19 +23,11 @@ class InvitedController extends Controller
 
     private function saveData($data)
     {
-        \Log::info('Guardando datos');
         file_put_contents($this->path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-        \Log::info('Datos guardados');
     }
 
     public function index($uuid = null)
     {
-        // return view('invitation', [
-        //     'uuid' => $uuid
-        // ]);
-        if (!$uuid) {
-        }
-
         $invitados = $this->getData();
         $grupo = collect($invitados)->firstWhere('uuid', $uuid);
 
@@ -43,69 +35,73 @@ class InvitedController extends Controller
             return abort(404, 'Invitación no encontrada');
         }
 
-        // return view('invitation', [
-        //     'uuid' => $uuid
-        // ]);
+        Log::info('Vista invitación abierta', ['grupo' => $grupo]);
         return view('invitation', compact('grupo', 'uuid'));
     }
 
     public function viewConfirm($uuid = null)
     {
         if (!$uuid) {
-            return view('welcome'); // Tu vista por defecto
+            return view('invalid'); 
         }
 
         $invitados = $this->getData();
         $grupo = collect($invitados)->firstWhere('uuid', $uuid);
 
         if (!$grupo) {
-            return abort(404, 'Invitación no encontrada');
+            Log::error('Invitación no encontrada', ['uuid' => $uuid]);
+            return view('invalid'); 
         }
 
+        // if (!$grupo) {
+        //     return abort(404, 'Invitación no encontrada');
+        // }
+        Log::info('Vista confirmación abierta', ['grupo' => $grupo]);
         return view('confirmation', compact('grupo', 'uuid'));
     }
 
     public function confirm(Request $request)
     {
-        \Log::info('Confirmando invitado');
         $uuid = $request->uuid;
         $tipo = $request->tipo; // 'principal' o 'acompanante'
         $nombre = $request->nombre; // Para identificar al acompañante
         $asistencia = $request->asistencia; // true, false o null
         $mensaje = $request->mensaje;
 
-        \Log::info('$request->all()');
-        \Log::info($request->all());
-
         $invitados = $this->getData();
-
-        \Log::info('$invitados');
-        \Log::info($invitados);
         
         foreach ($invitados as &$item) {
-            \Log::info('$item');
-            \Log::info($item);
             if ($item['uuid'] === $uuid) {
-                if ($tipo === 'principal') {
+                if($tipo === 'familiar') {
+                    foreach ($item['familia'] as &$familiar) {
+                        if ($familiar['invitado'] === $nombre) {
+                            $familiar['asistencia'] = $asistencia;
+                            Log::info('confirmacion:', ['familiar' => $familiar]);
+                        }
+                    }
+                } 
+                else if ($tipo === 'principal') {
                     $item['asistencia'] = $asistencia;
-                } else {
+                    Log::info('confirmacion:', ['asistencia' => $asistencia, 'principal' => $nombre, 'uuid' => $uuid]);
+                } 
+                else if ($tipo === 'acompanante') {
                     foreach ($item['acompanantes'] as &$acomp) {
                         if ($acomp['invitado'] === $nombre) {
                             $acomp['asistencia'] = $asistencia;
+                            Log::info('confirmacion:', ['asistencia' => $asistencia, 'acompanante' => $nombre, 'uuid' => $uuid]);
                         }
                     }
                 }
                 
                 if (isset($mensaje)) {
                     $item['mensaje'] = $mensaje;
+                    Log::info('Se agregó mensaje', ['mensaje' => $mensaje, 'uuid' => $uuid]);
                 }
                 break;
             }
         }
-        \Log::info('$invitados');
         $this->saveData($invitados);
         
-
         return response()->json(['success' => true]);
     }
 }
