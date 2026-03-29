@@ -105,6 +105,19 @@ class InvitedController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function viewPass($uuid)
+    {
+        $invitados = $this->getData();
+        $grupo = collect($invitados)->firstWhere('uuid', $uuid);
+
+        if (!$grupo) {
+            Log::error('Intento de ver pase con UUID inválido', ['uuid' => $uuid]);
+            return view('invalid');
+        }
+
+        return view('pass', compact('grupo'));
+    }
+
     public function invalid()
     {
         return view('invalid');
