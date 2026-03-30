@@ -105,6 +105,65 @@ class InvitedController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function viewArrival($uuid)
+    {
+        $invitados = $this->getData();
+        $grupo = collect($invitados)->firstWhere('uuid', $uuid);
+
+        // Seleccionar solo a los invitados que tengan valor true en asistencia
+
+        if (!$grupo) {
+            return view('invalid');
+        }
+
+        return view('arrival', compact('grupo', 'uuid'));
+    }
+
+    public function checkPassword(Request $request)
+    {
+        $password = 'boda2026'; // Contraseña hardcodeada
+        if ($request->password === $password) {
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false, 'message' => 'Contraseña incorrecta'], 401);
+    }
+
+    public function registerArrival(Request $request)
+    {
+        $uuid = $request->uuid;
+        $tipo = $request->tipo;
+        $nombre = $request->nombre;
+        $llegada = $request->llegada; // boolean
+
+        $invitados = $this->getData();
+        
+        foreach ($invitados as &$item) {
+            if ($item['uuid'] === $uuid) {
+                if($tipo === 'familiar') {
+                    foreach ($item['familia'] as &$familiar) {
+                        if ($familiar['invitado'] === $nombre) {
+                            $familiar['llegada'] = $llegada;
+                        }
+                    }
+                } 
+                else if ($tipo === 'principal') {
+                    $item['llegada'] = $llegada;
+                } 
+                else if ($tipo === 'acompanante') {
+                    foreach ($item['acompanantes'] as &$acomp) {
+                        if ($acomp['invitado'] === $nombre) {
+                            $acomp['llegada'] = $llegada;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        $this->saveData($invitados);
+        
+        return response()->json(['success' => true]);
+    }
+
     public function viewPass($uuid)
     {
         $invitados = $this->getData();

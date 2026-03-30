@@ -4,15 +4,18 @@
         "group": "Familia Pérez",
         "invitado": "Juan Pérez",
         "asistencia": true,
+        "llegada": true,
         "mensaje": "hola que onda",
         "acompanantes": [
             {
                 "invitado": "Pedro Campos",
-                "asistencia": false
+                "asistencia": false,
+                "llegada": true
             },
             {
                 "invitado": "Ana Pérez",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": true
             }
         ]
     },
@@ -21,6 +24,7 @@
         "group": "test ujnico",
         "invitado": "Uniko Pérez",
         "asistencia": false,
+        "llegada": null,
         "mensaje": "hjola unico y detergente",
         "acompanantes": []
     },
@@ -29,15 +33,18 @@
         "group": "test compania",
         "invitado": "Juan Pérez",
         "asistencia": false,
+        "llegada": null,
         "mensaje": "hola que onda assddffgdfgddsfsd",
         "acompanantes": [
             {
                 "invitado": "Acompañante 1",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Acompañante 2",
-                "asistencia": false
+                "asistencia": false,
+                "llegada": null
             }
         ]
     },
@@ -46,15 +53,18 @@
         "group": "Test familia",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "f eneshat",
         "familia": [
             {
                 "invitado": "Juan Perez",
-                "asistencia": false
+                "asistencia": false,
+                "llegada": null
             },
             {
                 "invitado": "Karen Perez",
-                "asistencia": false
+                "asistencia": false,
+                "llegada": null
             }
         ]
     },
@@ -63,6 +73,7 @@
         "group": "Familia Lopez",
         "invitado": "María López",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -71,6 +82,7 @@
         "group": "Familia Lopez",
         "invitado": "María López",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -79,6 +91,7 @@
         "group": "Daniel García",
         "invitado": "Daniel García",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -87,6 +100,7 @@
         "group": "Alejandra Rueda",
         "invitado": "Alejandra Rueda",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -95,11 +109,13 @@
         "group": "Danna García",
         "invitado": "Danna García",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Derek Zueck",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -108,6 +124,7 @@
         "group": "Gadiel García",
         "invitado": "Gadiel García",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -116,15 +133,18 @@
         "group": "Familia Rueda Navarro",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "familia": [
             {
                 "invitado": "Samuel Rueda",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Karen Navarro",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -133,20 +153,24 @@
         "group": "Familia Rueda",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Paola Rueda",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Javier Rueda",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Alexandra Savoloskia",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -155,6 +179,7 @@
         "group": "Jacobo Rueda",
         "invitado": "Jacobo Rueda",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -163,11 +188,13 @@
         "group": "Familia Rueda Navarro",
         "invitado": "Asunción Rueda",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Erika Navarro",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -176,19 +203,23 @@
         "group": "Juana Rueda",
         "invitado": "Juana Rueda",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Madaí Silva",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Liliana Silva",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Acompañante",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -197,6 +228,7 @@
         "group": "Alejandro Silva",
         "invitado": "Alejandro Silva",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -205,11 +237,13 @@
         "group": "Erik Silva",
         "invitado": "Erik Silva",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Acompañante",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -218,40 +252,49 @@
         "group": "Familia García Meza",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Francisco García",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Bertha Meza",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Uriel García",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Acompañante (Uriel)",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Eliezer García",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Acompañante (Eliezer)",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Emily García",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Acompañante (Emily)",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -260,6 +303,7 @@
         "group": "Tello García",
         "invitado": "Tello García",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -268,11 +312,13 @@
         "group": "Uziel García",
         "invitado": "Uziel García",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Acompañante",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -281,20 +327,24 @@
         "group": "Familia García López",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "En hora buena muchas felicidades, les acompañaremos de todo corazón, bendiciones",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Juan García",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Chuyita Lopéz",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Miguel Garcia",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -303,16 +353,19 @@
         "group": "Familia García Gonzalez",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Sidumy García",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Alberto Gonzalez",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -321,16 +374,19 @@
         "group": "Familia García Angulo",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Rafael García",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Angelica Ángulo",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -339,11 +395,13 @@
         "group": "Maday García",
         "invitado": "Maday García",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Elmer Higuera",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -352,6 +410,7 @@
         "group": "Fernanda García",
         "invitado": "Fernanda García",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -360,24 +419,29 @@
         "group": "Familia Humarán García",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "Que Dios los bendiga en gran manera, los llene de sabiduria para cuidarse y comprenderse el uno al otro, y que sea siempre el centro de su matrimonio..\nLos amo y me alegra mucho verles iniciar esta etapata llenos de amor e ilucion! 💕\nAgradezco que nos hagan participes de ese dia tan especial para ustedes, primero Dios ahi estaremos con mucho gusto!",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Sara García Ramos",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Manuel Humarán",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Dennise García",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Ferdinan Pacheco",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -386,24 +450,29 @@
         "group": "Familia Flores García",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "Felicidades hijos ❤️ que hermosa familia van a iniciar y solo les  puedo decir como consejo, que recuerden que el hombre es cabeza del hogar y la mujer es vaso frágil, si cada uno respeta el rol que Dios dispuso y se toman en cuenta uno al otro en cada  decisión van a ser el matrimonio que Dios espera 🙏 miren cada ejemplo que tienen al rededor y decidan como quieren vivir y que hogar le quieren dar a los hijos que Dios les va a enviar ❤️ los amamos y saben que cuentan con sus tíos",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Claudia García",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Martin Flores",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Karen Flores",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Eduardo Flores",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -412,11 +481,13 @@
         "group": "Katya Flores",
         "invitado": "Katya Flores",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Daniel Chavez",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -425,6 +496,7 @@
         "group": "Dolores García",
         "invitado": "Dolores García",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -433,6 +505,7 @@
         "group": "Vanesa García",
         "invitado": "Vanesa García",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -441,28 +514,34 @@
         "group": "Familia Vázquez García",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Nohemí García",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Juan Vázquez",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Alexis Payán",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Gabriela Vázquez",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Juan Vázquez Jr.",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -471,11 +550,13 @@
         "group": "Estefany García",
         "invitado": "Estefany García",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Wilver Gómez",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -484,11 +565,13 @@
         "group": "Familia Acuña García",
         "invitado": "Rosy García",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "David Acuña",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -497,6 +580,7 @@
         "group": "Arturo Toledo",
         "invitado": "Arturo Toledo",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -505,6 +589,7 @@
         "group": "Cristaly Diaz",
         "invitado": "Cristaly Diaz",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -513,11 +598,13 @@
         "group": "Jennifer Rodriguez",
         "invitado": "Jennifer Rodriguez",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Johan Rosas",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -526,6 +613,7 @@
         "group": "Sara Ramos",
         "invitado": "Sara Ramos",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "Que Dios les bendiga diga, los amo mucho, que sean muy felices",
         "acompanantes": []
     },
@@ -534,11 +622,13 @@
         "group": "Jesús Corona",
         "invitado": "Jesús Corona",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Acompañante",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -547,6 +637,7 @@
         "group": "Juan Zentella",
         "invitado": "Juan Zentella",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -555,6 +646,7 @@
         "group": "Lidia Mundo",
         "invitado": "Lidia Mundo",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -563,11 +655,13 @@
         "group": "Dulce Zentella Mundo",
         "invitado": "Dulce Zentella Mundo",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Johan Ramirez Rangel",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -576,6 +670,7 @@
         "group": "Teresa Wu Feng",
         "invitado": "Teresa Wu Feng",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -584,16 +679,19 @@
         "group": "Familia Mundo Zentella",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Daniel Mundo Cortes",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Luisa Zentella Hernandez",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -602,6 +700,7 @@
         "group": "Daniela Mundo Zentella",
         "invitado": "Daniela Mundo Zentella",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -610,6 +709,7 @@
         "group": "Daniel Mundo Zentella",
         "invitado": "Daniel Mundo Zentella",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -618,11 +718,13 @@
         "group": "Oscar Mundo Zentella",
         "invitado": "Oscar Mundo Zentella",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "Hip hip urraaa hip hip urraaaa !!!! \n\nKhemocion 🫶🏻",
         "acompanantes": [
             {
                 "invitado": "Melissa Olivas",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -631,6 +733,7 @@
         "group": "Porfirio Taracena",
         "invitado": "Porfirio Taracena",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -639,6 +742,7 @@
         "group": "Elizabeth Mundo Cortes",
         "invitado": "Elizabeth Mundo Cortes",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -647,6 +751,7 @@
         "group": "Bany Taracena Mundo",
         "invitado": "Bany Taracena Mundo",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -655,6 +760,7 @@
         "group": "Elisur Taracena Mundo",
         "invitado": "Elisur Taracena Mundo",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -663,6 +769,7 @@
         "group": "Brisa Taracena Mundo",
         "invitado": "Brisa Taracena Mundo",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "QUE VIVAN LOS NOVIOS✨",
         "acompanantes": []
     },
@@ -671,16 +778,19 @@
         "group": "Familia Mundo Santos",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Josue Mundo Cortes",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Monica Santos de Mundo",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -689,16 +799,19 @@
         "group": "Familia Mundo Chan",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "Mil bendiciones en sus vidas.",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Ismael Mundo Cortes",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Eloisa Chan de Mundo",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -707,11 +820,13 @@
         "group": "Belen Mundo Arce",
         "invitado": "Belen Mundo Arce",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "Muchas felicidades, me siento muy contenta por ustedes, les deseo lo mejor y Dios los bendiga en esta nueva etapa de sus vidas.\nEspero con gran alegría el día de su boda y me siento contenta de ser parte de ella, los quiero <3 .",
         "acompanantes": [
             {
                 "invitado": "Isaias Gonzales Morales",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -720,6 +835,7 @@
         "group": "Josue Mundo Arce",
         "invitado": "Josue Mundo Arce",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -728,6 +844,7 @@
         "group": "Azarely Mundo Santos",
         "invitado": "Azarely Mundo Santos",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "La más feliz de poder estar con ustedes en su día especial 🥹💗\nDios los guarde y guíe su matrimonio y q se arme la fiesta, hasta el amanecer 😛",
         "acompanantes": []
     },
@@ -736,6 +853,7 @@
         "group": "Pricila Mundo Chan",
         "invitado": "Pricila Mundo Chan",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "Dios los bendiga siempre, ¡muchas felicidades!🩷 Muy hermosa la invitación, gracias.",
         "acompanantes": []
     },
@@ -744,6 +862,7 @@
         "group": "Isai Mundo Chan",
         "invitado": "Isai Mundo Chan",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "Felicidades Perla y Daniel, por esa nueva etapa de su vida que van a comenzar. 🙌",
         "acompanantes": []
     },
@@ -752,6 +871,7 @@
         "group": "Israel Mundo Chan",
         "invitado": "Israel Mundo Chan",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "Felicidades Prima, que nuestro señor Jesucristo bendiga tu matrimonio.\n\n\"Y si alguno prevaleciere contra uno, dos le resistirán; y cordón de tres dobleces no se rompe pronto\"\nEclesiastés 4:12",
         "acompanantes": []
     },
@@ -760,6 +880,7 @@
         "group": "Ariana Escovedo",
         "invitado": "Ariana Escovedo",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -768,16 +889,19 @@
         "group": "Familia Escovedo Mundo",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Alejandro Escovedo",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Marilu Mundo de Escovedo",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -786,6 +910,7 @@
         "group": "Mia Escovedo",
         "invitado": "Mia Escovedo",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -794,20 +919,24 @@
         "group": "Familia Martinez Ricardez",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Maria Olga Ricardez García",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Ivan Martinez García",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Joaquin Valente Rodas Ricardez",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -816,6 +945,7 @@
         "group": "Tomasa Cortes",
         "invitado": "Tomasa Cortes",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -824,16 +954,19 @@
         "group": "Familia Velazquez Hernandez",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Daniela Hernandez",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Daniel Velazquez Espinoza",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -842,11 +975,13 @@
         "group": "Jonatan Gabriel Ramirez Barriga",
         "invitado": "Jonatan Gabriel Ramirez Barriga",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Miriam Lizbeth Fuentes Torres",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -855,24 +990,29 @@
         "group": "Familia Perez Vallejo",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "Un gusto acompañarlos hija en este día tan especial.",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Miguel Angel Pérez Lorenzo",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Silvia Vallejo Bolaños",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Sara Ximena Pérez Vallejo",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Miguel Angel Pérez Vallejo",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -881,11 +1021,13 @@
         "group": "Herlinda Orozco Mejia",
         "invitado": "Herlinda Orozco Mejia",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "Mejor son dos que uno, porque obtiene más frutos de su esfuerzo ✨️🫶 inician una nueva etapa de su vida en donde sus vidas se unen para convertirse uno solo, espero que este paso siempre esté acompañado de la mano de Dios qué el amor se multiplique cada día, que la felicidad habite en su hogar y que la fidelidad y la salud siempre estén presentes en su hogar 🤍 Con muchísimo amor en el corazón les deseo todo lo bonito en esta nueva etapa que están por comenzar juntos✨️✨️✨️",
         "acompanantes": [
             {
                 "invitado": "Acompañante",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -894,20 +1036,24 @@
         "group": "Familia Jimenez Guillen",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Jose Francisco Guillen Castro",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Martha Gricelda Jimenez Jimenez",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Paulina Paulette Guillen Jimenez",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -916,20 +1062,24 @@
         "group": "Familia Lucero Ahumada",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "Dios bendiga, su matrimonio, que este viaje que inician esté lleno de comprensión, amor, respeto y sobre todo comunicación.",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Marco A. Lucero",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Alegria Ahumada",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Erika Lucero Alegria",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -938,16 +1088,19 @@
         "group": "Familia Sotelo Escalante",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Minerva Escalante",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Ulises Sotelo",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -956,16 +1109,19 @@
         "group": "Familia Mata",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Nahara Mata",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Cristian Lopez",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -974,16 +1130,19 @@
         "group": "Familia Mata",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Brenda Mata",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Azael Ramirez",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -992,16 +1151,19 @@
         "group": "Familia Vazquez Beltran",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "Estoy muy feliz por ustedes !!! Gracias por contemplarnos en este su día tan especial !! Que tengas todo sea mejor de lo sueñan y que vivan un feliz matrimonio , éxito en esta nueva etapa los queremos    Vivan los NOVIOS!!!!!",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Gerardo Vazquez",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             },
             {
                 "invitado": "Karla Beltran",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -1010,16 +1172,19 @@
         "group": "Familia Rodriguez Limon",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Lupita Rodriguez",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Eunice Limon",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -1028,6 +1193,7 @@
         "group": "Carlos Palmerin",
         "invitado": "Carlos Palmerin",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -1036,28 +1202,34 @@
         "group": "Familia Mendoza",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Edgar Mendoza",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Elena Mendoza",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Malenita Mendoza",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Josue Mendoza",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Raquel Mendoza",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -1066,16 +1238,19 @@
         "group": "Familia Carreon Mundo",
         "invitado": "",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [],
         "familia": [
             {
                 "invitado": "Erick Carreon García",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             },
             {
                 "invitado": "Mayra Janet Mundo Lira",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -1084,6 +1259,7 @@
         "group": "Maghali Campos",
         "invitado": "Maghali Campos",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -1092,6 +1268,7 @@
         "group": "Valeria Mendez",
         "invitado": "Valeria Mendez",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -1100,6 +1277,7 @@
         "group": "Flora Rueda",
         "invitado": "Flora Rueda",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -1108,6 +1286,7 @@
         "group": "Cristina Rueda",
         "invitado": "Cristina Rueda",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -1116,6 +1295,7 @@
         "group": "Teresa Barraza",
         "invitado": "Teresa Barraza",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -1124,11 +1304,13 @@
         "group": "Jesús Crespo",
         "invitado": "Jesús Crespo",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Acompañante",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -1137,11 +1319,13 @@
         "group": "Irán Mendez",
         "invitado": "Irán Mendez",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Acompañante",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -1150,11 +1334,13 @@
         "group": "Karla Loera",
         "invitado": "Karla Loera",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Acompañante",
-                "asistencia": null
+                "asistencia": null,
+                "llegada": null
             }
         ]
     },
@@ -1163,11 +1349,13 @@
         "group": "Jesus Gonzalez",
         "invitado": "Jesus Gonzalez",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "Gracias por la invitación, la familia González Dominguez esta encantada de poder presenciar este dia tan importante para ustedes y les desea lo mejor para lo que viene en sus vidas.",
         "acompanantes": [
             {
                 "invitado": "Acompañante",
-                "asistencia": true
+                "asistencia": true,
+                "llegada": null
             }
         ]
     },
@@ -1176,6 +1364,7 @@
         "group": "Efrain",
         "invitado": "Efrain",
         "asistencia": null,
+        "llegada": null,
         "mensaje": "",
         "acompanantes": []
     },
@@ -1184,6 +1373,7 @@
         "group": "Itzel",
         "invitado": "Itzel",
         "asistencia": true,
+        "llegada": null,
         "mensaje": "Gracias, es un honor ser participe en su unión. Que la vida les conceda la sabiduría para cuidarse, la paciencia para entenderse y la alegría constante de saberse elegidos. \nMis más sinceras felicitaciones por este nuevo capítulo que están por iniciar.",
         "acompanantes": []
     }

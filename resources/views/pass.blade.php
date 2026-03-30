@@ -75,7 +75,7 @@
 
             {{-- QR Code --}}
             <div class="bg-white p-3 border-2 border-stone-50 rounded-2xl shadow-inner">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode(url('/view_pass/' . $grupo['uuid'])) }}" 
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode(url('/arrival/' . $grupo['uuid'])) }}" 
                      alt="QR Access" 
                      class="w-32 h-32 opacity-80">
             </div>
