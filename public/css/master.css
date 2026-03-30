@@ -107,6 +107,12 @@
     margin-top: 315px;
 }
 
+.qr-card {
+    z-index: 100;
+    background-color: #ffffff57;
+    backdrop-filter: blur(5px);
+}
+
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading .spinner { display: inline-block; }
 .loading .btn-text { display: none; }

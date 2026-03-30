@@ -19,6 +19,8 @@
 
         {{-- Header --}}
         <div class="bg-stone-50 p-6 text-center border-b-2 border-dashed border-gray-200">
+            <img src="{{ asset('img/logo.webp') }}" alt="" class="w-20 h-20 mx-auto">
+            <span class="font-serif block text-stone-600 mt-2">Boda</span>
             <h1 class="font-serif text-2xl text-stone-800 italic">Perla & Daniel</h1>
             <p class="text-stone-500 uppercase tracking-widest text-[10px] mt-1 font-bold">Pase de Acceso</p>
         </div>
@@ -74,7 +76,7 @@
             </div>
 
             {{-- QR Code --}}
-            <div class="bg-white p-3 border-2 border-stone-50 rounded-2xl shadow-inner">
+            <div class="qr-card p-4 border-2 border-stone-50 rounded-2xl shadow-inner">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode(url('/arrival/' . $grupo['uuid'])) }}" 
                      alt="QR Access" 
                      class="w-32 h-32 opacity-80">
@@ -82,10 +84,12 @@
             <p class="text-[9px] text-gray-300 mt-3 font-mono tracking-tighter">{{ $grupo['uuid'] }}</p>
         </div>
 
+        <img src="{{ asset('img/end.webp') }}" alt="" class="-mt-[193px]">
         {{-- Footer --}}
         <div class="bg-stone-800 p-4 text-center">
             <p class="text-stone-300 text-[9px] uppercase tracking-[0.4em] font-medium">Favor de presentar este código</p>
         </div>
+
     </div>
     
     <a href="{{ route('invitado.index', ['uuid' => $grupo['uuid']]) }}" class="mt-8 text-stone-400 text-xs uppercase tracking-widest hover:text-stone-600 transition-colors">Volver a la invitación</a>
