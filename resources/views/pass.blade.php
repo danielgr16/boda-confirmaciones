@@ -12,13 +12,13 @@
 </head>
 <body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-6 font-sans">
 
-    <div class="max-w-sm w-full bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 relative">
+    <div id="ticket-card" class="max-w-sm w-full rounded-3xl shadow-2xl overflow-hidden flex flex-col relative transition-transform duration-100 ease-out" style="will-change: transform; border: 5px solid transparent; background: linear-gradient(#fdfcfb, #fdfcfb) padding-box, linear-gradient(var(--angle, 45deg), #71706e, #e5e4e2, #ffffff, #d3d3d3, #71706e) border-box;">
         {{-- Círculos laterales para efecto ticket --}}
         <div class="absolute top-[22%] -left-4 w-8 h-8 bg-slate-100 rounded-full"></div>
         <div class="absolute top-[22%] -right-4 w-8 h-8 bg-slate-100 rounded-full"></div>
 
         {{-- Header --}}
-        <div class="bg-stone-50 p-6 text-center border-b-2 border-dashed border-gray-200">
+        <div class="bg-stone-100/30 p-6 text-center border-b-2 border-dashed border-gray-200">
             <img src="{{ asset('img/logo.webp') }}" alt="" class="w-20 h-20 mx-auto">
             <span class="font-serif block text-stone-600 mt-2">Boda</span>
             <h1 class="font-serif text-2xl text-stone-800 italic">Perla & Daniel</h1>
@@ -90,9 +90,69 @@
             <p class="text-stone-300 text-[9px] uppercase tracking-[0.4em] font-medium">Favor de presentar este código</p>
         </div>
 
+        {{-- Textura de papel lino (Trama fina cruzada) --}}
+        <div class="absolute inset-0 pointer-events-none z-40 opacity-[0.08]" 
+             style="background-image: 
+                repeating-linear-gradient(90deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 1px, transparent 3px),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 1px, transparent 3px);">
+        </div>
+
+        {{-- Capa de brillo y reflejo --}}
+        <div id="shine" class="absolute -inset-1 pointer-events-none opacity-0 z-50 transition-opacity duration-300" style="mix-blend-mode: overlay;"></div>
     </div>
     
     <a href="{{ route('invitado.index', ['uuid' => $grupo['uuid']]) }}" class="mt-8 text-stone-400 text-xs uppercase tracking-widest hover:text-stone-600 transition-colors">Volver a la invitación</a>
 
+    <script>
+        const card = document.getElementById('ticket-card');
+        const shine = document.getElementById('shine');
+
+        const handleMove = (e) => {
+            const pos = card.getBoundingClientRect();
+            // Obtener coordenadas tanto para mouse como para touch
+            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+            
+            const x = clientX - pos.left;
+            const y = clientY - pos.top;
+
+            // Calcular rotación (máximo 15 grados)
+            const centerX = pos.width / 2;
+            const centerY = pos.height / 2;
+            const rotateX = (centerY - y) / 25; // Aumentado de 12 a 25 para menos inclinación
+            const rotateY = (x - centerX) / 25; // Aumentado de 12 a 25 para menos inclinación
+
+            card.style.transform = `perspective(2000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`; // Aumentado de 1000px a 2000px
+
+            // Efecto de brillo dinámico
+            const shineX = (x / pos.width) * 100;
+            const shineY = (y / pos.height) * 100;
+            shine.style.background = `radial-gradient(circle at ${shineX}% ${shineY}%, rgba(255, 255, 255, 0.5) 0%, rgba(200, 200, 200, 0.2) 50%, transparent 80%)`;
+            shine.style.opacity = '1';
+
+            // Ajustar el ángulo del brillo del borde dorado
+            const angle = Math.atan2(y - centerY, x - centerX) * (180 / Math.PI);
+            card.style.setProperty('--angle', `${angle}deg`);
+        };
+
+        const handleReset = () => {
+            card.style.transform = 'perspective(2000px) rotateX(0deg) rotateY(0deg)';
+            card.style.transition = 'transform 0.5s ease-out';
+            shine.style.opacity = '0';
+            card.style.setProperty('--angle', '45deg');
+            setTimeout(() => { card.style.transition = 'transform 0.1s ease-out'; }, 500);
+        };
+
+        // Eventos de Mouse
+        card.addEventListener('mousemove', handleMove);
+        card.addEventListener('mouseleave', handleReset);
+
+        // Eventos de Touch (Móvil)
+        card.addEventListener('touchstart', handleMove, { passive: true });
+        card.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) handleMove(e);
+        }, { passive: true });
+        card.addEventListener('touchend', handleReset);
+    </script>
 </body>
 </html>
