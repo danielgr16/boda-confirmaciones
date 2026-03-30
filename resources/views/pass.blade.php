@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    {{-- Librería para generar PDF --}}
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script> -->
 </head>
 <body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-6 font-sans">
 
@@ -87,7 +89,7 @@
         <img src="{{ asset('img/end.webp') }}" alt="" class="-mt-[193px]">
         {{-- Footer --}}
         <div class="bg-stone-800 p-4 text-center">
-            <p class="text-stone-300 text-[9px] uppercase tracking-[0.4em] font-medium">Favor de presentar este código</p>
+            <p class="text-stone-300 text-[9px] uppercase tracking-[0.4em] font-medium">Presentar este pase al entrar al evento. <span class="font-black">IMPORTANTE: </span> Los pases son unicamente para las personas que aparecen en el mismo.</p>
         </div>
 
         {{-- Textura de papel lino (Trama fina cruzada) --}}
@@ -101,6 +103,10 @@
         <div id="shine" class="absolute -inset-1 pointer-events-none opacity-0 z-50 transition-opacity duration-300" style="mix-blend-mode: overlay;"></div>
     </div>
     
+    <!-- <button onclick="downloadPDF()" class="mt-8 bg-stone-800 text-white px-8 py-3 rounded-full text-xs uppercase tracking-[0.2em] font-bold hover:bg-stone-700 transition-all shadow-lg active:scale-95">
+        Descargar Pase (PDF)
+    </button> -->
+
     <a href="{{ route('invitado.index', ['uuid' => $grupo['uuid']]) }}" class="mt-8 text-stone-400 text-xs uppercase tracking-widest hover:text-stone-600 transition-colors">Volver a la invitación</a>
 
     <script>
