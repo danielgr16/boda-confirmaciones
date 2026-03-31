@@ -68,10 +68,12 @@
                 $allNames = implode(' ', array_column($invitadosList, 'nombre')) . ' ' . ($grupo['group'] ?? '');
             @endphp
 
-            <div class="invitation-card bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden" data-search-terms="{{ strtolower($allNames) }}">
+            <div class="invitation-card bg-white rounded-3xl shadow-xl border border-gray-300 overflow-hidden" data-search-terms="{{ strtolower($allNames) }}">
                 <div class="bg-stone-50 p-4 border-b border-gray-100">
                     <h2 class="text-stone-800 font-serif italic text-lg">{{ $grupo['group'] }}</h2>
-                    <p class="text-[10px] text-stone-400 uppercase tracking-widest font-bold">UUID: {{ $grupo['uuid'] }}</p>
+                    <a href="{{ route('invitado.view.confirm', ['uuid' => $grupo['uuid']]) }}">
+                        <p class="text-[10px] text-stone-400 uppercase tracking-widest font-bold">UUID: {{ $grupo['uuid'] }}</p>
+                    </a>
                 </div>
                 <div class="p-4 space-y-4">
                     @foreach($invitadosList as $inv)

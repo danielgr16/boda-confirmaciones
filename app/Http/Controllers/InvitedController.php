@@ -193,56 +193,33 @@ class InvitedController extends Controller
     {
         Log::info('Vista tabla de invitados');
 
-        $data = $this->getData();
+        $invitados = $this->getData();
+        
+        $stats = [
+            'confirmados' => 0,
+            'rechazados' => 0,
+            'pendientes' => 0,
+            'total' => 0
+        ];
 
-        $rows = [];
-        $i = 1;
-
-        foreach ($data as $grupo) {
-
-            // invitado principal
-            if (!empty($grupo['invitado'])) {
-                $rows[] = [
-                    'row' => $i++,
-                    'uuid' => $grupo['uuid'],
-                    'invitado' => $grupo['invitado'],
-                    'companias' => '',
-                    'group' => $grupo['group'] ?? '',
-                    'asistencia' => $grupo['asistencia']
-                ];
-            }
-
-            // acompañantes
+        foreach ($invitados as $grupo) {
+            $personas = [];
+            if (!empty($grupo['invitado'])) $personas[] = ['asistencia' => $grupo['asistencia'] ?? null];
             if (!empty($grupo['acompanantes'])) {
-                foreach ($grupo['acompanantes'] as $acomp) {
-                    $rows[] = [
-                        'row' => $i++,
-                        'uuid' => $grupo['uuid'],
-                        'invitado' => $acomp['invitado'],
-                        'companias' => $grupo['invitado'],
-                        'group' => $grupo['group'] ?? '',
-                        'asistencia' => $acomp['asistencia']
-                    ];
-                }
+                foreach($grupo['acompanantes'] as $a) $personas[] = ['asistencia' => $a['asistencia'] ?? null];
+            }
+            if (!empty($grupo['familia'])) {
+                foreach($grupo['familia'] as $f) $personas[] = ['asistencia' => $f['asistencia'] ?? null];
             }
 
-            // familia
-            if (!empty($grupo['familia'])) {
-                foreach ($grupo['familia'] as $fam) {
-                    $rows[] = [
-                        'row' => $i++,
-                        'uuid' => $grupo['uuid'],
-                        'invitado' => $fam['invitado'],
-                        'companias' => '',
-                        'group' => $grupo['group'] ?? '',
-                        'asistencia' => $fam['asistencia']
-                    ];
-                }
+            foreach ($personas as $p) {
+                $stats['total']++;
+                if (($p['asistencia'] ?? null) === true) $stats['confirmados']++;
+                elseif (($p['asistencia'] ?? null) === false) $stats['rechazados']++;
+                else $stats['pendientes']++;
             }
         }
 
-        return view('confirmations_table', [
-            'rows' => $rows
-        ]);
+        return view('confirmations_table', compact('invitados', 'stats'));
     }
 }
