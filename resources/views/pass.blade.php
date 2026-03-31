@@ -103,10 +103,6 @@
         <div id="shine" class="absolute -inset-1 pointer-events-none opacity-0 z-50 transition-opacity duration-300" style="mix-blend-mode: overlay;"></div>
     </div>
     
-    <!-- <button onclick="downloadPDF()" class="mt-8 bg-stone-800 text-white px-8 py-3 rounded-full text-xs uppercase tracking-[0.2em] font-bold hover:bg-stone-700 transition-all shadow-lg active:scale-95">
-        Descargar Pase (PDF)
-    </button> -->
-
     <a href="{{ route('invitado.index', ['uuid' => $grupo['uuid']]) }}" class="mt-8 text-stone-400 text-xs uppercase tracking-widest hover:text-stone-600 transition-colors">Volver a la invitación</a>
 
     <script>
