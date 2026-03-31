@@ -85,6 +85,9 @@
                 @if($grupo['guardia'] ?? false)
                     <a class="btn btn-secondary mt-3 block" href="{{ route('invitado.checkout_list') }}">Lista de Acceso (Solo guardias)</a>
                 @endif
+                @if($grupo['novios'] ?? false)
+                    <a class="btn btn-secondary mt-3 block" href="{{ route('invitado.table') }}">Confirmaciones</a>
+                @endif
             </div>
 
             <div class="parents text-center mt-16">
