@@ -26,7 +26,7 @@
         "group": "test ujnico",
         "invitado": "Uniko Pérez",
         "asistencia": false,
-        "llegada": null,
+        "llegada": true,
         "mensaje": "hjola unico y detergente",
         "acompanantes": []
     },
@@ -35,18 +35,18 @@
         "group": "test compania",
         "invitado": "Juan Pérez",
         "asistencia": false,
-        "llegada": null,
+        "llegada": false,
         "mensaje": "hola que onda assddffgdfgddsfsd",
         "acompanantes": [
             {
                 "invitado": "Acompañante 1",
                 "asistencia": true,
-                "llegada": null
+                "llegada": true
             },
             {
                 "invitado": "Acompañante 2",
                 "asistencia": false,
-                "llegada": null
+                "llegada": true
             }
         ]
     },
@@ -61,12 +61,12 @@
             {
                 "invitado": "Juan Perez",
                 "asistencia": false,
-                "llegada": null
+                "llegada": true
             },
             {
                 "invitado": "Karen Perez",
                 "asistencia": false,
-                "llegada": null
+                "llegada": true
             }
         ]
     },
@@ -75,7 +75,7 @@
         "group": "Familia Lopez",
         "invitado": "María López",
         "asistencia": true,
-        "llegada": null,
+        "llegada": true,
         "mensaje": "",
         "acompanantes": []
     },
@@ -84,7 +84,7 @@
         "group": "Familia Lopez",
         "invitado": "María López",
         "asistencia": true,
-        "llegada": null,
+        "llegada": true,
         "mensaje": "",
         "acompanantes": []
     },
@@ -93,7 +93,7 @@
         "group": "Daniel García",
         "invitado": "Daniel García",
         "asistencia": true,
-        "llegada": null,
+        "llegada": true,
         "mensaje": "",
         "acompanantes": []
     },
@@ -102,7 +102,7 @@
         "group": "Alejandra Rueda",
         "invitado": "Alejandra Rueda",
         "asistencia": true,
-        "llegada": null,
+        "llegada": true,
         "mensaje": "",
         "acompanantes": []
     },
@@ -111,13 +111,13 @@
         "group": "Danna García",
         "invitado": "Danna García",
         "asistencia": null,
-        "llegada": null,
+        "llegada": true,
         "mensaje": "",
         "acompanantes": [
             {
                 "invitado": "Derek Zueck",
                 "asistencia": null,
-                "llegada": null
+                "llegada": true
             }
         ]
     },
@@ -126,7 +126,7 @@
         "group": "Gadiel García",
         "invitado": "Gadiel García",
         "asistencia": null,
-        "llegada": null,
+        "llegada": false,
         "mensaje": "",
         "acompanantes": []
     },

@@ -123,7 +123,40 @@ class InvitedController extends Controller
     {
         Log::info('Vista lista de acceso');
         $invitados = $this->getData();
-        return view('checkout_list', compact('invitados'));
+
+        $stats = [
+            'llegaron' => 0,
+            'no_llegaron' => 0,
+            'pendientes' => 0,
+            'total' => 0
+        ];
+
+        foreach ($invitados as $grupo) {
+            $personas = [];
+            if (!empty($grupo['familia'])) {
+                foreach ($grupo['familia'] as $f) {
+                    $personas[] = ['llegada' => $f['llegada'] ?? null];
+                }
+            } else {
+                if (!empty($grupo['invitado'])) {
+                    $personas[] = ['llegada' => $grupo['llegada'] ?? null];
+                }
+                if (!empty($grupo['acompanantes'])) {
+                    foreach ($grupo['acompanantes'] as $a) {
+                        $personas[] = ['llegada' => $a['llegada'] ?? null];
+                    }
+                }
+            }
+
+            foreach ($personas as $p) {
+                $stats['total']++;
+                if (($p['llegada'] ?? null) === true) $stats['llegaron']++;
+                elseif (($p['llegada'] ?? null) === false) $stats['no_llegaron']++;
+                else $stats['pendientes']++;
+            }
+        }
+
+        return view('checkout_list', compact('invitados', 'stats'));
     }
 
     public function checkPassword(Request $request)

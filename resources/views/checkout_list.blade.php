@@ -46,9 +46,33 @@
 
     {{-- Sección de Checkout List --}}
     <div id="checkout-section" class="hidden">
-        {{-- Topbar Sticky con Buscador --}}
-        <div class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 p-4 shadow-sm">
-            <div class="max-w-md mx-auto">
+        {{-- Topbar Sticky con Contadores y Buscador --}}
+        <div class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
+            <div class="max-w-md mx-auto p-4">
+                <div class="mb-5">
+                    <h1 class="text-xl font-serif text-stone-800 italic text-center mb-4">Lista de Acceso</h1>
+                    
+                    {{-- Contadores Globales --}}
+                    <div class="grid grid-cols-4 gap-2">
+                        <div class="bg-stone-100 p-2 rounded-2xl text-center">
+                            <span class="block text-[10px] uppercase text-stone-500 font-bold tracking-tighter">Total</span>
+                            <span id="count-total" class="text-lg font-bold text-stone-800">{{ $stats['total'] }}</span>
+                        </div>
+                        <div class="bg-emerald-50 p-2 rounded-2xl text-center border border-emerald-100">
+                            <span class="block text-[10px] uppercase text-emerald-600 font-bold tracking-tighter">Llegó</span>
+                            <span id="count-llegaron" class="text-lg font-bold text-emerald-700">{{ $stats['llegaron'] }}</span>
+                        </div>
+                        <div class="bg-rose-50 p-2 rounded-2xl text-center border border-rose-100">
+                            <span class="block text-[10px] uppercase text-rose-600 font-bold tracking-tighter">Faltó</span>
+                            <span id="count-no_llegaron" class="text-lg font-bold text-rose-700">{{ $stats['no_llegaron'] }}</span>
+                        </div>
+                        <div class="bg-amber-50 p-2 rounded-2xl text-center border border-amber-100">
+                            <span class="block text-[10px] uppercase text-amber-600 font-bold tracking-tighter">Pend.</span>
+                            <span id="count-pendientes" class="text-lg font-bold text-amber-700">{{ $stats['pendientes'] }}</span>
+                        </div>
+                    </div>
+                </div>
+
                 <input type="text" id="guest-search" onkeyup="filterInvitations()" 
                        placeholder="Buscar invitado por nombre..." 
                        class="w-full px-5 py-3 rounded-full border border-gray-200 focus:ring-2 focus:ring-stone-400 outline-none shadow-inner bg-gray-50/50">
@@ -144,6 +168,15 @@
         async function registerArrival(uuid, tipo, nombre, llegada, btnElement) {
             const container = btnElement.parentElement;
             const buttons = container.querySelectorAll('button');
+            const btnIn = container.querySelector('.arrival-btn-in');
+            const btnOut = container.querySelector('.arrival-btn-out');
+
+            // Determinar el estado previo antes de realizar el cambio
+            let previousStatus = null;
+            if (btnIn.classList.contains('bg-emerald-600')) previousStatus = true;
+            else if (btnOut.classList.contains('bg-rose-600')) previousStatus = false;
+
+            if (previousStatus === llegada) return;
 
             btnElement.classList.add('loading');
             buttons.forEach(b => { b.disabled = true; b.classList.add('opacity-60'); });
@@ -156,9 +189,6 @@
                 });
 
                 if (response.ok) {
-                    const btnIn = container.querySelector('.arrival-btn-in');
-                    const btnOut = container.querySelector('.arrival-btn-out');
-
                     // Reset styles
                     btnIn.className = 'w-10 h-10 rounded-lg border flex justify-center items-center transition-all arrival-btn-in bg-white text-emerald-600 border-emerald-200';
                     btnOut.className = 'w-10 h-10 rounded-lg border flex justify-center items-center transition-all arrival-btn-out bg-white text-rose-600 border-rose-200';
@@ -172,6 +202,18 @@
                         btnOut.classList.replace('text-rose-600', 'text-white');
                         btnOut.classList.replace('border-rose-200', 'border-rose-600');
                     }
+
+                    // Actualizar Contadores en vivo
+                    const countLlegaron = document.getElementById('count-llegaron');
+                    const countNoLlegaron = document.getElementById('count-no_llegaron');
+                    const countPendientes = document.getElementById('count-pendientes');
+
+                    if (previousStatus === null) countPendientes.innerText = parseInt(countPendientes.innerText) - 1;
+                    else if (previousStatus === true) countLlegaron.innerText = parseInt(countLlegaron.innerText) - 1;
+                    else if (previousStatus === false) countNoLlegaron.innerText = parseInt(countNoLlegaron.innerText) - 1;
+
+                    if (llegada === true) countLlegaron.innerText = parseInt(countLlegaron.innerText) + 1;
+                    else if (llegada === false) countNoLlegaron.innerText = parseInt(countNoLlegaron.innerText) + 1;
                 }
             } catch (error) {
                 alert('Error al registrar.');
