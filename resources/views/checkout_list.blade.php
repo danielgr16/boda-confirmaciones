@@ -54,22 +54,22 @@
                     
                     {{-- Contadores Globales --}}
                     <div class="grid grid-cols-4 gap-2">
-                        <div class="bg-stone-100 p-2 rounded-2xl text-center">
+                        <button onclick="setArrivalFilter('all', this)" class="arrival-filter-btn bg-stone-100 p-2 rounded-2xl text-center transition-all ring-2 ring-stone-300 ring-offset-2">
                             <span class="block text-[10px] uppercase text-stone-500 font-bold tracking-tighter">Total</span>
                             <span id="count-total" class="text-lg font-bold text-stone-800">{{ $stats['total'] }}</span>
-                        </div>
-                        <div class="bg-emerald-50 p-2 rounded-2xl text-center border border-emerald-100">
+                        </button>
+                        <button onclick="setArrivalFilter('llegaron', this)" class="arrival-filter-btn bg-emerald-50 p-2 rounded-2xl text-center border border-emerald-100 transition-all">
                             <span class="block text-[10px] uppercase text-emerald-600 font-bold tracking-tighter">Llegó</span>
                             <span id="count-llegaron" class="text-lg font-bold text-emerald-700">{{ $stats['llegaron'] }}</span>
-                        </div>
-                        <div class="bg-rose-50 p-2 rounded-2xl text-center border border-rose-100">
+                        </button>
+                        <button onclick="setArrivalFilter('no_llegaron', this)" class="arrival-filter-btn bg-rose-50 p-2 rounded-2xl text-center border border-rose-100 transition-all">
                             <span class="block text-[10px] uppercase text-rose-600 font-bold tracking-tighter">Faltó</span>
                             <span id="count-no_llegaron" class="text-lg font-bold text-rose-700">{{ $stats['no_llegaron'] }}</span>
-                        </div>
-                        <div class="bg-amber-50 p-2 rounded-2xl text-center border border-amber-100">
+                        </button>
+                        <button onclick="setArrivalFilter('pendientes', this)" class="arrival-filter-btn bg-amber-50 p-2 rounded-2xl text-center border border-amber-100 transition-all">
                             <span class="block text-[10px] uppercase text-amber-600 font-bold tracking-tighter">Pend.</span>
                             <span id="count-pendientes" class="text-lg font-bold text-amber-700">{{ $stats['pendientes'] }}</span>
-                        </div>
+                        </button>
                     </div>
                 </div>
 
@@ -89,10 +89,20 @@
                     $invitadosList = [];
                     foreach($grupo['familia'] as $f) $invitadosList[] = ['nombre' => $f['invitado'], 'tipo' => 'familiar', 'llegada' => $f['llegada'] ?? null];
                 }
+
+                $arrivalStatuses = [];
+                foreach($invitadosList as $inv) {
+                    if ($inv['llegada'] === true) $arrivalStatuses[] = 'llegaron';
+                    elseif ($inv['llegada'] === false) $arrivalStatuses[] = 'no_llegaron';
+                    else $arrivalStatuses[] = 'pendientes';
+                }
+                $arrivalStatuses = array_unique($arrivalStatuses);
                 $allNames = implode(' ', array_column($invitadosList, 'nombre')) . ' ' . ($grupo['group'] ?? '');
             @endphp
 
-            <div class="invitation-card bg-white rounded-3xl shadow-xl border border-gray-300 overflow-hidden" data-search-terms="{{ strtolower($allNames) }}">
+            <div class="invitation-card bg-white rounded-3xl shadow-xl border border-gray-300 overflow-hidden" 
+                 data-search-terms="{{ strtolower($allNames) }}"
+                 data-arrival-statuses="{{ implode(' ', $arrivalStatuses) }}">
                 <div class="bg-stone-50 p-4 border-b border-gray-100">
                     <h2 class="text-stone-800 font-serif italic text-lg">{{ $grupo['group'] }}</h2>
                     <a href="{{ route('invitado.view.confirm', ['uuid' => $grupo['uuid']]) }}">
@@ -156,12 +166,27 @@
             document.getElementById('checkout-section').classList.remove('hidden');
         }
 
+        let currentArrivalFilter = 'all';
+
+        function setArrivalFilter(filter, el) {
+            currentArrivalFilter = filter;
+            document.querySelectorAll('.arrival-filter-btn').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-stone-500', 'ring-stone-300', 'ring-offset-2');
+            });
+            const ringColor = filter === 'all' ? 'ring-stone-300' : 'ring-stone-500';
+            el.classList.add('ring-2', ringColor, 'ring-offset-2');
+            filterInvitations();
+        }
+
         function filterInvitations() {
             const query = document.getElementById('guest-search').value.toLowerCase();
             const cards = document.querySelectorAll('.invitation-card');
             cards.forEach(card => {
                 const terms = card.getAttribute('data-search-terms');
-                card.style.display = terms.includes(query) ? 'block' : 'none';
+                const statuses = card.getAttribute('data-arrival-statuses').split(' ');
+                const matchesSearch = terms.includes(query);
+                const matchesFilter = currentArrivalFilter === 'all' || statuses.includes(currentArrivalFilter);
+                card.style.display = (matchesSearch && matchesFilter) ? 'block' : 'none';
             });
         }
 
@@ -202,6 +227,20 @@
                         btnOut.classList.replace('text-rose-600', 'text-white');
                         btnOut.classList.replace('border-rose-200', 'border-rose-600');
                     }
+
+                    // Actualizar data-arrival-statuses del card para que el filtro funcione en tiempo real
+                    const card = btnElement.closest('.invitation-card');
+                    const rows = card.querySelectorAll('.flex.items-center.justify-between.gap-4.py-2');
+                    let newStatuses = new Set();
+                    rows.forEach(row => {
+                        const isIn = row.querySelector('.arrival-btn-in').classList.contains('bg-emerald-600');
+                        const isOut = row.querySelector('.arrival-btn-out').classList.contains('bg-rose-600');
+                        if (isIn) newStatuses.add('llegaron');
+                        else if (isOut) newStatuses.add('no_llegaron');
+                        else newStatuses.add('pendientes');
+                    });
+                    card.setAttribute('data-arrival-statuses', Array.from(newStatuses).join(' '));
+                    filterInvitations();
 
                     // Actualizar Contadores en vivo
                     const countLlegaron = document.getElementById('count-llegaron');
