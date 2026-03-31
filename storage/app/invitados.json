@@ -5,12 +5,14 @@
         "invitado": "Juan Pérez",
         "asistencia": true,
         "llegada": true,
+        "guardia": true,
         "mensaje": "hola que onda",
         "acompanantes": [
             {
                 "invitado": "Pedro Campos",
                 "asistencia": false,
-                "llegada": true
+                "llegada": true,
+                "guardia": true
             },
             {
                 "invitado": "Ana Pérez",
@@ -339,12 +341,12 @@
             {
                 "invitado": "Chuyita Lopéz",
                 "asistencia": true,
-                "llegada": null
+                "llegada": true
             },
             {
                 "invitado": "Miguel Garcia",
                 "asistencia": true,
-                "llegada": null
+                "llegada": true
             }
         ]
     },

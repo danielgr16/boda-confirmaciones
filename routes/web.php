@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [InvitedController::class, 'invalid'])->name('invitado.invalid');
 Route::get('/table', [InvitedController::class, 'invitados'])->name('invitado.table');
+Route::get('/checkout_list', [InvitedController::class, 'checkoutList'])->name('invitado.checkout_list');
 Route::get('/{uuid?}', [InvitedController::class, 'index'])->name('invitado.index');
 Route::get('/{uuid?}/view/confirm', [InvitedController::class, 'viewConfirm'])->name('invitado.view.confirm');
 Route::post('/confirm', [InvitedController::class, 'confirm'])->name('invitado.confirm');

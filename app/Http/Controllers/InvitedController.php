@@ -119,6 +119,13 @@ class InvitedController extends Controller
         return view('arrival', compact('grupo', 'uuid'));
     }
 
+    public function checkoutList()
+    {
+        Log::info('Vista lista de acceso');
+        $invitados = $this->getData();
+        return view('checkout_list', compact('invitados'));
+    }
+
     public function checkPassword(Request $request)
     {
         $password = 'boda2026'; // Contraseña hardcodeada
