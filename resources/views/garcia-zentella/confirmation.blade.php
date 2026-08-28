@@ -168,7 +168,7 @@
 
             try {
                 console.log('try');
-                const response = await fetch("{{ route('invitado.confirm') }}", {
+                const response = await fetch("{{ route('invitado.confirm', ['novios' => $novios]) }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -210,7 +210,7 @@
             status.innerText = "Guardando...";
             
             try {
-                await fetch("{{ route('invitado.confirm') }}", {
+                await fetch("{{ route('invitado.confirm', ['novios' => $novios]) }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

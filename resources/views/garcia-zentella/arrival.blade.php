@@ -115,7 +115,7 @@
             const password = document.getElementById('admin_password').value;
             
             try {
-                const response = await fetch("{{ route('invitado.check_password') }}", {
+                const response = await fetch("{{ route('invitado.check_password', ['novios' => $novios]) }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -158,7 +158,7 @@
             });
 
             try {
-                const response = await fetch("{{ route('invitado.register_arrival') }}", {
+                const response = await fetch("{{ route('invitado.register_arrival', ['novios' => $novios]) }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

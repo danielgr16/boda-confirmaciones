@@ -79,7 +79,7 @@
 
             {{-- QR Code --}}
             <div class="qr-card p-4 border-2 border-stone-50 rounded-2xl shadow-inner">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode(url('/arrival/' . $grupo['uuid'])) }}" 
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode(route('invitado.arrival', ['novios' => $novios, 'uuid' => $grupo['uuid']])) }}" 
                      alt="QR Access" 
                      class="w-32 h-32 opacity-80">
             </div>
@@ -103,7 +103,7 @@
         <div id="shine" class="absolute -inset-1 pointer-events-none opacity-0 z-50 transition-opacity duration-300" style="mix-blend-mode: overlay;"></div>
     </div>
     
-    <a href="{{ route('invitado.index', ['uuid' => $grupo['uuid']]) }}" class="mt-8 text-stone-400 text-xs uppercase tracking-widest hover:text-stone-600 transition-colors">Volver a la invitación</a>
+    <a href="{{ route('invitado.index', ['novios' => $novios, 'uuid' => $grupo['uuid']]) }}" class="mt-8 text-stone-400 text-xs uppercase tracking-widest hover:text-stone-600 transition-colors">Volver a la invitación</a>
 
     <script>
         const card = document.getElementById('ticket-card');

@@ -7,72 +7,108 @@ use Illuminate\Support\Facades\Log;
 
 class InvitedController extends Controller
 {
-    private $path;
-
-    public function __construct()
+    private function getPath($novios = null)
     {
-        $this->path = storage_path('app/invitados.json');
+        $candidates = [];
+        if ($novios) {
+            $candidates[] = "app/public/{$novios}/invitados.json";
+            $candidates[] = "app/{$novios}/invitados.json";
+            $candidates[] = "app/{$novios}.json";
+            $candidates[] = "app/invitados_{$novios}.json";
+        }
+        $candidates[] = "app/invitados.json";
+
+        // 1. Check if already exists in active storage_path()
+        foreach ($candidates as $relative) {
+            $target = storage_path($relative);
+            if (file_exists($target)) {
+                return $target;
+            }
+        }
+
+        // 2. If not found in storage_path (e.g. running in serverless /tmp), check base_path('storage/...')
+        foreach ($candidates as $relative) {
+            $source = base_path("storage/{$relative}");
+            if (file_exists($source)) {
+                $dest = storage_path($relative);
+                $dir = dirname($dest);
+                if (!is_dir($dir)) {
+                    @mkdir($dir, 0755, true);
+                }
+                @copy($source, $dest);
+                return file_exists($dest) ? $dest : $source;
+            }
+        }
+
+        return storage_path('app/invitados.json');
     }
 
-    private function getData()
+    private function getData($novios = null)
     {
-        if (!file_exists($this->path)) return [];
-        $content = file_get_contents($this->path);
+        $path = $this->getPath($novios);
+        if (!file_exists($path)) return [];
+        $content = file_get_contents($path);
         return json_decode($content, true) ?? [];
     }
 
-    private function saveData($data)
+    private function saveData($data, $novios = null)
     {
-        file_put_contents($this->path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        $path = $this->getPath($novios);
+        $dir = dirname($path);
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0755, true);
+        }
+        @file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
 
-    public function index($uuid = null)
+    public function index($novios, $uuid = null)
     {
-        $invitados = $this->getData();
+        if (!view()->exists("{$novios}.invitation")) {
+            return $this->invalid($novios);
+        }
+
+        $invitados = $this->getData($novios);
         $grupo = collect($invitados)->firstWhere('uuid', $uuid);
 
         if (!$grupo) {
-            return abort(404, 'Invitación no encontrada');
+            return $this->invalid($novios);
         }
 
-        Log::info('Vista invitación abierta', ['grupo' => $grupo]);
-        return view('invitation', compact('grupo', 'uuid'));
+        Log::info('Vista invitación abierta', ['novios' => $novios, 'grupo' => $grupo]);
+        return view("{$novios}.invitation", compact('grupo', 'uuid', 'novios'));
     }
 
-    public function viewConfirm($uuid = null)
+    public function viewConfirm($novios, $uuid = null)
     {
-        if (!$uuid) {
-            return view('invalid'); 
+        if (!$uuid || !view()->exists("{$novios}.confirmation")) {
+            return $this->invalid($novios); 
         }
 
-        $invitados = $this->getData();
+        $invitados = $this->getData($novios);
         $grupo = collect($invitados)->firstWhere('uuid', $uuid);
 
         if (!$grupo) {
-            Log::error('Invitación no encontrada', ['uuid' => $uuid]);
-            return view('invalid'); 
+            Log::error('Invitación no encontrada', ['novios' => $novios, 'uuid' => $uuid]);
+            return $this->invalid($novios); 
         }
 
-        // if (!$grupo) {
-        //     return abort(404, 'Invitación no encontrada');
-        // }
-        Log::info('Vista confirmación abierta', ['grupo' => $grupo]);
-        return view('confirmation', compact('grupo', 'uuid'));
+        Log::info('Vista confirmación abierta', ['novios' => $novios, 'grupo' => $grupo]);
+        return view("{$novios}.confirmation", compact('grupo', 'uuid', 'novios'));
     }
 
-    public function confirm(Request $request)
+    public function confirm(Request $request, $novios)
     {
         $uuid = $request->uuid;
-        $tipo = $request->tipo; // 'principal' o 'acompanante'
-        $nombre = $request->nombre; // Para identificar al acompañante
+        $tipo = $request->tipo; // 'principal', 'acompanante' o 'familiar'
+        $nombre = $request->nombre; // Para identificar al acompañante/familiar
         $asistencia = $request->asistencia; // true, false o null
         $mensaje = $request->mensaje;
 
-        $invitados = $this->getData();
+        $invitados = $this->getData($novios);
         
         foreach ($invitados as &$item) {
             if ($item['uuid'] === $uuid) {
-                if($tipo === 'familiar') {
+                if ($tipo === 'familiar' && !empty($item['familia'])) {
                     foreach ($item['familia'] as &$familiar) {
                         if ($familiar['invitado'] === $nombre) {
                             $familiar['asistencia'] = $asistencia;
@@ -84,7 +120,7 @@ class InvitedController extends Controller
                     $item['asistencia'] = $asistencia;
                     Log::info('confirmacion:', ['asistencia' => $asistencia, 'principal' => $nombre, 'uuid' => $uuid]);
                 } 
-                else if ($tipo === 'acompanante') {
+                else if ($tipo === 'acompanante' && !empty($item['acompanantes'])) {
                     foreach ($item['acompanantes'] as &$acomp) {
                         if ($acomp['invitado'] === $nombre) {
                             $acomp['asistencia'] = $asistencia;
@@ -100,29 +136,35 @@ class InvitedController extends Controller
                 break;
             }
         }
-        $this->saveData($invitados);
+        $this->saveData($invitados, $novios);
         
         return response()->json(['success' => true]);
     }
 
-    public function viewArrival($uuid)
+    public function viewArrival($novios, $uuid)
     {
-        $invitados = $this->getData();
-        $grupo = collect($invitados)->firstWhere('uuid', $uuid);
-
-        // Seleccionar solo a los invitados que tengan valor true en asistencia
-
-        if (!$grupo) {
-            return view('invalid');
+        if (!view()->exists("{$novios}.arrival")) {
+            return $this->invalid($novios);
         }
 
-        return view('arrival', compact('grupo', 'uuid'));
+        $invitados = $this->getData($novios);
+        $grupo = collect($invitados)->firstWhere('uuid', $uuid);
+
+        if (!$grupo) {
+            return $this->invalid($novios);
+        }
+
+        return view("{$novios}.arrival", compact('grupo', 'uuid', 'novios'));
     }
 
-    public function checkoutList()
+    public function checkoutList($novios)
     {
-        Log::info('Vista lista de acceso');
-        $invitados = $this->getData();
+        if (!view()->exists("{$novios}.checkout_list")) {
+            return $this->invalid($novios);
+        }
+
+        Log::info('Vista lista de acceso', ['novios' => $novios]);
+        $invitados = $this->getData($novios);
 
         $stats = [
             'llegaron' => 0,
@@ -156,10 +198,10 @@ class InvitedController extends Controller
             }
         }
 
-        return view('checkout_list', compact('invitados', 'stats'));
+        return view("{$novios}.checkout_list", compact('invitados', 'stats', 'novios'));
     }
 
-    public function checkPassword(Request $request)
+    public function checkPassword(Request $request, $novios)
     {
         $password = 'boda2026'; // Contraseña hardcodeada
         if ($request->password === $password) {
@@ -168,18 +210,18 @@ class InvitedController extends Controller
         return response()->json(['success' => false, 'message' => 'Contraseña incorrecta'], 401);
     }
 
-    public function registerArrival(Request $request)
+    public function registerArrival(Request $request, $novios)
     {
         $uuid = $request->uuid;
         $tipo = $request->tipo;
         $nombre = $request->nombre;
         $llegada = $request->llegada; // boolean
 
-        $invitados = $this->getData();
+        $invitados = $this->getData($novios);
         
         foreach ($invitados as &$item) {
             if ($item['uuid'] === $uuid) {
-                if($tipo === 'familiar') {
+                if ($tipo === 'familiar' && !empty($item['familia'])) {
                     foreach ($item['familia'] as &$familiar) {
                         if ($familiar['invitado'] === $nombre) {
                             $familiar['llegada'] = $llegada;
@@ -189,7 +231,7 @@ class InvitedController extends Controller
                 else if ($tipo === 'principal') {
                     $item['llegada'] = $llegada;
                 } 
-                else if ($tipo === 'acompanante') {
+                else if ($tipo === 'acompanante' && !empty($item['acompanantes'])) {
                     foreach ($item['acompanantes'] as &$acomp) {
                         if ($acomp['invitado'] === $nombre) {
                             $acomp['llegada'] = $llegada;
@@ -199,34 +241,48 @@ class InvitedController extends Controller
                 break;
             }
         }
-        $this->saveData($invitados);
+        $this->saveData($invitados, $novios);
         
         return response()->json(['success' => true]);
     }
 
-    public function viewPass($uuid)
+    public function viewPass($novios, $uuid)
     {
-        $invitados = $this->getData();
+        if (!view()->exists("{$novios}.pass")) {
+            return $this->invalid($novios);
+        }
+
+        $invitados = $this->getData($novios);
         $grupo = collect($invitados)->firstWhere('uuid', $uuid);
 
         if (!$grupo) {
-            Log::error('Intento de ver pase con UUID inválido', ['uuid' => $uuid]);
-            return view('invalid');
+            Log::error('Intento de ver pase con UUID inválido', ['novios' => $novios, 'uuid' => $uuid]);
+            return $this->invalid($novios);
         }
 
-        return view('pass', compact('grupo'));
+        return view("{$novios}.pass", compact('grupo', 'novios'));
     }
 
-    public function invalid()
+    public function invalid($novios = null)
     {
-        return view('invalid');
+        if ($novios && view()->exists("{$novios}.invalid")) {
+            return response()->view("{$novios}.invalid", compact('novios'), 404);
+        }
+        if (view()->exists('garcia-zentella.invalid')) {
+            return response()->view('garcia-zentella.invalid', ['novios' => 'garcia-zentella'], 404);
+        }
+        return abort(404, 'Invitación no encontrada');
     }
 
-    public function invitados()
+    public function invitados($novios)
     {
-        Log::info('Vista tabla de invitados');
+        if (!view()->exists("{$novios}.confirmations_table")) {
+            return $this->invalid($novios);
+        }
 
-        $invitados = $this->getData();
+        Log::info('Vista tabla de invitados', ['novios' => $novios]);
+
+        $invitados = $this->getData($novios);
         
         $stats = [
             'confirmados' => 0,
@@ -239,10 +295,10 @@ class InvitedController extends Controller
             $personas = [];
             if (!empty($grupo['invitado'])) $personas[] = ['asistencia' => $grupo['asistencia'] ?? null];
             if (!empty($grupo['acompanantes'])) {
-                foreach($grupo['acompanantes'] as $a) $personas[] = ['asistencia' => $a['asistencia'] ?? null];
+                foreach ($grupo['acompanantes'] as $a) $personas[] = ['asistencia' => $a['asistencia'] ?? null];
             }
             if (!empty($grupo['familia'])) {
-                foreach($grupo['familia'] as $f) $personas[] = ['asistencia' => $f['asistencia'] ?? null];
+                foreach ($grupo['familia'] as $f) $personas[] = ['asistencia' => $f['asistencia'] ?? null];
             }
 
             foreach ($personas as $p) {
@@ -253,6 +309,6 @@ class InvitedController extends Controller
             }
         }
 
-        return view('confirmations_table', compact('invitados', 'stats'));
+        return view("{$novios}.confirmations_table", compact('invitados', 'stats', 'novios'));
     }
 }

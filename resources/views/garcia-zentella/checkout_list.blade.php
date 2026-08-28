@@ -105,7 +105,7 @@
                  data-arrival-statuses="{{ implode(' ', $arrivalStatuses) }}">
                 <div class="bg-stone-50 p-4 border-b border-gray-100">
                     <h2 class="text-stone-800 font-serif italic text-lg">{{ $grupo['group'] }}</h2>
-                    <a href="{{ route('invitado.view.confirm', ['uuid' => $grupo['uuid']]) }}">
+                    <a href="{{ route('invitado.view.confirm', ['novios' => $novios, 'uuid' => $grupo['uuid']]) }}">
                         <p class="text-[10px] text-stone-400 uppercase tracking-widest font-bold">UUID: {{ $grupo['uuid'] }}</p>
                     </a>
                 </div>
@@ -149,7 +149,7 @@
         async function checkAuth() {
             const password = document.getElementById('admin_password').value;
             try {
-                const response = await fetch("{{ route('invitado.check_password') }}", {
+                const response = await fetch("{{ route('invitado.check_password', ['novios' => $novios]) }}", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content },
                     body: JSON.stringify({ password })
@@ -207,7 +207,7 @@
             buttons.forEach(b => { b.disabled = true; b.classList.add('opacity-60'); });
 
             try {
-                const response = await fetch("{{ route('invitado.register_arrival') }}", {
+                const response = await fetch("{{ route('invitado.register_arrival', ['novios' => $novios]) }}", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content },
                     body: JSON.stringify({ uuid, tipo, nombre, llegada })
