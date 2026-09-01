@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect, use, useRef } from 'react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { 
   Play, 
   Pause, 
@@ -11,13 +10,12 @@ import {
   MapPin, 
   Gift, 
   Sparkles, 
-  Church, 
-  Wine, 
-  Utensils, 
-  Disc3, 
   Heart,
-  Volume2,
-  Ticket
+  Ticket,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Maximize2
 } from 'lucide-react';
 import type { FullInvitation } from '@/lib/types';
 
@@ -45,6 +43,12 @@ export default function InvitationPage({
 
   // Clipboard Toast State
   const [copiedAccount, setCopiedAccount] = useState<string | null>(null);
+
+  // Carousel & Modal Lightbox State
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+  const [modalPhoto, setModalPhoto] = useState<string | null>(null);
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
 
   // Fetch Invitation Data
   useEffect(() => {
@@ -124,23 +128,46 @@ export default function InvitationPage({
     setTimeout(() => setCopiedAccount(null), 2500);
   };
 
+  // Carousel touch swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = (photosLength: number) => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const diff = touchStartX.current - touchEndX.current;
+    if (diff > 45) {
+      // Swiped Left -> Next
+      setActivePhotoIndex((prev) => (prev + 1) % photosLength);
+    } else if (diff < -45) {
+      // Swiped Right -> Prev
+      setActivePhotoIndex((prev) => (prev - 1 + photosLength) % photosLength);
+    }
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FBF9F5] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#6E836F] border-t-transparent"></div>
+      <div className="min-h-screen bg-[#FAF8F5] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-10 w-10 border-3 border-[#6E836F] border-t-transparent"></div>
       </div>
     );
   }
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-[#FBF9F5] flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 border border-gray-100 text-center">
-          <div className="text-4xl mb-4">💌</div>
-          <h2 className="font-serif text-2xl text-gray-700 font-bold mb-2">
+      <div className="min-h-screen bg-[#FAF8F5] flex items-center justify-center p-4">
+        <div className="max-w-sm w-full bg-white rounded-3xl shadow-xl p-8 border border-[#E8F0E7] text-center">
+          <div className="text-4xl mb-3">💌</div>
+          <h2 className="font-cormorant text-2xl text-[#3F5241] font-bold mb-2">
             Invitación no encontrada
           </h2>
-          <p className="text-sm text-gray-500 mb-6">
+          <p className="text-xs text-gray-500">
             Por favor verifica el enlace personalizado con los novios.
           </p>
         </div>
@@ -150,6 +177,7 @@ export default function InvitationPage({
 
   const { couple, group } = data;
   const config = couple.config || {};
+  const albumPhotos = config.photos?.album || ['/img/album-1.webp', '/img/album-2.webp', '/img/album-3.webp', '/img/album-4.webp'];
 
   // Count reserved seats
   const reservedSeats = group.guests && group.guests.length > 0 ? group.guests.length : 1;
@@ -162,186 +190,176 @@ export default function InvitationPage({
   const yearNumber = eventDateObj.getFullYear();
 
   return (
-    <div className="min-h-screen flex justify-center py-0 sm:py-8 bg-[#ECE7E1]">
-      <main className="w-full max-w-md bg-[#FBF9F5] min-h-screen shadow-2xl overflow-hidden relative linen-texture pb-16">
+    <div className="min-h-screen flex justify-center py-0 sm:py-8 bg-[#E2DDD5] text-[#2C3E2D]">
+      <main className="w-full max-w-md bg-[#FAF8F5] min-h-screen shadow-2xl overflow-hidden relative linen-texture pb-20 select-none">
         
-        {/* Botanical Top Corners */}
-        <div className="absolute top-0 left-0 w-36 pointer-events-none opacity-85 z-10">
-          <img src="/img/top-left.webp" alt="Hojas" className="w-full h-auto object-contain" />
+        {/* Botanical Eucalyptus Top Draped Branches */}
+        <div className="absolute top-0 left-0 w-36 pointer-events-none opacity-80 z-10">
+          <img src="/img/top-left.webp" alt="" className="w-full h-auto object-contain" />
         </div>
-        <div className="absolute top-0 right-0 w-36 pointer-events-none opacity-85 z-10">
-          <img src="/img/top-right.webp" alt="Hojas" className="w-full h-auto object-contain" />
+        <div className="absolute top-0 right-0 w-36 pointer-events-none opacity-80 z-10">
+          <img src="/img/top-right.webp" alt="" className="w-full h-auto object-contain" />
         </div>
 
-        {/* SECTION 1: HEADER & VERSE */}
-        <header className="pt-14 px-6 text-center relative z-20">
+        {/* 1. TOP VERSE & MONOGRAM */}
+        <header className="pt-16 px-6 text-center relative z-20">
           {couple.bible_verse && (
-            <div className="max-w-xs mx-auto mb-8 px-3">
-              <p className="font-cormorant italic text-sm sm:text-base text-[#3F5241] leading-relaxed">
+            <div className="max-w-xs mx-auto mb-8 px-2">
+              <p className="font-serif italic text-xs tracking-wider text-[#586959] leading-relaxed uppercase">
                 {couple.bible_verse}
               </p>
               {couple.bible_citation && (
-                <span className="block font-cormorant font-semibold tracking-widest text-xs uppercase text-[#BCA074] mt-2">
+                <span className="block font-cormorant font-semibold tracking-[0.25em] text-[11px] uppercase text-[#BCA074] mt-2">
                   — {couple.bible_citation} —
                 </span>
               )}
             </div>
           )}
 
-          {/* Monogram */}
+          {/* Clean Roman Monogram */}
           <div className="flex items-center justify-center gap-4 my-6">
-            <span className="font-cormorant text-5xl sm:text-6xl text-[#3F5241] font-light tracking-tight">
+            <span className="font-cormorant text-5xl sm:text-6xl text-[#3F5241] font-normal tracking-wider">
               {couple.bride_name.charAt(0)}
             </span>
-            <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-[#3F5241]/50 to-transparent"></div>
-            <span className="font-cormorant text-5xl sm:text-6xl text-[#3F5241] font-light tracking-tight">
+            <div className="w-px h-10 bg-[#6E836F]/40"></div>
+            <span className="font-cormorant text-5xl sm:text-6xl text-[#3F5241] font-normal tracking-wider">
               {couple.groom_name.charAt(0)}
             </span>
           </div>
 
-          <p className="text-[10px] tracking-[0.35em] uppercase font-semibold text-[#586959]">
-            NUESTRA BODA
+          <p className="text-[10px] tracking-[0.35em] uppercase font-bold text-[#6E836F] mt-2">
+            OUR WEDDING
           </p>
 
           <div className="flex justify-center items-center my-3 opacity-60">
-            <Heart className="w-4 h-4 text-[#6E836F] fill-[#6E836F]" />
+            <Heart className="w-3.5 h-3.5 text-[#6E836F] fill-[#6E836F]" />
           </div>
         </header>
 
-        {/* SECTION 2: COVER PHOTO */}
-        <section className="relative px-5 my-6">
-          <div className="relative rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+        {/* 2. COVER PHOTO INTEGRATED WITH TORN PAPER EDGE */}
+        <section className="relative w-full my-6 overflow-hidden">
+          <div className="relative w-full h-80 sm:h-96">
             <img
               src={config.photos?.cover || '/img/cover.webp'}
               alt={`${couple.bride_name} & ${couple.groom_name}`}
-              className="w-full h-[360px] sm:h-[400px] object-cover object-center"
+              className="w-full h-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10"></div>
-            <div className="absolute bottom-3 left-0 right-0 text-center">
-              <p className="font-cormorant italic text-white/90 text-sm tracking-widest drop-shadow-md">
-                {dayNumber} . {monthName} . {yearNumber}
-              </p>
-            </div>
+            {/* Top subtle fade gradient */}
+            <div className="absolute top-0 inset-x-0 h-12 bg-gradient-to-b from-[#FAF8F5] to-transparent"></div>
+            {/* Bottom torn paper effect */}
+            <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent"></div>
           </div>
         </section>
 
-        {/* SECTION 3: INVITATION TEXT & PARENTS */}
+        {/* 3. INVITATION MESSAGE & PARENTS (CLEAN TYPOGRAPHY, NO HEAVY CARDS) */}
         <section className="px-6 text-center my-8">
-          <p className="font-cormorant uppercase tracking-[0.18em] text-xs text-[#586959] max-w-xs mx-auto leading-relaxed">
-            Con la bendición de Dios y el amor de nuestros padres, los invitamos a celebrar nuestra unión matrimonial
+          <p className="font-cormorant uppercase tracking-[0.2em] text-xs text-[#586959] max-w-xs mx-auto leading-relaxed">
+            Con gran alegría y corazones agradecidos, junto a nuestros padres, los invitamos a celebrar nuestra unión en matrimonio.
           </p>
 
           <div className="watercolor-divider max-w-xs mx-auto my-6">
-            <span className="px-3 text-[#BCA074] text-xs">❦</span>
+            <span className="px-2 text-[#BCA074] text-xs">❦</span>
           </div>
 
-          {/* Parents Grid */}
+          {/* Parents 2-Column Minimalist Typography */}
           <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto text-center my-6">
-            <div className="p-3 bg-white/70 rounded-xl border border-[#E8F0E7] shadow-sm">
-              <h3 className="text-[9px] uppercase tracking-widest font-bold text-[#6E836F] mb-2">
+            <div>
+              <h3 className="text-[9px] uppercase tracking-widest font-bold text-[#6E836F] mb-1.5">
                 Padres de la Novia
               </h3>
-              <p className="font-cormorant font-medium text-sm text-[#3F5241] leading-snug">
+              <p className="font-cormorant font-medium text-xs text-[#3F5241] leading-snug">
                 {config.parents?.brideFather || 'Padre de la Novia'}
               </p>
-              <p className="font-cormorant font-medium text-sm text-[#3F5241] leading-snug">
+              <p className="font-cormorant font-medium text-xs text-[#3F5241] leading-snug">
                 {config.parents?.brideMother || 'Madre de la Novia'}
               </p>
             </div>
 
-            <div className="p-3 bg-white/70 rounded-xl border border-[#E8F0E7] shadow-sm">
-              <h3 className="text-[9px] uppercase tracking-widest font-bold text-[#6E836F] mb-2">
+            <div>
+              <h3 className="text-[9px] uppercase tracking-widest font-bold text-[#6E836F] mb-1.5">
                 Padres del Novio
               </h3>
-              <p className="font-cormorant font-medium text-sm text-[#3F5241] leading-snug">
+              <p className="font-cormorant font-medium text-xs text-[#3F5241] leading-snug">
                 {config.parents?.groomFather || 'Padre del Novio'}
               </p>
-              <p className="font-cormorant font-medium text-sm text-[#3F5241] leading-snug">
+              <p className="font-cormorant font-medium text-xs text-[#3F5241] leading-snug">
                 {config.parents?.groomMother || 'Madre del Novio'}
               </p>
             </div>
           </div>
         </section>
 
-        {/* SECTION 4: COUPLE NAMES */}
-        <section className="text-center px-4 my-8 relative">
+        {/* 4. COUPLE NAMES (CALLIGRAPHY SCRIPT) */}
+        <section className="text-center px-4 my-10 relative">
           <div className="py-2">
-            <h1 className="font-script text-6xl sm:text-7xl text-[#3F5241] tracking-wide leading-tight">
+            <h1 className="font-script text-6xl sm:text-7xl text-[#3F5241] tracking-wide leading-none">
               {couple.bride_name.split(' ')[0]}
             </h1>
-            <div className="font-cormorant italic text-2xl text-[#BCA074] my-1 font-light">&</div>
-            <h1 className="font-script text-6xl sm:text-7xl text-[#3F5241] tracking-wide leading-tight">
+            <div className="font-cormorant italic text-2xl text-[#BCA074] my-2 font-light">&</div>
+            <h1 className="font-script text-6xl sm:text-7xl text-[#3F5241] tracking-wide leading-none">
               {couple.groom_name.split(' ')[0]}
             </h1>
           </div>
 
-          <p className="text-[10px] tracking-[0.25em] uppercase font-medium text-[#7E8E7F] mt-5">
+          <p className="text-[10px] tracking-[0.28em] uppercase font-bold text-[#7E8E7F] mt-6">
             TENEMOS EL HONOR DE INVITARLE A NUESTRA BODA
           </p>
         </section>
 
-        {/* SECTION 5: DATE & COUNTDOWN */}
-        <section className="px-6 my-10">
-          <div className="card-elegant p-6 text-center max-w-sm mx-auto bg-gradient-to-b from-white to-[#F9F7F2]">
-            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#6E836F] mb-3">
+        {/* 5. MINIMALIST CALENDAR & LIVE COUNTDOWN */}
+        <section className="px-6 my-10 text-center">
+          <div className="max-w-xs mx-auto">
+            <p className="text-[11px] font-bold tracking-[0.35em] uppercase text-[#6E836F] mb-3">
               {monthName}
             </p>
 
-            <div className="flex items-center justify-center gap-6 my-2">
-              <span className="text-xs uppercase tracking-widest font-semibold text-[#586959]">
+            <div className="flex items-center justify-center gap-4 py-2 border-y border-[#6E836F]/25">
+              <span className="text-xs uppercase tracking-widest font-semibold text-[#586959] w-24 text-right">
                 {dayName}
               </span>
-              <span className="font-cormorant font-bold text-5xl sm:text-6xl text-[#3F5241] leading-none">
+              <span className="font-cormorant font-bold text-5xl text-[#3F5241] leading-none px-2">
                 {dayNumber}
               </span>
-              <span className="text-xs uppercase tracking-widest font-semibold text-[#586959]">
+              <span className="text-xs uppercase tracking-widest font-semibold text-[#586959] w-24 text-left">
                 {yearNumber}
               </span>
             </div>
 
-            <p className="text-xs font-cormorant italic text-[#6E836F] mt-2">
-              {eventDateObj.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' })} • {couple.ceremony_address?.split(',')[1] || 'Culiacán Rosales, Sinaloa'}
+            <p className="text-xs font-cormorant italic text-[#6E836F] mt-3">
+              {eventDateObj.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' })} • Culiacán Rosales, Sinaloa
             </p>
 
-            <div className="watercolor-divider my-5">
-              <span className="px-3 text-[#BCA074] text-xs">❖</span>
-            </div>
-
-            {/* Countdown Clock */}
-            <p className="text-[10px] tracking-widest uppercase font-bold text-[#7E8E7F] mb-3">
-              TIEMPO RESTANTE PARA EL GRAN DÍA
-            </p>
-
-            <div className="grid grid-cols-4 gap-2 text-center pt-1">
-              <div className="bg-[#E8F0E7]/80 p-2.5 rounded-xl border border-[#9FB99E]/30">
-                <span className="font-cormorant font-bold text-2xl text-[#3F5241] block">
+            {/* Countdown timer */}
+            <div className="grid grid-cols-4 gap-2 pt-6 text-center">
+              <div className="bg-[#E8F0E7]/60 py-2 px-1 rounded-xl border border-[#9FB99E]/25">
+                <span className="font-cormorant font-bold text-xl text-[#3F5241] block leading-none">
                   {timeLeft.days}
                 </span>
-                <span className="text-[9px] uppercase tracking-wider text-[#586959] font-medium">
+                <span className="text-[8px] uppercase tracking-wider text-[#586959] font-semibold">
                   Días
                 </span>
               </div>
-              <div className="bg-[#E8F0E7]/80 p-2.5 rounded-xl border border-[#9FB99E]/30">
-                <span className="font-cormorant font-bold text-2xl text-[#3F5241] block">
+              <div className="bg-[#E8F0E7]/60 py-2 px-1 rounded-xl border border-[#9FB99E]/25">
+                <span className="font-cormorant font-bold text-xl text-[#3F5241] block leading-none">
                   {String(timeLeft.hours).padStart(2, '0')}
                 </span>
-                <span className="text-[9px] uppercase tracking-wider text-[#586959] font-medium">
+                <span className="text-[8px] uppercase tracking-wider text-[#586959] font-semibold">
                   Horas
                 </span>
               </div>
-              <div className="bg-[#E8F0E7]/80 p-2.5 rounded-xl border border-[#9FB99E]/30">
-                <span className="font-cormorant font-bold text-2xl text-[#3F5241] block">
+              <div className="bg-[#E8F0E7]/60 py-2 px-1 rounded-xl border border-[#9FB99E]/25">
+                <span className="font-cormorant font-bold text-xl text-[#3F5241] block leading-none">
                   {String(timeLeft.minutes).padStart(2, '0')}
                 </span>
-                <span className="text-[9px] uppercase tracking-wider text-[#586959] font-medium">
+                <span className="text-[8px] uppercase tracking-wider text-[#586959] font-semibold">
                   Min
                 </span>
               </div>
-              <div className="bg-[#E8F0E7]/80 p-2.5 rounded-xl border border-[#9FB99E]/30">
-                <span className="font-cormorant font-bold text-2xl text-[#3F5241] block">
+              <div className="bg-[#E8F0E7]/60 py-2 px-1 rounded-xl border border-[#9FB99E]/25">
+                <span className="font-cormorant font-bold text-xl text-[#3F5241] block leading-none">
                   {String(timeLeft.seconds).padStart(2, '0')}
                 </span>
-                <span className="text-[9px] uppercase tracking-wider text-[#586959] font-medium">
+                <span className="text-[8px] uppercase tracking-wider text-[#586959] font-semibold">
                   Seg
                 </span>
               </div>
@@ -349,21 +367,17 @@ export default function InvitationPage({
           </div>
         </section>
 
-        {/* SECTION 6: LOCATIONS */}
-        <section className="px-6 my-10 space-y-6">
+        {/* 6. CEREMONY & RECEPTION (MINIMALIST CLEAN TYPOGRAPHY) */}
+        <section className="px-6 my-12 text-center space-y-8">
           {/* Ceremony */}
-          <div className="card-elegant p-6 text-center max-w-sm mx-auto">
-            <div className="w-12 h-12 rounded-full bg-[#E8F0E7] flex items-center justify-center mx-auto mb-3 text-[#3F5241]">
-              <Church className="w-6 h-6" />
-            </div>
-
+          <div className="max-w-xs mx-auto">
             <span className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#BCA074] block mb-1">
               2:30 PM
             </span>
-            <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
+            <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-1 uppercase tracking-wider">
               Ceremonia Religiosa
             </h3>
-            <p className="font-sans text-xs text-[#586959] leading-relaxed mb-4 px-2">
+            <p className="text-xs text-[#586959] leading-relaxed mb-4 px-2">
               {couple.ceremony_address}
             </p>
 
@@ -372,7 +386,7 @@ export default function InvitationPage({
                 href={couple.ceremony_maps_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-outline-sage"
+                className="btn-primary-sage"
               >
                 <MapPin className="w-3.5 h-3.5" />
                 VER UBICACIÓN
@@ -380,19 +394,19 @@ export default function InvitationPage({
             )}
           </div>
 
-          {/* Reception */}
-          <div className="card-elegant p-6 text-center max-w-sm mx-auto">
-            <div className="w-12 h-12 rounded-full bg-[#E8F0E7] flex items-center justify-center mx-auto mb-3 text-[#3F5241]">
-              <Wine className="w-6 h-6" />
-            </div>
+          <div className="watercolor-divider max-w-xs mx-auto">
+            <span className="px-2 text-[#BCA074] text-xs">❦</span>
+          </div>
 
+          {/* Reception */}
+          <div className="max-w-xs mx-auto">
             <span className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#BCA074] block mb-1">
               {couple.reception_time || '5:00 PM'}
             </span>
-            <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
+            <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-1 uppercase tracking-wider">
               Recepción
             </h3>
-            <p className="font-sans text-xs text-[#586959] leading-relaxed mb-4 px-2">
+            <p className="text-xs text-[#586959] leading-relaxed mb-4 px-2">
               {couple.reception_address}
             </p>
 
@@ -401,7 +415,7 @@ export default function InvitationPage({
                 href={couple.reception_maps_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-outline-sage"
+                className="btn-primary-sage"
               >
                 <MapPin className="w-3.5 h-3.5" />
                 VER UBICACIÓN
@@ -410,121 +424,114 @@ export default function InvitationPage({
           </div>
         </section>
 
-        {/* SECTION 7: ITINERARY */}
-        <section className="my-12 px-5">
-          <div className="rounded-3xl p-6 sm:p-8 bg-sage-wash border border-[#9FB99E]/40 shadow-lg relative overflow-hidden">
+        {/* 7. ITINERARY WITH SOFT WATERCOLOR SAGE WASH */}
+        <section className="my-14 relative">
+          <div className="bg-sage-wash py-12 px-8 border-y border-[#9FB99E]/30 relative">
             <div className="text-center mb-8">
               <p className="text-[10px] tracking-[0.3em] uppercase font-bold text-[#3F5241] mb-1">
-                CRONOGRAMA
+                ITINERARY OF ACTIVITIES
               </p>
               <h2 className="font-cormorant text-3xl font-bold text-[#3F5241]">
-                Itinerario del Evento
+                Cronograma
               </h2>
             </div>
 
-            <div className="relative pl-12 space-y-6">
+            <div className="relative pl-12 space-y-6 max-w-xs mx-auto">
               <div className="timeline-line"></div>
 
               <div className="relative flex items-center">
-                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border-2 border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
+                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
                   ⛪
                 </div>
-                <div className="pl-1">
-                  <span className="text-[11px] font-bold tracking-wider text-[#3F5241] block">2:30 PM</span>
-                  <h4 className="font-cormorant font-bold text-lg text-[#3F5241] leading-tight">Ceremonia Religiosa</h4>
-                  <p className="text-[11px] text-[#586959]">Unión sagrada ante Dios</p>
+                <div className="pl-2">
+                  <span className="text-[11px] font-bold text-[#3F5241] block">2:30 PM</span>
+                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Ceremonia Religiosa</h4>
                 </div>
               </div>
 
               <div className="relative flex items-center">
-                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border-2 border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
+                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
                   🍸
                 </div>
-                <div className="pl-1">
-                  <span className="text-[11px] font-bold tracking-wider text-[#3F5241] block">5:00 PM</span>
-                  <h4 className="font-cormorant font-bold text-lg text-[#3F5241] leading-tight">Recepción & Bienvenida</h4>
-                  <p className="text-[11px] text-[#586959]">Llegada al salón y cóctel</p>
+                <div className="pl-2">
+                  <span className="text-[11px] font-bold text-[#3F5241] block">5:00 PM</span>
+                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Recepción & Bienvenida</h4>
                 </div>
               </div>
 
               <div className="relative flex items-center">
-                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border-2 border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
+                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
                   ✨
                 </div>
-                <div className="pl-1">
-                  <span className="text-[11px] font-bold tracking-wider text-[#3F5241] block">6:30 PM</span>
-                  <h4 className="font-cormorant font-bold text-lg text-[#3F5241] leading-tight">Entrada de los Novios</h4>
-                  <p className="text-[11px] text-[#586959]">Gran bienvenida a los recién casados</p>
+                <div className="pl-2">
+                  <span className="text-[11px] font-bold text-[#3F5241] block">6:30 PM</span>
+                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Entrada de los Novios</h4>
                 </div>
               </div>
 
               <div className="relative flex items-center">
-                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border-2 border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
+                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
                   🍽️
                 </div>
-                <div className="pl-1">
-                  <span className="text-[11px] font-bold tracking-wider text-[#3F5241] block">7:30 PM</span>
-                  <h4 className="font-cormorant font-bold text-lg text-[#3F5241] leading-tight">Banquete & Brindis</h4>
-                  <p className="text-[11px] text-[#586959]">Cena en honor a la pareja</p>
+                <div className="pl-2">
+                  <span className="text-[11px] font-bold text-[#3F5241] block">7:30 PM</span>
+                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Banquete & Brindis</h4>
                 </div>
               </div>
 
               <div className="relative flex items-center">
-                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border-2 border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
+                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
                   🪩
                 </div>
-                <div className="pl-1">
-                  <span className="text-[11px] font-bold tracking-wider text-[#3F5241] block">8:30 PM</span>
-                  <h4 className="font-cormorant font-bold text-lg text-[#3F5241] leading-tight">Fiesta & Baile</h4>
-                  <p className="text-[11px] text-[#586959]">Celebración en la pista</p>
+                <div className="pl-2">
+                  <span className="text-[11px] font-bold text-[#3F5241] block">8:30 PM</span>
+                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Fiesta & Baile</h4>
                 </div>
               </div>
 
               <div className="relative flex items-center">
-                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border-2 border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
+                <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
                   💫
                 </div>
-                <div className="pl-1">
-                  <span className="text-[11px] font-bold tracking-wider text-[#3F5241] block">2:00 AM</span>
-                  <h4 className="font-cormorant font-bold text-lg text-[#3F5241] leading-tight">Despedida</h4>
-                  <p className="text-[11px] text-[#586959]">Agradecimiento y cierre</p>
+                <div className="pl-2">
+                  <span className="text-[11px] font-bold text-[#3F5241] block">2:00 AM</span>
+                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Despedida</h4>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* SECTION 8: RESERVED SEATS & PASS */}
+        {/* 8. RESERVED SEATS (MINIMALIST LIKE REFERENCE) */}
         <section className="px-6 my-10 text-center">
-          <div className="card-elegant p-6 max-w-sm mx-auto border-2 border-[#9FB99E]/40 bg-white">
-            <div className="w-10 h-10 mx-auto rounded-full bg-[#EFE4D2] flex items-center justify-center text-[#BCA074] mb-3">
-              <Ticket className="w-5 h-5" />
+          <div className="max-w-xs mx-auto">
+            <div className="w-8 h-8 mx-auto mb-2 text-[#6E836F] flex items-center justify-center">
+              <Ticket className="w-6 h-6" />
             </div>
 
             <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#7E8E7F] mb-1">
-              PASE DIGITAL
+              RESERVED SEATS FOR YOU
             </p>
-            <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-1">
+
+            <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
               {group.group_name}
             </h3>
 
-            <div className="inline-block bg-[#E8F0E7] px-4 py-1.5 rounded-full my-3 border border-[#9FB99E]/30">
-              <span className="text-xs font-semibold text-[#3F5241] tracking-wide">
-                {reservedSeats} {reservedSeats === 1 ? 'Lugar Reservado' : 'Lugares Reservados'}
+            <div className="inline-flex items-center justify-center px-4 py-1 rounded-md border border-[#9FB99E]/50 bg-white mb-4">
+              <span className="font-cormorant font-bold text-base text-[#3F5241] mr-1.5">{reservedSeats}</span>
+              <span className="text-[10px] uppercase tracking-widest font-semibold text-[#586959]">
+                {reservedSeats === 1 ? 'Lugar' : 'Lugares'}
               </span>
             </div>
 
-            <p className="text-xs text-[#586959] mb-5 px-4">
-              Para ingresar al evento, presenta tu pase virtual con código QR personalizado.
-            </p>
-
-            <Link
-              href={`/${coupleSlug}/view_pass/${uuid}`}
-              className="btn-primary-sage w-full max-w-xs"
-            >
-              <Ticket className="w-4 h-4" />
-              VER MI PASE VIRTUAL
-            </Link>
+            <div>
+              <Link
+                href={`/${coupleSlug}/view_pass/${uuid}`}
+                className="btn-primary-sage text-xs"
+              >
+                VER PASE VIRTUAL
+              </Link>
+            </div>
 
             {/* Special Links for Guards / Couple */}
             {group.is_guard && (
@@ -546,59 +553,37 @@ export default function InvitationPage({
           </div>
         </section>
 
-        {/* SECTION 9: DRESS CODE */}
+        <div className="watercolor-divider max-w-xs mx-auto my-8">
+          <span className="px-2 text-[#BCA074] text-xs">❦</span>
+        </div>
+
+        {/* 9. GIFT REGISTRY & TRANSFERS */}
         <section className="px-6 my-10 text-center">
-          <div className="card-elegant p-6 max-w-sm mx-auto">
-            <div className="w-12 h-12 rounded-full bg-[#FAF5ED] border border-[#BCA074]/30 flex items-center justify-center mx-auto mb-3">
-              <img src="/img/dresscode.svg" alt="Dress Code" className="w-6 h-6 object-contain opacity-80" />
-            </div>
-
-            <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#BCA074] mb-1">
-              DRESS CODE
-            </p>
-            <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
-              {config.dressCode?.type || 'Formal'}
-            </h3>
-            <p className="text-xs text-[#586959] leading-relaxed max-w-xs mx-auto">
-              {config.dressCode?.description || 'Agradecemos a todos nuestros invitados vestir con atuendo formal.'}
-            </p>
-
-            {config.dressCode?.restrictedColors && (
-              <div className="mt-4 p-3 bg-[#E8F0E7]/60 rounded-xl border border-[#9FB99E]/30 text-xs text-[#3F5241]">
-                <span className="font-semibold block mb-0.5">Nota importante:</span>
-                {config.dressCode.restrictedColors}
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* SECTION 10: GIFT REGISTRY & TRANSFERS */}
-        <section className="px-6 my-10 text-center">
-          <div className="card-elegant p-6 max-w-sm mx-auto">
-            <div className="w-12 h-12 rounded-full bg-[#E8F0E7] flex items-center justify-center mx-auto mb-3 text-[#3F5241]">
+          <div className="max-w-xs mx-auto">
+            <div className="w-8 h-8 mx-auto mb-2 text-[#6E836F] flex items-center justify-center">
               <Gift className="w-6 h-6" />
             </div>
 
             <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#BCA074] mb-1">
-              SUGERENCIA DE REGALOS
+              GIFT SUGGESTION
             </p>
             <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
               Mesa de Regalos
             </h3>
-            <p className="text-xs text-[#586959] leading-relaxed mb-6">
-              Su presencia es nuestro mejor regalo. Si desean hacernos un presente, ponemos a su disposición las siguientes opciones:
+            <p className="text-xs text-[#586959] leading-relaxed mb-5">
+              Su presencia es nuestro mayor regalo. Si desean tener un detalle con nosotros:
             </p>
 
             {/* Registry Buttons */}
             {config.registryLinks && config.registryLinks.length > 0 && (
-              <div className="space-y-3 mb-6">
+              <div className="space-y-2.5 mb-5">
                 {config.registryLinks.map((link, idx) => (
                   <a
                     key={idx}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-outline-sage w-full py-3"
+                    className="btn-outline-sage w-full py-2.5"
                   >
                     🎁 {link.title}
                   </a>
@@ -606,119 +591,65 @@ export default function InvitationPage({
               </div>
             )}
 
-            {/* Bank Accounts */}
+            {/* Bank Accounts with 1-Click Copy */}
             {config.bankAccounts && config.bankAccounts.length > 0 && (
-              <>
-                <div className="watercolor-divider my-5">
-                  <span className="px-3 text-[#BCA074] text-xs">O TRANSFERENCIA BANCARIA</span>
-                </div>
-
-                <div className="space-y-3 text-left">
-                  {config.bankAccounts.map((account, idx) => (
-                    <div
-                      key={idx}
-                      className="p-3.5 bg-[#FBF9F5] rounded-xl border border-[#9FB99E]/30 flex items-center justify-between"
-                    >
-                      <div>
-                        <span className="text-[10px] uppercase font-bold text-[#6E836F] block">
-                          {account.bank} • {account.holder}
-                        </span>
-                        <span className="font-mono text-xs font-bold text-[#3F5241] tracking-wider select-all">
-                          {account.accountNumber}
-                        </span>
-                      </div>
-                      <button
-                        onClick={() => handleCopy(account.accountNumber)}
-                        className={`px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider rounded-lg border transition ${
-                          copiedAccount === account.accountNumber
-                            ? 'bg-[#3F5241] text-white border-[#3F5241]'
-                            : 'bg-white border-[#9FB99E] text-[#3F5241] hover:bg-[#3F5241] hover:text-white'
-                        }`}
-                      >
-                        {copiedAccount === account.accountNumber ? '¡Copiado!' : 'Copiar'}
-                      </button>
+              <div className="space-y-2 text-left pt-2">
+                {config.bankAccounts.map((account, idx) => (
+                  <div
+                    key={idx}
+                    className="p-3 bg-white rounded-xl border border-[#9FB99E]/30 flex items-center justify-between shadow-xs"
+                  >
+                    <div>
+                      <span className="text-[9px] uppercase font-bold text-[#6E836F] block">
+                        {account.bank} • {account.holder}
+                      </span>
+                      <span className="font-mono text-xs font-bold text-[#3F5241] tracking-wider select-all">
+                        {account.accountNumber}
+                      </span>
                     </div>
-                  ))}
-                </div>
-              </>
+                    <button
+                      onClick={() => handleCopy(account.accountNumber)}
+                      className={`px-2 py-1 text-[9px] font-semibold uppercase tracking-wider rounded-md border transition ${
+                        copiedAccount === account.accountNumber
+                          ? 'bg-[#3F5241] text-white border-[#3F5241]'
+                          : 'bg-[#FAF8F5] border-[#9FB99E] text-[#3F5241] hover:bg-[#3F5241] hover:text-white'
+                      }`}
+                    >
+                      {copiedAccount === account.accountNumber ? '¡Copiado!' : 'Copiar'}
+                    </button>
+                  </div>
+                ))}
+              </div>
             )}
 
-            {/* Envelopes Notice */}
-            <div className="mt-6 p-4 bg-[#FAF5ED] rounded-xl border border-[#BCA074]/30">
-              <div className="flex items-center justify-center gap-2 mb-1 text-[#BCA074] font-semibold text-xs">
-                <span>✉️</span>
-                <span>Lluvia de Sobres</span>
-              </div>
-              <p className="text-[11px] text-[#586959]">
-                También contaremos con un buzón para sobres el día del evento.
-              </p>
-            </div>
+            {/* Envelope note */}
+            <p className="text-[11px] text-[#7E8E7F] mt-4 italic">
+              ✉️ También contaremos con buzón para lluvia de sobres en el salón.
+            </p>
           </div>
         </section>
 
-        {/* SECTION 11: ADULTS ONLY */}
-        {config.adultsOnly && (
-          <section className="px-6 my-10 text-center">
-            <div className="card-elegant p-6 max-w-sm mx-auto bg-gradient-to-b from-white to-[#E8F0E7]/30">
-              <div className="w-10 h-10 rounded-full bg-[#E8F0E7] flex items-center justify-center mx-auto mb-3 text-[#3F5241] text-lg">
-                ✨
-              </div>
+        <div className="watercolor-divider max-w-xs mx-auto my-8">
+          <span className="px-2 text-[#BCA074] text-xs">❦</span>
+        </div>
 
-              <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#BCA074] mb-1">
-                EVENTO EXCLUSIVO
-              </p>
-              <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
-                Solo Adultos
-              </h3>
-              <p className="text-xs text-[#586959] leading-relaxed px-2">
-                {config.adultsOnlyMessage ||
-                  'Amamos a sus pequeños, pero para que todos podamos disfrutar plenamente de esta celebración, nuestra boda será un evento exclusivamente para adultos.'}
-              </p>
-            </div>
-          </section>
-        )}
-
-        {/* SECTION 12: PHOTO GALLERY */}
-        <section className="px-6 my-12 text-center">
-          <p className="text-[10px] tracking-[0.3em] uppercase font-bold text-[#6E836F] mb-1">
-            NUESTROS MOMENTOS
-          </p>
-          <h3 className="font-cormorant text-3xl font-bold text-[#3F5241] mb-6">
-            Galería de Fotos
-          </h3>
-
-          <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
-            {(config.photos?.album || ['/img/album-1.webp', '/img/album-2.webp', '/img/album-3.webp', '/img/album-4.webp']).map(
-              (imgSrc, idx) => (
-                <div key={idx} className="rounded-xl overflow-hidden shadow-md border-2 border-white">
-                  <img
-                    src={imgSrc}
-                    alt={`Recuerdo ${idx + 1}`}
-                    className="w-full h-36 object-cover hover:scale-105 transition duration-300"
-                  />
-                </div>
-              )
-            )}
-          </div>
-        </section>
-
-        {/* SECTION 13: RSVP CONFIRMATION */}
-        <section className="px-6 my-12 text-center">
-          <div className="card-elegant p-7 max-w-sm mx-auto border-2 border-[#6E836F]/40 bg-gradient-to-b from-white to-[#F7F9F6]">
-            <div className="w-12 h-12 rounded-full bg-[#3F5241] text-white flex items-center justify-center mx-auto mb-4 shadow-md">
-              <Heart className="w-5 h-5 fill-white" />
+        {/* 10. RSVP CONFIRMATION SECTION */}
+        <section className="px-6 my-10 text-center">
+          <div className="max-w-xs mx-auto">
+            <div className="w-8 h-8 mx-auto mb-2 text-[#6E836F] flex items-center justify-center">
+              <Heart className="w-6 h-6 fill-[#6E836F]" />
             </div>
 
             <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#BCA074] mb-1">
-              CONFIRMACIÓN
+              CONFIRMATION
             </p>
-            <h3 className="font-cormorant text-3xl font-bold text-[#3F5241] mb-2">
-              ¿Nos acompañas?
+            <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
+              Confirmación de Asistencia
             </h3>
 
-            <p className="text-xs text-[#586959] leading-relaxed mb-6">
-              Agradecemos confirmar su asistencia a más tardar el:<br />
-              <strong className="font-bold text-[#3F5241] text-sm block mt-1">
+            <p className="text-xs text-[#586959] leading-relaxed mb-4">
+              Agradecemos confirmar antes del:<br />
+              <strong className="font-bold text-[#3F5241] text-xs block mt-1">
                 {couple.rsvp_deadline
                   ? new Date(couple.rsvp_deadline).toLocaleDateString('es-MX', {
                       day: 'numeric',
@@ -731,40 +662,34 @@ export default function InvitationPage({
 
             <Link
               href={`/${coupleSlug}/${uuid}/confirm`}
-              className="btn-primary-sage w-full py-3.5 text-sm"
+              className="btn-primary-sage py-3 px-6 text-xs shadow-md"
             >
               CONFIRMAR ASISTENCIA
             </Link>
 
             {/* Contacts */}
             {config.contacts && (
-              <div className="mt-8 pt-6 border-t border-[#9FB99E]/30 text-xs text-[#586959]">
-                <span className="text-[10px] uppercase font-bold text-[#6E836F] tracking-widest block mb-2">
-                  CONTACTOS PARA DUDAS
-                </span>
-                <div className="flex justify-center gap-6 mt-1">
+              <div className="mt-6 pt-4 border-t border-[#9FB99E]/25 text-xs text-[#586959]">
+                <div className="flex justify-center gap-6">
                   {config.contacts.groom && (
                     <div>
-                      <span className="font-semibold text-[#3F5241] block">
+                      <span className="font-semibold text-[#3F5241] block text-[11px]">
                         {config.contacts.groom.name}
                       </span>
-                      <a href={`tel:${config.contacts.groom.phone}`} className="text-[#7E8E7F] hover:text-[#6E836F] transition">
+                      <a href={`tel:${config.contacts.groom.phone}`} className="text-[10px] text-[#7E8E7F] hover:text-[#6E836F]">
                         {config.contacts.groom.phone}
                       </a>
                     </div>
                   )}
                   {config.contacts.bride && (
-                    <>
-                      <div className="w-[1px] h-8 bg-[#9FB99E]/50"></div>
-                      <div>
-                        <span className="font-semibold text-[#3F5241] block">
-                          {config.contacts.bride.name}
-                        </span>
-                        <a href={`tel:${config.contacts.bride.phone}`} className="text-[#7E8E7F] hover:text-[#6E836F] transition">
-                          {config.contacts.bride.phone}
-                        </a>
-                      </div>
-                    </>
+                    <div>
+                      <span className="font-semibold text-[#3F5241] block text-[11px]">
+                        {config.contacts.bride.name}
+                      </span>
+                      <a href={`tel:${config.contacts.bride.phone}`} className="text-[10px] text-[#7E8E7F] hover:text-[#6E836F]">
+                        {config.contacts.bride.phone}
+                      </a>
+                    </div>
                   )}
                 </div>
               </div>
@@ -772,19 +697,111 @@ export default function InvitationPage({
           </div>
         </section>
 
-        {/* SECTION 14: FOOTER */}
-        <footer className="text-center pt-8 px-6 pb-12 relative">
-          <div className="max-w-xs mx-auto mb-6">
-            <p className="font-script text-4xl sm:text-5xl text-[#3F5241] mb-2">
-              ¡Esperamos verte pronto!
-            </p>
-            <p className="font-cormorant italic text-sm text-[#586959]">
-              {couple.bride_name.split(' ')[0]} & {couple.groom_name.split(' ')[0]}
-            </p>
-          </div>
+        <div className="watercolor-divider max-w-xs mx-auto my-8">
+          <span className="px-2 text-[#BCA074] text-xs">❦</span>
+        </div>
 
-          <div className="w-full rounded-2xl overflow-hidden shadow-lg border-2 border-white max-w-sm mx-auto mb-6">
-            <img src={config.photos?.end || '/img/end.webp'} alt="Foto Final" className="w-full h-48 object-cover" />
+        {/* 11. ADULTS ONLY (CLEAN TYPOGRAPHY) */}
+        {config.adultsOnly && (
+          <section className="px-6 my-10 text-center">
+            <div className="max-w-xs mx-auto">
+              <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#BCA074] mb-1">
+                ADULTS ONLY, PLEASE
+              </p>
+              <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
+                Solo Adultos
+              </h3>
+              <p className="text-xs text-[#586959] leading-relaxed">
+                {config.adultsOnlyMessage ||
+                  'Esperamos comprendan que nuestro día especial será una celebración exclusivamente para adultos.'}
+              </p>
+            </div>
+          </section>
+        )}
+
+        {/* 12. SWIPEABLE PHOTO CAROUSEL WITH FULLSCREEN MODAL */}
+        <section className="my-12 px-6 text-center">
+          <p className="text-[10px] tracking-[0.3em] uppercase font-bold text-[#6E836F] mb-1">
+            NUESTROS MOMENTOS
+          </p>
+          <h3 className="font-cormorant text-3xl font-bold text-[#3F5241] mb-4">
+            Galería de Fotos
+          </h3>
+
+          <div
+            className="relative max-w-xs mx-auto rounded-2xl overflow-hidden shadow-lg border-2 border-white bg-black/5"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={() => handleTouchEnd(albumPhotos.length)}
+          >
+            <div
+              className="cursor-pointer relative group"
+              onClick={() => setModalPhoto(albumPhotos[activePhotoIndex])}
+            >
+              <img
+                src={albumPhotos[activePhotoIndex]}
+                alt={`Momento ${activePhotoIndex + 1}`}
+                className="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-102"
+              />
+              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                <Maximize2 className="w-8 h-8 drop-shadow-md" />
+              </div>
+            </div>
+
+            {/* Left/Right Carousel Controls */}
+            {albumPhotos.length > 1 && (
+              <>
+                <button
+                  onClick={() => setActivePhotoIndex((prev) => (prev - 1 + albumPhotos.length) % albumPhotos.length)}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/85 text-[#3F5241] flex items-center justify-center shadow-md hover:bg-white transition"
+                  aria-label="Foto anterior"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setActivePhotoIndex((prev) => (prev + 1) % albumPhotos.length)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/85 text-[#3F5241] flex items-center justify-center shadow-md hover:bg-white transition"
+                  aria-label="Siguiente foto"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </>
+            )}
+
+            {/* Carousel Dots */}
+            <div className="absolute bottom-2.5 inset-x-0 flex justify-center gap-1.5 z-10">
+              {albumPhotos.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActivePhotoIndex(idx)}
+                  className={`h-1.5 rounded-full transition-all ${
+                    idx === activePhotoIndex ? 'w-5 bg-white shadow' : 'w-1.5 bg-white/60'
+                  }`}
+                  aria-label={`Ir a foto ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+          <p className="text-[10px] text-[#7E8E7F] mt-2">
+            Desliza para ver más • Toca para ampliar
+          </p>
+        </section>
+
+        {/* 13. CLOSING PHOTO & BLESSING */}
+        <footer className="text-center pt-8 px-6 pb-6 relative">
+          <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#7E8E7F] mb-1">
+            WE LOOK FORWARD TO CELEBRATING WITH YOU
+          </p>
+          <p className="font-script text-4xl sm:text-5xl text-[#3F5241] mb-6">
+            ¡Te esperamos!
+          </p>
+
+          <div className="w-full rounded-2xl overflow-hidden shadow-xl border-2 border-white max-w-xs mx-auto mb-6">
+            <img
+              src={config.photos?.end || '/img/end.webp'}
+              alt="Foto Final"
+              className="w-full h-56 object-cover"
+            />
           </div>
 
           <div className="max-w-xs mx-auto text-center">
@@ -804,18 +821,43 @@ export default function InvitationPage({
             className={`music-float-btn ${isPlaying ? '' : 'music-pulse'}`}
             aria-label="Reproducir música de fondo"
           >
-            {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
           </button>
         )}
 
-        {/* CLIPBOARD COPIED TOAST */}
+        {/* CLIPBOARD TOAST */}
         <div
-          className={`fixed bottom-24 left-1/2 -translate-x-1/2 bg-[#3F5241] text-white px-4 py-2 rounded-full text-xs font-semibold shadow-xl transition-opacity duration-300 pointer-events-none z-50 ${
+          className={`fixed bottom-20 left-1/2 -translate-x-1/2 bg-[#3F5241] text-white px-4 py-2 rounded-full text-xs font-semibold shadow-xl transition-opacity duration-300 pointer-events-none z-50 ${
             copiedAccount ? 'opacity-100' : 'opacity-0'
           }`}
         >
           ✓ Copiado al portapapeles
         </div>
+
+        {/* FULLSCREEN PHOTO LIGHTBOX MODAL */}
+        {modalPhoto && (
+          <div
+            className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4"
+            onClick={() => setModalPhoto(null)}
+          >
+            <button
+              onClick={() => setModalPhoto(null)}
+              className="absolute top-5 right-5 text-white/80 hover:text-white p-2 rounded-full bg-white/10 transition"
+              aria-label="Cerrar foto"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <div className="relative max-w-2xl max-h-[85vh] w-full flex items-center justify-center">
+              <img
+                src={modalPhoto}
+                alt="Foto ampliada"
+                className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
+          </div>
+        )}
+
       </main>
     </div>
   );
