@@ -1,0 +1,3 @@
+{
+  "/api/[coupleSlug]/table/route": "app/api/[coupleSlug]/table/route.js"
+}

@@ -1,0 +1,3 @@
+{
+  "/api/[coupleSlug]/checkout-list/route": "app/api/[coupleSlug]/checkout-list/route.js"
+}

@@ -1,0 +1,3 @@
+{
+  "/api/[coupleSlug]/arrival/check-password/route": "app/api/[coupleSlug]/arrival/check-password/route.js"
+}

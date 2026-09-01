@@ -3,8 +3,8 @@
         "uuid": "novios-gz",
         "group": "Familia García Zentella",
         "invitado": "",
-        "asistencia": null,
-        "mensaje": "",
+        "asistencia": true,
+        "mensaje": "¡Muchas felicidades a los novios!",
         "novios": true,
         "guardia": true,
         "familia": [
