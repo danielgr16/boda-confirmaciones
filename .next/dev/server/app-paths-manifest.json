@@ -1,6 +1,0 @@
-{
-  "/[coupleSlug]/[uuid]/page": "app/[coupleSlug]/[uuid]/page.js",
-  "/[coupleSlug]/view_pass/[uuid]/page": "app/[coupleSlug]/view_pass/[uuid]/page.js",
-  "/api/[coupleSlug]/invitation/[uuid]/route": "app/api/[coupleSlug]/invitation/[uuid]/route.js",
-  "/page": "app/page.js"
-}
