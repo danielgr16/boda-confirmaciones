@@ -120,33 +120,29 @@ export default function TableDashboardPage({
             <div className="flex gap-1.5 overflow-x-auto pb-1 text-xs">
               <button
                 onClick={() => setFilterStatus('all')}
-                className={`px-3 py-1.5 rounded-full font-semibold transition ${
-                  filterStatus === 'all' ? 'bg-[#3F5241] text-white' : 'bg-gray-100 text-gray-600'
-                }`}
+                className={`px-3 py-1.5 rounded-full font-semibold transition ${filterStatus === 'all' ? 'bg-[#3F5241] text-white' : 'bg-gray-100 text-gray-600'
+                  }`}
               >
                 Todos
               </button>
               <button
                 onClick={() => setFilterStatus('confirmed')}
-                className={`px-3 py-1.5 rounded-full font-semibold transition ${
-                  filterStatus === 'confirmed' ? 'bg-emerald-600 text-white' : 'bg-emerald-50 text-emerald-700'
-                }`}
+                className={`px-3 py-1.5 rounded-full font-semibold transition ${filterStatus === 'confirmed' ? 'bg-emerald-600 text-white' : 'bg-emerald-50 text-emerald-700'
+                  }`}
               >
                 Confirmados
               </button>
               <button
                 onClick={() => setFilterStatus('declined')}
-                className={`px-3 py-1.5 rounded-full font-semibold transition ${
-                  filterStatus === 'declined' ? 'bg-rose-600 text-white' : 'bg-rose-50 text-rose-700'
-                }`}
+                className={`px-3 py-1.5 rounded-full font-semibold transition ${filterStatus === 'declined' ? 'bg-rose-600 text-white' : 'bg-rose-50 text-rose-700'
+                  }`}
               >
                 Rechazados
               </button>
               <button
                 onClick={() => setFilterStatus('pending')}
-                className={`px-3 py-1.5 rounded-full font-semibold transition ${
-                  filterStatus === 'pending' ? 'bg-amber-600 text-white' : 'bg-amber-50 text-amber-700'
-                }`}
+                className={`px-3 py-1.5 rounded-full font-semibold transition ${filterStatus === 'pending' ? 'bg-amber-600 text-white' : 'bg-amber-50 text-amber-700'
+                  }`}
               >
                 Pendientes
               </button>
@@ -206,13 +202,12 @@ export default function TableDashboardPage({
                         <span className="font-medium text-gray-700">{name}</span>
 
                         <span
-                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 ${
-                            status === true
+                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 ${status === true
                               ? 'bg-emerald-100 text-emerald-800'
                               : status === false
-                              ? 'bg-rose-100 text-rose-800'
-                              : 'bg-amber-100 text-amber-800'
-                          }`}
+                                ? 'bg-rose-100 text-rose-800'
+                                : 'bg-amber-100 text-amber-800'
+                            }`}
                         >
                           {status === true ? (
                             <>

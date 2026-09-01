@@ -228,7 +228,7 @@ export default function InvitationPage({
           </div>
 
           <p className="text-[10px] tracking-[0.35em] uppercase font-bold text-[#6E836F] mt-2">
-            OUR WEDDING
+            NUESTRA BODA
           </p>
 
           <div className="flex justify-center items-center my-3 opacity-60">
@@ -240,7 +240,7 @@ export default function InvitationPage({
         <section className="relative w-full my-6 overflow-hidden">
           <div className="relative w-full h-80 sm:h-96">
             <img
-              src={config.photos?.cover || '/img/cover.webp'}
+              src={config.photos?.cover || '/img/silva-arce/IMG_8472.webp'}
               alt={`${couple.bride_name} & ${couple.groom_name}`}
               className="w-full h-full object-cover object-center"
             />
@@ -429,7 +429,7 @@ export default function InvitationPage({
           <div className="bg-sage-wash py-12 px-8 border-y border-[#9FB99E]/30 relative">
             <div className="text-center mb-8">
               <p className="text-[10px] tracking-[0.3em] uppercase font-bold text-[#3F5241] mb-1">
-                ITINERARY OF ACTIVITIES
+                ITINERARIO DE ACTIVIDADES
               </p>
               <h2 className="font-cormorant text-3xl font-bold text-[#3F5241]">
                 Cronograma
@@ -475,7 +475,7 @@ export default function InvitationPage({
                 </div>
                 <div className="pl-2">
                   <span className="text-[11px] font-bold text-[#3F5241] block">7:30 PM</span>
-                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Banquete & Brindis</h4>
+                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Banquete</h4>
                 </div>
               </div>
 
@@ -485,7 +485,7 @@ export default function InvitationPage({
                 </div>
                 <div className="pl-2">
                   <span className="text-[11px] font-bold text-[#3F5241] block">8:30 PM</span>
-                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Fiesta & Baile</h4>
+                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Fiesta</h4>
                 </div>
               </div>
 
@@ -510,7 +510,7 @@ export default function InvitationPage({
             </div>
 
             <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#7E8E7F] mb-1">
-              RESERVED SEATS FOR YOU
+              ASIENTOS RESERVADOS PARA TÍ
             </p>
 
             <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
@@ -565,7 +565,7 @@ export default function InvitationPage({
             </div>
 
             <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#BCA074] mb-1">
-              GIFT SUGGESTION
+              SUGERENCIAS DE REGALOS
             </p>
             <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
               Mesa de Regalos
@@ -641,7 +641,7 @@ export default function InvitationPage({
             </div>
 
             <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#BCA074] mb-1">
-              CONFIRMATION
+              CONFIRMACIÓN
             </p>
             <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
               Confirmación de Asistencia
@@ -706,7 +706,7 @@ export default function InvitationPage({
           <section className="px-6 my-10 text-center">
             <div className="max-w-xs mx-auto">
               <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#BCA074] mb-1">
-                ADULTS ONLY, PLEASE
+                IMPORTANTE
               </p>
               <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-2">
                 Solo Adultos
@@ -790,7 +790,7 @@ export default function InvitationPage({
         {/* 13. CLOSING PHOTO & BLESSING */}
         <footer className="text-center pt-8 px-6 pb-6 relative">
           <p className="text-[10px] tracking-[0.25em] uppercase font-bold text-[#7E8E7F] mb-1">
-            WE LOOK FORWARD TO CELEBRATING WITH YOU
+            ESPERAMOS CELEBRAR CON USTEDES
           </p>
           <p className="font-script text-4xl sm:text-5xl text-[#3F5241] mb-6">
             ¡Te esperamos!

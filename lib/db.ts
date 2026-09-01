@@ -73,14 +73,16 @@ export const DEFAULT_COUPLES: Record<string, Couple> = {
         }
       ],
       photos: {
-        cover: '/img/cover.webp',
+        cover: '/img/silva-arce/IMG_8472.webp',
         album: [
-          '/img/album-1.webp',
-          '/img/album-2.webp',
-          '/img/album-3.webp',
-          '/img/album-4.webp'
+          '/img/silva-arce/IMG_8190.webp',
+          '/img/silva-arce/IMG_8202.webp',
+          '/img/silva-arce/IMG_8216.webp',
+          '/img/silva-arce/IMG_8258.webp',
+          '/img/silva-arce/IMG_8476.webp',
+          '/img/silva-arce/IMG_8477.webp'
         ],
-        end: '/img/end.webp'
+        end: '/img/silva-arce/IMG_8480.webp'
       },
       adultsOnly: true,
       adultsOnlyMessage: 'Amamos a sus pequeños, pero para que todos podamos disfrutar plenamente de esta celebración, nuestra boda será un evento exclusivamente para adultos.'
