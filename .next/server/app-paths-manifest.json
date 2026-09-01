@@ -1,0 +1,17 @@
+{
+  "/[coupleSlug]/[uuid]/confirm/page": "app/[coupleSlug]/[uuid]/confirm/page.js",
+  "/[coupleSlug]/[uuid]/page": "app/[coupleSlug]/[uuid]/page.js",
+  "/[coupleSlug]/arrival/[uuid]/page": "app/[coupleSlug]/arrival/[uuid]/page.js",
+  "/[coupleSlug]/checkout_list/page": "app/[coupleSlug]/checkout_list/page.js",
+  "/[coupleSlug]/table/page": "app/[coupleSlug]/table/page.js",
+  "/[coupleSlug]/view_pass/[uuid]/page": "app/[coupleSlug]/view_pass/[uuid]/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/[coupleSlug]/arrival/check-password/route": "app/api/[coupleSlug]/arrival/check-password/route.js",
+  "/api/[coupleSlug]/arrival/register/route": "app/api/[coupleSlug]/arrival/register/route.js",
+  "/api/[coupleSlug]/checkout-list/route": "app/api/[coupleSlug]/checkout-list/route.js",
+  "/api/[coupleSlug]/confirm/route": "app/api/[coupleSlug]/confirm/route.js",
+  "/api/[coupleSlug]/invitation/[uuid]/route": "app/api/[coupleSlug]/invitation/[uuid]/route.js",
+  "/api/[coupleSlug]/table/route": "app/api/[coupleSlug]/table/route.js",
+  "/page": "app/page.js"
+}
