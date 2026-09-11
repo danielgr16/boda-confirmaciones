@@ -375,8 +375,13 @@ export default function InvitationPage({
               2:30 PM
             </span>
             <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-1 uppercase tracking-wider">
-              Ceremonia Religiosa
+              Ceremonia
             </h3>
+            {couple.ceremony_place && (
+              <p className="font-cormorant text-base font-semibold text-[#3F5241] mb-0.5">
+                {couple.ceremony_place}
+              </p>
+            )}
             <p className="text-xs text-[#586959] leading-relaxed mb-4 px-2">
               {couple.ceremony_address}
             </p>
@@ -406,6 +411,11 @@ export default function InvitationPage({
             <h3 className="font-cormorant text-2xl font-bold text-[#3F5241] mb-1 uppercase tracking-wider">
               Recepción
             </h3>
+            {couple.reception_place && (
+              <p className="font-cormorant text-base font-semibold text-[#3F5241] mb-0.5">
+                {couple.reception_place}
+              </p>
+            )}
             <p className="text-xs text-[#586959] leading-relaxed mb-4 px-2">
               {couple.reception_address}
             </p>

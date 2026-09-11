@@ -28,11 +28,11 @@ async function migrate() {
       const coupleRows = await sql`
         INSERT INTO couples (
           slug, groom_name, bride_name, event_date, reception_time,
-          ceremony_address, reception_address, ceremony_maps_url, reception_maps_url,
+          ceremony_place, ceremony_address, reception_place, reception_address, ceremony_maps_url, reception_maps_url,
           bible_verse, bible_citation, access_password, rsvp_deadline, config
         ) VALUES (
           ${couple.slug}, ${couple.groom_name}, ${couple.bride_name}, ${couple.event_date}, ${couple.reception_time || null},
-          ${couple.ceremony_address || null}, ${couple.reception_address || null}, ${couple.ceremony_maps_url || null}, ${couple.reception_maps_url || null},
+          ${couple.ceremony_place || null}, ${couple.ceremony_address || null}, ${couple.reception_place || null}, ${couple.reception_address || null}, ${couple.ceremony_maps_url || null}, ${couple.reception_maps_url || null},
           ${couple.bible_verse || null}, ${couple.bible_citation || null}, ${couple.access_password || 'boda2026'}, ${couple.rsvp_deadline || null},
           ${JSON.stringify(couple.config)}::jsonb
         )
@@ -41,7 +41,9 @@ async function migrate() {
           bride_name = EXCLUDED.bride_name,
           event_date = EXCLUDED.event_date,
           reception_time = EXCLUDED.reception_time,
+          ceremony_place = EXCLUDED.ceremony_place,
           ceremony_address = EXCLUDED.ceremony_address,
+          reception_place = EXCLUDED.reception_place,
           reception_address = EXCLUDED.reception_address,
           ceremony_maps_url = EXCLUDED.ceremony_maps_url,
           reception_maps_url = EXCLUDED.reception_maps_url,

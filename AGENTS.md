@@ -17,7 +17,7 @@ Sistema multi-pareja (multi-tenant) de invitaciones digitales de boda, confirmac
 ### Tablas Principales (`scripts/init-db.ts`)
 - **`couples`**:
   - `id` (SERIAL PK), `slug` (VARCHAR UNIQUE), `groom_name`, `bride_name`, `event_date` (TIMESTAMPTZ), `reception_time`.
-  - Direcciones y URLs de Google Maps: `ceremony_address`, `reception_address`, `ceremony_maps_url`, `reception_maps_url`.
+  - Lugares, Direcciones y URLs de Google Maps: `ceremony_place`, `ceremony_address`, `reception_place`, `reception_address`, `ceremony_maps_url`, `reception_maps_url`.
   - Cita bíblica: `bible_verse`, `bible_citation`.
   - Seguridad y fechas: `access_password` (default 'boda2026'), `rsvp_deadline` (TIMESTAMPTZ).
   - `config` (JSONB): Paleta de colores (`theme`), fotos (`cover`, `album`, `end`), contactos, padres, código de vestimenta (`dressCode`), música (`musicUrl`), itinerario (`timeline`), cuentas bancarias (`bankAccounts`), mesas de regalo (`registryLinks`), `adultsOnly`, `monogram`.
@@ -84,6 +84,7 @@ La aplicación implementa un sistema híbrido resiliente:
 - `npm run dev`: Inicia el servidor de desarrollo Next.js.
 - `npm run build`: Compila la aplicación para producción.
 - `npm run init-db`: Crea tablas e índices en Neon PostgreSQL (`scripts/init-db.ts`).
+- `npm run migrate:places`: Ejecuta la migración DDL para agregar `ceremony_place` y `reception_place` en la tabla `couples` (`scripts/migrate-add-places.ts`).
 - `npm run migrate-data`: Migra datos de `DEFAULT_COUPLES` y JSONs locales hacia Neon DB (`scripts/migrate-data.ts`).
 
 ---

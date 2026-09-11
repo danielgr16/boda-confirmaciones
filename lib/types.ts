@@ -62,7 +62,9 @@ export interface Couple {
   bride_name: string;
   event_date: string;
   reception_time?: string;
+  ceremony_place?: string;
   ceremony_address?: string;
+  reception_place?: string;
   reception_address?: string;
   ceremony_maps_url?: string;
   reception_maps_url?: string;

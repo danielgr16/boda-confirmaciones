@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "init-db": "tsx scripts/init-db.ts",
-    "migrate-data": "tsx scripts/migrate-data.ts"
+    "migrate-data": "tsx scripts/migrate-data.ts",
+    "migrate:places": "tsx scripts/migrate-add-places.ts"
   },
   "dependencies": {
     "@neon/config": "^1.1.0",
