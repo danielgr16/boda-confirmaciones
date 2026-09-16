@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect, use, useRef } from 'react';
 import Link from 'next/link';
-import { 
-  Play, 
-  Pause, 
-  Copy, 
-  Check, 
-  MapPin, 
-  Gift, 
-  Sparkles, 
+import {
+  Play,
+  Pause,
+  Copy,
+  Check,
+  MapPin,
+  Gift,
+  Sparkles,
   Heart,
   Ticket,
   ChevronLeft,
@@ -192,19 +192,16 @@ export default function InvitationPage({
   return (
     <div className="min-h-screen flex justify-center py-0 sm:py-8 bg-[#E2DDD5] text-[#2C3E2D]">
       <main className="w-full max-w-md bg-[#FAF8F5] min-h-screen shadow-2xl overflow-hidden relative linen-texture pb-20 select-none">
-        
-        {/* Botanical Eucalyptus Top Draped Branches */}
-        <div className="absolute top-0 left-0 w-36 pointer-events-none opacity-80 z-10">
-          <img src="/img/top-left.webp" alt="" className="w-full h-auto object-contain" />
-        </div>
-        <div className="absolute top-0 right-0 w-36 pointer-events-none opacity-80 z-10">
-          <img src="/img/top-right.webp" alt="" className="w-full h-auto object-contain" />
+
+        {/* Watercolor Top Floral Header */}
+        <div className="absolute top-0 left-0 right-0 w-full pointer-events-none z-10">
+          <img src="/img/watercolor_header.webp" alt="" className="w-full h-auto object-contain" />
         </div>
 
         {/* 1. TOP VERSE & MONOGRAM */}
         <header className="pt-16 px-6 text-center relative z-20">
           {couple.bible_verse && (
-            <div className="max-w-xs mx-auto mb-8 px-2">
+            <div className="max-w-xs mt-4 mx-auto mb-8 px-2">
               <p className="font-serif italic text-xs tracking-wider text-[#586959] leading-relaxed uppercase">
                 {couple.bible_verse}
               </p>
@@ -237,60 +234,22 @@ export default function InvitationPage({
         </header>
 
         {/* 2. COVER PHOTO INTEGRATED WITH TORN PAPER EDGE */}
-        <section className="relative w-full my-6 overflow-hidden">
-          <div className="relative w-full h-80 sm:h-96">
+        <section className="relative w-full my-6 mt-[-165px] mb-[-90px] overflow-hidden">
+          <div className="relative w-full">
             <img
               src={config.photos?.cover || '/img/silva-arce/IMG_8472.webp'}
               alt={`${couple.bride_name} & ${couple.groom_name}`}
-              className="w-full h-full object-cover object-center"
+              className="w-full h-auto block"
             />
             {/* Top subtle fade gradient */}
-            <div className="absolute top-0 inset-x-0 h-12 bg-gradient-to-b from-[#FAF8F5] to-transparent"></div>
+            <div className="absolute top-0 inset-x-0 h-24 sm:h-28 bg-gradient-to-b from-[#FAF8F5] via-[#FAF8F5]/70 to-transparent pointer-events-none"></div>
             {/* Bottom torn paper effect */}
-            <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent"></div>
-          </div>
-        </section>
-
-        {/* 3. INVITATION MESSAGE & PARENTS (CLEAN TYPOGRAPHY, NO HEAVY CARDS) */}
-        <section className="px-6 text-center my-8">
-          <p className="font-cormorant uppercase tracking-[0.2em] text-xs text-[#586959] max-w-xs mx-auto leading-relaxed">
-            Con gran alegría y corazones agradecidos, junto a nuestros padres, los invitamos a celebrar nuestra unión en matrimonio.
-          </p>
-
-          <div className="watercolor-divider max-w-xs mx-auto my-6">
-            <span className="px-2 text-[#BCA074] text-xs">❦</span>
-          </div>
-
-          {/* Parents 2-Column Minimalist Typography */}
-          <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto text-center my-6">
-            <div>
-              <h3 className="text-[9px] uppercase tracking-widest font-bold text-[#6E836F] mb-1.5">
-                Padres de la Novia
-              </h3>
-              <p className="font-cormorant font-medium text-xs text-[#3F5241] leading-snug">
-                {config.parents?.brideFather || 'Padre de la Novia'}
-              </p>
-              <p className="font-cormorant font-medium text-xs text-[#3F5241] leading-snug">
-                {config.parents?.brideMother || 'Madre de la Novia'}
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-[9px] uppercase tracking-widest font-bold text-[#6E836F] mb-1.5">
-                Padres del Novio
-              </h3>
-              <p className="font-cormorant font-medium text-xs text-[#3F5241] leading-snug">
-                {config.parents?.groomFather || 'Padre del Novio'}
-              </p>
-              <p className="font-cormorant font-medium text-xs text-[#3F5241] leading-snug">
-                {config.parents?.groomMother || 'Madre del Novio'}
-              </p>
-            </div>
+            <div className="absolute bottom-0 inset-x-0 h-28 sm:h-28 bg-gradient-to-t from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent pointer-events-none"></div>
           </div>
         </section>
 
         {/* 4. COUPLE NAMES (CALLIGRAPHY SCRIPT) */}
-        <section className="text-center px-4 my-10 relative">
+        <section className="text-center px-4 relative">
           <div className="py-2">
             <h1 className="font-script text-6xl sm:text-7xl text-[#3F5241] tracking-wide leading-none">
               {couple.bride_name.split(' ')[0]}
@@ -301,10 +260,11 @@ export default function InvitationPage({
             </h1>
           </div>
 
-          <p className="text-[10px] tracking-[0.28em] uppercase font-bold text-[#7E8E7F] mt-6">
+          <p className="text-[10px] tracking-[0.28em] uppercase font-bold text-[#7E8E7F] mt-6 mx-8">
             TENEMOS EL HONOR DE INVITARLE A NUESTRA BODA
           </p>
         </section>
+
 
         {/* 5. MINIMALIST CALENDAR & LIVE COUNTDOWN */}
         <section className="px-6 my-10 text-center">
@@ -367,6 +327,58 @@ export default function InvitationPage({
           </div>
         </section>
 
+        {/* 3. INVITATION MESSAGE & PARENTS (CLEAN TYPOGRAPHY, NO HEAVY CARDS) */}
+        <section className="px-6 text-center my-8">
+          <p className="font-cormorant uppercase tracking-[0.2em] text-xs text-[#586959] max-w-xs mx-auto leading-relaxed">
+            Con gran alegría y corazones agradecidos, junto a nuestros padres, los invitamos a celebrar nuestra unión en matrimonio.
+          </p>
+
+          <div className='w-full justify-center items-center gap-1 mt-6'>
+            <div className="watercolor-divider w-full mx-auto my-6">
+              <span className="px-2 text-[#BCA074] text-xs">❦</span>
+            </div>
+          </div>
+
+          {/* Parents 2-Column Minimalist Typography */}
+          <div className="grid grid-cols-1 gap-4 max-w-sm mx-auto text-center my-6">
+            <div>
+              <h3 className="text-xs uppercase tracking-widest font-bold text-[#6E836F] mb-1.5">
+                Padres de la Novia
+              </h3>
+              <p className="font-script text-xl text-[#3F5241] leading-snug">
+                {config.parents?.brideFather || 'Padre de la Novia'}
+              </p>
+              <p className="font-script text-xl text-[#3F5241] leading-snug">
+                {config.parents?.brideMother || 'Madre de la Novia'}
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-xs uppercase tracking-widest font-bold text-[#6E836F] mb-1.5">
+                Padres del Novio
+              </h3>
+              <p className="font-script text-xl text-[#3F5241] leading-snug">
+                {config.parents?.groomFather || 'Padre del Novio'}
+              </p>
+              <p className="font-script text-xl text-[#3F5241] leading-snug">
+                {config.parents?.groomMother || 'Madre del Novio'}
+              </p>
+            </div>
+
+            <div className='mt-6'>
+              <h3 className="text-xs uppercase tracking-widest font-bold text-[#6E836F] mb-1.5">
+                Padrinos de velación
+              </h3>
+              <p className="font-script text-xl text-[#3F5241] leading-snug">
+                Óscar Alain Muro López
+              </p>
+              <p className="font-script text-xl text-[#3F5241] leading-snug">
+                Diana Karina Araujo Beltrán
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* 6. CEREMONY & RECEPTION (MINIMALIST CLEAN TYPOGRAPHY) */}
         <section className="px-6 my-12 text-center space-y-8">
           {/* Ceremony */}
@@ -399,8 +411,10 @@ export default function InvitationPage({
             )}
           </div>
 
-          <div className="watercolor-divider max-w-xs mx-auto">
-            <span className="px-2 text-[#BCA074] text-xs">❦</span>
+          <div className='w-full justify-center items-center gap-1 mt-6'>
+            <div className="watercolor-divider w-full mx-auto my-6">
+              <span className="px-2 text-[#BCA074] text-xs">❦</span>
+            </div>
           </div>
 
           {/* Reception */}
@@ -439,7 +453,7 @@ export default function InvitationPage({
           <div className="bg-sage-wash py-12 px-8 border-y border-[#9FB99E]/30 relative">
             <div className="text-center mb-8">
               <p className="text-[10px] tracking-[0.3em] uppercase font-bold text-[#3F5241] mb-1">
-                ITINERARIO DE ACTIVIDADES
+                ITINERARIO
               </p>
               <h2 className="font-cormorant text-3xl font-bold text-[#3F5241]">
                 Cronograma
@@ -455,7 +469,7 @@ export default function InvitationPage({
                 </div>
                 <div className="pl-2">
                   <span className="text-[11px] font-bold text-[#3F5241] block">2:30 PM</span>
-                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Ceremonia Religiosa</h4>
+                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Ceremonia</h4>
                 </div>
               </div>
 
@@ -474,7 +488,7 @@ export default function InvitationPage({
                   ✨
                 </div>
                 <div className="pl-2">
-                  <span className="text-[11px] font-bold text-[#3F5241] block">6:30 PM</span>
+                  <span className="text-[11px] font-bold text-[#3F5241] block">6:00 PM</span>
                   <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Entrada de los Novios</h4>
                 </div>
               </div>
@@ -484,12 +498,12 @@ export default function InvitationPage({
                   🍽️
                 </div>
                 <div className="pl-2">
-                  <span className="text-[11px] font-bold text-[#3F5241] block">7:30 PM</span>
-                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Banquete</h4>
+                  <span className="text-[11px] font-bold text-[#3F5241] block">8:00 PM</span>
+                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Cena</h4>
                 </div>
               </div>
 
-              <div className="relative flex items-center">
+              {/* <div className="relative flex items-center">
                 <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
                   🪩
                 </div>
@@ -497,15 +511,15 @@ export default function InvitationPage({
                   <span className="text-[11px] font-bold text-[#3F5241] block">8:30 PM</span>
                   <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Fiesta</h4>
                 </div>
-              </div>
+              </div> */}
 
               <div className="relative flex items-center">
                 <div className="absolute -left-12 w-8 h-8 rounded-full bg-white border border-[#6E836F] flex items-center justify-center text-xs shadow-sm z-10">
                   💫
                 </div>
                 <div className="pl-2">
-                  <span className="text-[11px] font-bold text-[#3F5241] block">2:00 AM</span>
-                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Despedida</h4>
+                  <span className="text-[11px] font-bold text-[#3F5241] block">10:00 PM</span>
+                  <h4 className="font-cormorant font-bold text-base text-[#3F5241] leading-tight">Agradecimientos</h4>
                 </div>
               </div>
             </div>
@@ -619,11 +633,10 @@ export default function InvitationPage({
                     </div>
                     <button
                       onClick={() => handleCopy(account.accountNumber)}
-                      className={`px-2 py-1 text-[9px] font-semibold uppercase tracking-wider rounded-md border transition ${
-                        copiedAccount === account.accountNumber
-                          ? 'bg-[#3F5241] text-white border-[#3F5241]'
-                          : 'bg-[#FAF8F5] border-[#9FB99E] text-[#3F5241] hover:bg-[#3F5241] hover:text-white'
-                      }`}
+                      className={`px-2 py-1 text-[9px] font-semibold uppercase tracking-wider rounded-md border transition ${copiedAccount === account.accountNumber
+                        ? 'bg-[#3F5241] text-white border-[#3F5241]'
+                        : 'bg-[#FAF8F5] border-[#9FB99E] text-[#3F5241] hover:bg-[#3F5241] hover:text-white'
+                        }`}
                     >
                       {copiedAccount === account.accountNumber ? '¡Copiado!' : 'Copiar'}
                     </button>
@@ -639,8 +652,11 @@ export default function InvitationPage({
           </div>
         </section>
 
-        <div className="watercolor-divider max-w-xs mx-auto my-8">
-          <span className="px-2 text-[#BCA074] text-xs">❦</span>
+        <div className="w-full justify-center items-center gap-1">
+          <div className="watercolor-divider mx-auto my-8">
+            <span className="px-2 text-[#BCA074] text-xs">❦</span>
+          </div>
+
         </div>
 
         {/* 10. RSVP CONFIRMATION SECTION */}
@@ -662,10 +678,10 @@ export default function InvitationPage({
               <strong className="font-bold text-[#3F5241] text-xs block mt-1">
                 {couple.rsvp_deadline
                   ? new Date(couple.rsvp_deadline).toLocaleDateString('es-MX', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    })
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })
                   : '16 de Octubre de 2026'}
               </strong>
             </p>
@@ -683,20 +699,20 @@ export default function InvitationPage({
                 <div className="flex justify-center gap-6">
                   {config.contacts.groom && (
                     <div>
-                      <span className="font-semibold text-[#3F5241] block text-[11px]">
+                      <span className="font-semibold text-[#3F5241] block text-sm">
                         {config.contacts.groom.name}
                       </span>
-                      <a href={`tel:${config.contacts.groom.phone}`} className="text-[10px] text-[#7E8E7F] hover:text-[#6E836F]">
+                      <a href={`tel:${config.contacts.groom.phone}`} className="text-sm text-[#7E8E7F] hover:text-[#6E836F]">
                         {config.contacts.groom.phone}
                       </a>
                     </div>
                   )}
                   {config.contacts.bride && (
                     <div>
-                      <span className="font-semibold text-[#3F5241] block text-[11px]">
+                      <span className="font-semibold text-[#3F5241] block text-sm">
                         {config.contacts.bride.name}
                       </span>
-                      <a href={`tel:${config.contacts.bride.phone}`} className="text-[10px] text-[#7E8E7F] hover:text-[#6E836F]">
+                      <a href={`tel:${config.contacts.bride.phone}`} className="text-sm text-[#7E8E7F] hover:text-[#6E836F]">
                         {config.contacts.bride.phone}
                       </a>
                     </div>
@@ -707,8 +723,10 @@ export default function InvitationPage({
           </div>
         </section>
 
-        <div className="watercolor-divider max-w-xs mx-auto my-8">
-          <span className="px-2 text-[#BCA074] text-xs">❦</span>
+        <div className='w-full justify-center items-center gap-1'>
+          <div className="watercolor-divider w-full mx-auto my-8">
+            <span className="px-2 text-[#BCA074] text-xs">❦</span>
+          </div>
         </div>
 
         {/* 11. ADULTS ONLY (CLEAN TYPOGRAPHY) */}
@@ -739,7 +757,7 @@ export default function InvitationPage({
           </h3>
 
           <div
-            className="relative max-w-xs mx-auto rounded-2xl overflow-hidden shadow-lg border-2 border-white bg-black/5"
+            className="relative mx-auto rounded-2xl overflow-hidden shadow-lg border-2 border-white bg-black/5"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={() => handleTouchEnd(albumPhotos.length)}
@@ -784,9 +802,8 @@ export default function InvitationPage({
                 <button
                   key={idx}
                   onClick={() => setActivePhotoIndex(idx)}
-                  className={`h-1.5 rounded-full transition-all ${
-                    idx === activePhotoIndex ? 'w-5 bg-white shadow' : 'w-1.5 bg-white/60'
-                  }`}
+                  className={`h-1.5 rounded-full transition-all ${idx === activePhotoIndex ? 'w-5 bg-white shadow' : 'w-1.5 bg-white/60'
+                    }`}
                   aria-label={`Ir a foto ${idx + 1}`}
                 />
               ))}
@@ -810,18 +827,18 @@ export default function InvitationPage({
             <img
               src={config.photos?.end || '/img/end.webp'}
               alt="Foto Final"
-              className="w-full h-56 object-cover"
+              className="w-full object-cover"
             />
           </div>
 
-          <div className="max-w-xs mx-auto text-center">
+          {/* <div className="max-w-xs mx-auto text-center">
             <p className="font-cormorant italic text-xs text-[#7E8E7F]">
               “Las muchas aguas no podrán apagar el amor, ni lo ahogarán los ríos.”
             </p>
             <span className="font-cormorant text-[11px] uppercase tracking-widest text-[#BCA074] font-bold block mt-1">
               — Cantares 8:7 —
             </span>
-          </div>
+          </div> */}
         </footer>
 
         {/* FLOATING MUSIC BUTTON */}
@@ -837,9 +854,8 @@ export default function InvitationPage({
 
         {/* CLIPBOARD TOAST */}
         <div
-          className={`fixed bottom-20 left-1/2 -translate-x-1/2 bg-[#3F5241] text-white px-4 py-2 rounded-full text-xs font-semibold shadow-xl transition-opacity duration-300 pointer-events-none z-50 ${
-            copiedAccount ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`fixed bottom-20 left-1/2 -translate-x-1/2 bg-[#3F5241] text-white px-4 py-2 rounded-full text-xs font-semibold shadow-xl transition-opacity duration-300 pointer-events-none z-50 ${copiedAccount ? 'opacity-100' : 'opacity-0'
+            }`}
         >
           ✓ Copiado al portapapeles
         </div>
