@@ -166,7 +166,7 @@ export default function GlobalLoginPage() {
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Ej. silva-arce o garcia-zentella"
+                    placeholder="Ej. perez-lopez o rueda-sanchez"
                     className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#FBF9F5] border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#6E836F] text-stone-800 transition"
                     autoFocus
                     required
