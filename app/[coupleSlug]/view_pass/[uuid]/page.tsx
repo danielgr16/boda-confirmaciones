@@ -151,9 +151,17 @@ export default function ViewPassPage({
                   </div>
                 ))
               ) : (
-                <p className="text-xs text-rose-400 italic">
-                  Sin confirmaciones registradas aún
-                </p>
+                <div className="space-y-1.5 py-1">
+                  <p className="text-xs text-amber-600 italic">
+                    Sin confirmaciones registradas aún
+                  </p>
+                  <Link
+                    href={`/${coupleSlug}/${uuid}/confirm`}
+                    className="inline-block text-xs font-bold text-[#3F5241] underline hover:text-[#6E836F] transition"
+                  >
+                    Toca aquí para confirmar asistencia
+                  </Link>
+                </div>
               )}
             </div>
 
@@ -213,14 +221,24 @@ export default function ViewPassPage({
         ></div>
       </div>
 
-      {/* Back to Invitation */}
-      <Link
-        href={`/${coupleSlug}/${uuid}`}
-        className="mt-8 text-stone-500 text-xs uppercase tracking-widest hover:text-stone-800 transition-colors flex items-center gap-1.5"
-      >
-        <ArrowLeft className="w-3.5 h-3.5" />
-        Volver a la invitación
-      </Link>
+      {/* Navigation and Action Links */}
+      <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
+        <Link
+          href={`/${coupleSlug}/${uuid}/confirm`}
+          className="px-6 py-2.5 rounded-full bg-[#3F5241] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#2C3E2D] transition shadow-md flex items-center gap-2"
+        >
+          <CheckCircle2 className="w-4 h-4" />
+          <span>{confirmedGuests.length > 0 ? 'Modificar Confirmación' : 'Confirmar Asistencia'}</span>
+        </Link>
+
+        <Link
+          href={`/${coupleSlug}/${uuid}`}
+          className="px-4 py-2 text-stone-500 text-xs uppercase tracking-widest hover:text-stone-800 transition-colors flex items-center gap-1.5"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          Volver a la invitación
+        </Link>
+      </div>
     </div>
   );
 }

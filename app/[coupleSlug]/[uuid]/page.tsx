@@ -584,8 +584,10 @@ export default function InvitationPage({
           </div>
         </section>
 
-        <div className="watercolor-divider max-w-xs mx-auto my-8">
-          <span className="px-2 text-[#BCA074] text-xs">❦</span>
+        <div className="w-full justify-center items-center gap-1">
+          <div className="watercolor-divider mx-auto my-8">
+            <span className="px-2 text-[#BCA074] text-xs">❦</span>
+          </div>
         </div>
 
         {/* 9. GIFT REGISTRY & TRANSFERS */}
