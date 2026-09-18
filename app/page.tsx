@@ -25,6 +25,15 @@ export default function HomePage() {
             Ver Invitación (Perla & Daniel)
           </Link>
         </div>
+
+        <div className="mt-8 pt-6 border-t border-stone-100 text-center">
+          <Link
+            href="/admin"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-stone-100 hover:bg-[#E8F0E7] text-[#3F5241] text-xs font-semibold transition"
+          >
+            🔒 Portal de Administración (Novios & Recepción)
+          </Link>
+        </div>
       </div>
     </main>
   );

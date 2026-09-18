@@ -95,6 +95,7 @@ export interface InvitationGroup {
   message?: string;
   is_couple?: boolean;
   is_guard?: boolean;
+  kids_count?: number;
   guests?: Guest[];
 }
 
@@ -102,4 +103,23 @@ export interface FullInvitation {
   couple: Couple;
   group: InvitationGroup;
   uuid: string;
+}
+
+export interface User {
+  id: number;
+  couple_id: number;
+  username: string;
+  password?: string;
+  name: string;
+  role: 'couple' | 'guard' | 'admin';
+  created_at?: string;
+}
+
+export interface AuthSession {
+  userId: number;
+  username: string;
+  name: string;
+  role: 'couple' | 'guard' | 'admin';
+  coupleId: number;
+  coupleSlug: string;
 }

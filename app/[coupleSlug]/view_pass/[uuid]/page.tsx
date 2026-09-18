@@ -156,6 +156,12 @@ export default function ViewPassPage({
                 </p>
               )}
             </div>
+
+            {Number(group.kids_count) > 0 && (
+              <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#3F5241] bg-[#E8F0E7] px-3.5 py-1 rounded-full border border-[#6E836F]/20">
+                <span>🧒 +{group.kids_count} {Number(group.kids_count) === 1 ? 'niño permitido' : 'niños permitidos'}</span>
+              </div>
+            )}
           </div>
 
           {/* Event Details Grid */}
@@ -188,7 +194,11 @@ export default function ViewPassPage({
         <div className="bg-stone-800 p-4 text-center">
           <p className="text-stone-300 text-[9px] uppercase tracking-[0.2em] font-medium leading-relaxed">
             Presentar este pase al llegar al evento.<br />
-            <span className="font-bold text-white">Válido exclusivamente para las personas listadas.</span>
+            <span className="font-bold text-white">
+              {Number(group.kids_count) > 0
+                ? `Válido para las personas listadas y ${group.kids_count} ${Number(group.kids_count) === 1 ? 'niño' : 'niños'}.`
+                : 'Válido exclusivamente para las personas listadas.'}
+            </span>
           </p>
         </div>
 

@@ -55,6 +55,7 @@ async function main() {
         message TEXT,
         is_couple BOOLEAN DEFAULT FALSE,
         is_guard BOOLEAN DEFAULT FALSE,
+        kids_count INTEGER DEFAULT 0,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
         UNIQUE(couple_id, uuid)
@@ -77,10 +78,26 @@ async function main() {
     `;
     console.log('✅ Table "guests" created/verified.');
 
+    // 4. Users table
+    await sql`
+      CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        couple_id INTEGER REFERENCES couples(id) ON DELETE CASCADE,
+        username VARCHAR(100) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        name VARCHAR(200) NOT NULL,
+        role VARCHAR(50) DEFAULT 'couple',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      );
+    `;
+    console.log('✅ Table "users" created/verified.');
+
     // Indexes
     await sql`CREATE INDEX IF NOT EXISTS idx_couples_slug ON couples(slug);`;
     await sql`CREATE INDEX IF NOT EXISTS idx_groups_couple_uuid ON invitation_groups(couple_id, uuid);`;
     await sql`CREATE INDEX IF NOT EXISTS idx_guests_group ON guests(group_id);`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_users_couple ON users(couple_id);`;
 
     console.log('🎉 Database initialized successfully in Neon!');
   } catch (error) {

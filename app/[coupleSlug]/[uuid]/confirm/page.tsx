@@ -148,6 +148,11 @@ export default function RsvpPage({
             <p className="text-xs text-gray-500 mt-2">
               Indica la asistencia de cada persona para nuestra boda.
             </p>
+            {Number(group.kids_count) > 0 && (
+              <div className="mt-3.5 inline-flex items-center gap-1.5 bg-[#E8F0E7] border border-[#6E836F]/25 text-[#3F5241] px-3.5 py-1.5 rounded-full text-xs font-semibold">
+                <span>🧒 Esta invitación incluye <strong>{group.kids_count} {Number(group.kids_count) === 1 ? 'pase infantil' : 'pases infantiles'}</strong></span>
+              </div>
+            )}
           </div>
 
           {/* Form */}

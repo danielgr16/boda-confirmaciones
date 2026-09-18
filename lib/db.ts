@@ -1,7 +1,7 @@
 import { neon, neonConfig } from '@neondatabase/serverless';
 import fs from 'fs';
 import path from 'path';
-import type { Couple, InvitationGroup, Guest } from './types';
+import type { Couple, InvitationGroup, Guest, User } from './types';
 
 // Cache database connection
 const databaseUrl = process.env.DATABASE_URL;
@@ -219,6 +219,25 @@ export async function getCoupleBySlug(slug: string): Promise<Couple | null> {
   return DEFAULT_COUPLES[slug] || null;
 }
 
+export async function getCoupleById(id: number): Promise<Couple | null> {
+  if (sql) {
+    try {
+      const rows = await sql`
+        SELECT * FROM couples WHERE id = ${id} LIMIT 1
+      `;
+      if (rows && rows.length > 0) {
+        return rows[0] as Couple;
+      }
+    } catch (err) {
+      console.warn('Neon DB getCoupleById query failed, using fallback:', err);
+    }
+  }
+  for (const couple of Object.values(DEFAULT_COUPLES)) {
+    if (couple.id === id) return couple;
+  }
+  return null;
+}
+
 export async function getInvitation(coupleSlug: string, uuid: string): Promise<{ couple: Couple; group: InvitationGroup } | null> {
   const couple = await getCoupleBySlug(coupleSlug);
   if (!couple) return null;
@@ -249,6 +268,7 @@ export async function getInvitation(coupleSlug: string, uuid: string): Promise<{
           message: groupRow.message,
           is_couple: groupRow.is_couple,
           is_guard: groupRow.is_guard,
+          kids_count: Number(groupRow.kids_count) || 0,
           guests: guestsRows.map(g => ({
             id: g.id,
             group_id: g.group_id,
@@ -310,6 +330,7 @@ export async function getInvitation(coupleSlug: string, uuid: string): Promise<{
     message: item.mensaje || '',
     is_couple: item.novios || false,
     is_guard: item.guardia || false,
+    kids_count: Number(item.kids_count) || 0,
     guests
   };
 
@@ -604,4 +625,511 @@ export async function getCheckoutData(coupleSlug: string): Promise<{ list: any[]
 
 function empty(val: any): boolean {
   return val === undefined || val === null || val === '';
+}
+
+// User & Authentication Methods
+export async function getUserByUsername(username: string): Promise<User | null> {
+  if (sql) {
+    try {
+      const rows = await sql`
+        SELECT id, couple_id, username, password, name, role, created_at
+        FROM users 
+        WHERE username = ${username}
+        LIMIT 1
+      `;
+      if (rows && rows.length > 0) {
+        return rows[0] as User;
+      }
+    } catch (err) {
+      console.warn('Neon DB user query failed, checking fallback:', err);
+    }
+  }
+
+  // Fallback check against DEFAULT_COUPLES
+  for (const [slug, couple] of Object.entries(DEFAULT_COUPLES)) {
+    if (slug === username) {
+      return {
+        id: couple.id,
+        couple_id: couple.id,
+        username: slug,
+        password: couple.access_password || 'boda2026',
+        name: `${couple.bride_name} & ${couple.groom_name}`,
+        role: 'couple'
+      };
+    }
+    if (`${slug}-guard` === username) {
+      return {
+        id: couple.id * 1000 + 1,
+        couple_id: couple.id,
+        username: `${slug}-guard`,
+        password: couple.access_password || 'boda2026',
+        name: `Recepción ${slug}`,
+        role: 'guard'
+      };
+    }
+  }
+
+  return null;
+}
+
+export async function getUserById(id: number): Promise<User | null> {
+  if (sql) {
+    try {
+      const rows = await sql`
+        SELECT id, couple_id, username, name, role, created_at
+        FROM users 
+        WHERE id = ${id}
+        LIMIT 1
+      `;
+      if (rows && rows.length > 0) {
+        return rows[0] as User;
+      }
+    } catch (err) {
+      console.warn('Neon DB getUserById query failed:', err);
+    }
+  }
+
+  for (const [slug, couple] of Object.entries(DEFAULT_COUPLES)) {
+    if (couple.id === id) {
+      return {
+        id: couple.id,
+        couple_id: couple.id,
+        username: slug,
+        name: `${couple.bride_name} & ${couple.groom_name}`,
+        role: 'couple'
+      };
+    }
+  }
+
+  return null;
+}
+
+export async function authenticateUser(
+  username: string,
+  passwordInput: string,
+  coupleSlug?: string
+): Promise<{ success: boolean; user?: User; error?: string }> {
+  // 1. Try to find user in DB or fallback
+  let user = await getUserByUsername(username);
+
+  // If username wasn't found directly, but coupleSlug is provided and matches, try coupleSlug
+  if (!user && coupleSlug && (username.toLowerCase() === 'admin' || username.toLowerCase() === 'novios')) {
+    user = await getUserByUsername(coupleSlug);
+  }
+
+  // If still not found and coupleSlug is provided, check if password matches couple access_password
+  if (!user && coupleSlug) {
+    const couple = await getCoupleBySlug(coupleSlug);
+    if (couple && (couple.access_password || 'boda2026') === passwordInput) {
+      user = {
+        id: couple.id,
+        couple_id: couple.id,
+        username: couple.slug,
+        password: couple.access_password || 'boda2026',
+        name: `${couple.bride_name} & ${couple.groom_name}`,
+        role: 'couple'
+      };
+    }
+  }
+
+  if (!user) {
+    return { success: false, error: 'Usuario o contraseña no válidos' };
+  }
+
+  // 2. Validate password
+  if (user.password !== passwordInput) {
+    return { success: false, error: 'Contraseña incorrecta' };
+  }
+
+  // 3. Verify couple slug match if restricted
+  if (coupleSlug) {
+    const couple = await getCoupleBySlug(coupleSlug);
+    if (couple && user.couple_id !== couple.id && user.role !== 'admin') {
+      return { success: false, error: 'El usuario no tiene acceso a esta boda' };
+    }
+  }
+
+  // Omit password from returned object for safety
+  const safeUser: User = {
+    id: user.id,
+    couple_id: user.couple_id,
+    username: user.username,
+    name: user.name,
+    role: user.role,
+    created_at: user.created_at
+  };
+
+  return { success: true, user: safeUser };
+}
+
+// ==========================================
+// INVITATION CRUD OPERATIONS
+// ==========================================
+
+function generateCustomUuid(): string {
+  const hex = () => Math.random().toString(16).substring(2, 6);
+  const hexLong = () => Math.random().toString(16).substring(2, 14);
+  return `${hex()}-${hexLong()}`;
+}
+
+export async function createInvitationGroup(
+  coupleSlug: string,
+  data: {
+    group_name: string;
+    titular_name?: string;
+    uuid?: string;
+    is_couple?: boolean;
+    is_guard?: boolean;
+    kids_count?: number;
+    message?: string;
+    guests: {
+      name: string;
+      type: 'principal' | 'acompanante' | 'familiar';
+      attendance?: boolean | null;
+      arrived?: boolean | null;
+    }[];
+  }
+): Promise<{ success: boolean; group?: InvitationGroup; error?: string }> {
+  const couple = await getCoupleBySlug(coupleSlug);
+  if (!couple) return { success: false, error: 'Boda no encontrada' };
+
+  const rawUuid = data.uuid && data.uuid.trim() !== '' ? data.uuid.trim() : generateCustomUuid();
+  const uuid = rawUuid.toLowerCase().replace(/[^a-z0-9-_]/g, '-');
+  const group_name = data.group_name.trim();
+  const titular_name = data.titular_name?.trim() || null;
+  const is_couple = Boolean(data.is_couple);
+  const is_guard = Boolean(data.is_guard);
+  const kids_count = Math.max(0, Number(data.kids_count) || 0);
+  const message = data.message || '';
+
+  if (sql) {
+    try {
+      // Check if UUID already exists for this couple
+      const existing = await sql`
+        SELECT id FROM invitation_groups WHERE couple_id = ${couple.id} AND uuid = ${uuid} LIMIT 1
+      `;
+      if (existing && existing.length > 0) {
+        return { success: false, error: 'El identificador (UUID) ya está en uso en esta boda' };
+      }
+
+      const groupRows = await sql`
+        INSERT INTO invitation_groups (
+          couple_id, uuid, group_name, titular_name, attendance, message, is_couple, is_guard, kids_count
+        ) VALUES (
+          ${couple.id}, ${uuid}, ${group_name}, ${titular_name}, null, ${message}, ${is_couple}, ${is_guard}, ${kids_count}
+        )
+        RETURNING *
+      `;
+
+      const groupRow = groupRows[0];
+      const insertedGuests: Guest[] = [];
+
+      for (const g of data.guests) {
+        if (!g.name || g.name.trim() === '') continue;
+        const guestRows = await sql`
+          INSERT INTO guests (group_id, name, type, attendance, arrived)
+          VALUES (${groupRow.id}, ${g.name.trim()}, ${g.type || 'familiar'}, ${g.attendance ?? null}, ${g.arrived ?? null})
+          RETURNING *
+        `;
+        if (guestRows && guestRows.length > 0) {
+          insertedGuests.push(guestRows[0] as Guest);
+        }
+      }
+
+      return {
+        success: true,
+        group: {
+          id: groupRow.id,
+          couple_id: groupRow.couple_id,
+          uuid: groupRow.uuid,
+          group_name: groupRow.group_name,
+          titular_name: groupRow.titular_name,
+          attendance: groupRow.attendance,
+          message: groupRow.message,
+          is_couple: groupRow.is_couple,
+          is_guard: groupRow.is_guard,
+          kids_count: Number(groupRow.kids_count) || 0,
+          guests: insertedGuests
+        }
+      };
+    } catch (err: any) {
+      console.error('Error creating invitation in Neon DB:', err);
+      return { success: false, error: err.message || 'Error al guardar en base de datos' };
+    }
+  }
+
+  // Fallback to local JSON
+  const rawList = getLocalGuests(coupleSlug);
+  if (rawList.some((item: any) => item.uuid === uuid)) {
+    return { success: false, error: 'El identificador (UUID) ya está en uso' };
+  }
+
+  const newGroupJson: any = {
+    uuid,
+    group: group_name,
+    invitado: titular_name || '',
+    asistencia: null,
+    mensaje: message,
+    novios: is_couple,
+    guardia: is_guard,
+    kids_count,
+  };
+
+  const familia = data.guests.filter(g => g.type === 'familiar').map(g => ({
+    invitado: g.name.trim(),
+    asistencia: g.attendance ?? null,
+    llegada: g.arrived ?? null
+  }));
+
+  const acompanantes = data.guests.filter(g => g.type === 'acompanante').map(g => ({
+    invitado: g.name.trim(),
+    asistencia: g.attendance ?? null,
+    llegada: g.arrived ?? null
+  }));
+
+  if (familia.length > 0) {
+    newGroupJson.familia = familia;
+  }
+  if (acompanantes.length > 0) {
+    newGroupJson.acompanantes = acompanantes;
+  }
+
+  rawList.push(newGroupJson);
+  saveLocalGuests(coupleSlug, rawList);
+
+  return {
+    success: true,
+    group: {
+      uuid,
+      group_name,
+      titular_name: titular_name || undefined,
+      is_couple,
+      is_guard,
+      kids_count,
+      attendance: null,
+      message,
+      guests: data.guests.map(g => ({
+        name: g.name.trim(),
+        type: g.type,
+        attendance: g.attendance ?? null,
+        arrived: g.arrived ?? null
+      }))
+    }
+  };
+}
+
+export async function updateInvitationGroup(
+  coupleSlug: string,
+  targetUuid: string,
+  data: {
+    group_name: string;
+    titular_name?: string;
+    new_uuid?: string;
+    is_couple?: boolean;
+    is_guard?: boolean;
+    kids_count?: number;
+    message?: string;
+    guests: {
+      name: string;
+      type: 'principal' | 'acompanante' | 'familiar';
+      attendance?: boolean | null;
+      arrived?: boolean | null;
+    }[];
+  }
+): Promise<{ success: boolean; group?: InvitationGroup; error?: string }> {
+  const couple = await getCoupleBySlug(coupleSlug);
+  if (!couple) return { success: false, error: 'Boda no encontrada' };
+
+  const group_name = data.group_name.trim();
+  const titular_name = data.titular_name?.trim() || null;
+  const is_couple = Boolean(data.is_couple);
+  const is_guard = Boolean(data.is_guard);
+  const kids_count = data.kids_count !== undefined ? Math.max(0, Number(data.kids_count) || 0) : undefined;
+  const message = data.message !== undefined ? data.message : undefined;
+  const nextUuid = data.new_uuid && data.new_uuid.trim() !== '' ? data.new_uuid.trim().toLowerCase() : targetUuid;
+
+  if (sql) {
+    try {
+      const groupRows = await sql`
+        SELECT g.id 
+        FROM invitation_groups g
+        JOIN couples c ON g.couple_id = c.id
+        WHERE c.slug = ${coupleSlug} AND g.uuid = ${targetUuid}
+        LIMIT 1
+      `;
+
+      if (!groupRows || groupRows.length === 0) {
+        return { success: false, error: 'Invitación no encontrada' };
+      }
+
+      const groupId = groupRows[0].id;
+
+      // Check if new UUID conflicts with another group
+      if (nextUuid !== targetUuid) {
+        const conflict = await sql`
+          SELECT id FROM invitation_groups 
+          WHERE couple_id = ${couple.id} AND uuid = ${nextUuid} AND id != ${groupId} 
+          LIMIT 1
+        `;
+        if (conflict && conflict.length > 0) {
+          return { success: false, error: 'El nuevo UUID ya está en uso' };
+        }
+      }
+
+      await sql`
+        UPDATE invitation_groups
+        SET 
+          group_name = ${group_name},
+          titular_name = ${titular_name},
+          uuid = ${nextUuid},
+          is_couple = ${is_couple},
+          is_guard = ${is_guard},
+          kids_count = COALESCE(${kids_count}, kids_count),
+          message = COALESCE(${message}, message),
+          updated_at = NOW()
+        WHERE id = ${groupId}
+      `;
+
+      // Replace guests: delete old guests and insert current ones
+      await sql`DELETE FROM guests WHERE group_id = ${groupId}`;
+
+      const insertedGuests: Guest[] = [];
+      for (const g of data.guests) {
+        if (!g.name || g.name.trim() === '') continue;
+        const guestRows = await sql`
+          INSERT INTO guests (group_id, name, type, attendance, arrived)
+          VALUES (${groupId}, ${g.name.trim()}, ${g.type || 'familiar'}, ${g.attendance ?? null}, ${g.arrived ?? null})
+          RETURNING *
+        `;
+        if (guestRows && guestRows.length > 0) {
+          insertedGuests.push(guestRows[0] as Guest);
+        }
+      }
+
+      return {
+        success: true,
+        group: {
+          id: groupId,
+          couple_id: couple.id,
+          uuid: nextUuid,
+          group_name,
+          titular_name: titular_name || undefined,
+          attendance: null,
+          is_couple,
+          is_guard,
+          kids_count: kids_count ?? 0,
+          guests: insertedGuests
+        }
+      };
+    } catch (err: any) {
+      console.error('Error updating invitation in Neon DB:', err);
+      return { success: false, error: err.message || 'Error al actualizar invitación' };
+    }
+  }
+
+  // Fallback to local JSON
+  const rawList = getLocalGuests(coupleSlug);
+  const index = rawList.findIndex((item: any) => item.uuid === targetUuid);
+  if (index === -1) {
+    return { success: false, error: 'Invitación no encontrada' };
+  }
+
+  const updatedJson: any = {
+    ...rawList[index],
+    uuid: nextUuid,
+    group: group_name,
+    invitado: titular_name || '',
+    novios: is_couple,
+    guardia: is_guard,
+  };
+
+  if (kids_count !== undefined) {
+    updatedJson.kids_count = kids_count;
+  }
+
+  if (message !== undefined) {
+    updatedJson.mensaje = message;
+  }
+
+  const familia = data.guests.filter(g => g.type === 'familiar').map(g => ({
+    invitado: g.name.trim(),
+    asistencia: g.attendance ?? null,
+    llegada: g.arrived ?? null
+  }));
+
+  const acompanantes = data.guests.filter(g => g.type === 'acompanante').map(g => ({
+    invitado: g.name.trim(),
+    asistencia: g.attendance ?? null,
+    llegada: g.arrived ?? null
+  }));
+
+  delete updatedJson.familia;
+  delete updatedJson.acompanantes;
+
+  if (familia.length > 0) updatedJson.familia = familia;
+  if (acompanantes.length > 0) updatedJson.acompanantes = acompanantes;
+
+  rawList[index] = updatedJson;
+  saveLocalGuests(coupleSlug, rawList);
+
+  return {
+    success: true,
+    group: {
+      uuid: nextUuid,
+      group_name,
+      titular_name: titular_name || undefined,
+      attendance: null,
+      is_couple,
+      is_guard,
+      kids_count: kids_count !== undefined ? kids_count : (Number(updatedJson.kids_count) || 0),
+      guests: data.guests.map(g => ({
+        name: g.name.trim(),
+        type: g.type,
+        attendance: g.attendance ?? null,
+        arrived: g.arrived ?? null
+      }))
+    }
+  };
+}
+
+export async function deleteInvitationGroup(
+  coupleSlug: string,
+  targetUuid: string
+): Promise<{ success: boolean; error?: string }> {
+  const couple = await getCoupleBySlug(coupleSlug);
+  if (!couple) return { success: false, error: 'Boda no encontrada' };
+
+  if (sql) {
+    try {
+      const groupRows = await sql`
+        SELECT g.id 
+        FROM invitation_groups g
+        JOIN couples c ON g.couple_id = c.id
+        WHERE c.slug = ${coupleSlug} AND g.uuid = ${targetUuid}
+        LIMIT 1
+      `;
+
+      if (!groupRows || groupRows.length === 0) {
+        return { success: false, error: 'Invitación no encontrada' };
+      }
+
+      const groupId = groupRows[0].id;
+      // Cascade delete guests and invitation_group
+      await sql`DELETE FROM invitation_groups WHERE id = ${groupId}`;
+      return { success: true };
+    } catch (err: any) {
+      console.error('Error deleting invitation from Neon DB:', err);
+      return { success: false, error: err.message || 'Error al eliminar invitación' };
+    }
+  }
+
+  // Fallback to local JSON
+  const rawList = getLocalGuests(coupleSlug);
+  const filtered = rawList.filter((item: any) => item.uuid !== targetUuid);
+  if (filtered.length === rawList.length) {
+    return { success: false, error: 'Invitación no encontrada' };
+  }
+
+  saveLocalGuests(coupleSlug, filtered);
+  return { success: true };
 }

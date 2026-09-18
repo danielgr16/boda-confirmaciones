@@ -31,6 +31,10 @@ Sistema multi-pareja (multi-tenant) de invitaciones digitales de boda, confirmac
   - `name` (VARCHAR NOT NULL), `type` (`'principal' | 'acompanante' | 'familiar'`).
   - `attendance` (BOOLEAN/NULL: `true` = asistirá, `false` = no asistirá, `null` = pendiente).
   - `arrived` (BOOLEAN/NULL: `true` = ingresó al evento, `false` = no llegó, `null` = pendiente).
+- **`users`**:
+  - `id` (SERIAL PK), `couple_id` (FK -> `couples.id` ON DELETE CASCADE).
+  - `username` (VARCHAR UNIQUE NOT NULL), `password` (VARCHAR NOT NULL), `name` (VARCHAR NOT NULL), `role` (`'couple' | 'guard' | 'admin'`).
+  - `created_at` (TIMESTAMPTZ DEFAULT NOW()).
 
 ---
 
@@ -47,12 +51,24 @@ La aplicación implementa un sistema híbrido resiliente:
 - `updateArrival(coupleSlug, uuid, guestName, type, arrived)`: Actualiza estado de check-in en puerta.
 - `getTableData(coupleSlug)`: Lista de invitados y estadísticas globales de confirmación (`total`, `confirmados`, `rechazados`, `pendientes`).
 - `getCheckoutData(coupleSlug)`: Lista de invitados y estadísticas de recepción (`total`, `llegaron`, `no_llegaron`, `pendientes`).
+- `getUserByUsername(username)`: Busca usuario en Neon DB o fallback.
+- `authenticateUser(username, password, coupleSlug)`: Valida credenciales de login y emite sesión.
+- `createInvitationGroup(coupleSlug, data)`: Crea un grupo de invitación y sus integrantes en Neon DB / JSON.
+- `updateInvitationGroup(coupleSlug, uuid, data)`: Actualiza datos del grupo e integrantes sincronizados.
+- `deleteInvitationGroup(coupleSlug, uuid)`: Elimina un grupo y sus pases asignados.
 
 ---
 
 ## 4. Estructura de Rutas y Páginas
 
-### Vistas de Usuario y Anfitriones (`app/[coupleSlug]/`)
+### Vistas Globales
+- `/`: Página principal con enlaces a las invitaciones y botón de acceso al portal de novios.
+- `/login`: Pantalla de inicio de sesión global e independiente de la URL para cualquier pareja/usuario.
+- `/admin`: Acceso centralizado administrativo que detecta la sesión activa o redirige a `/login`.
+
+### Vistas por Pareja (`app/[coupleSlug]/`)
+- `/[coupleSlug]/admin`: Panel de control y vista administrativa para los novios (autenticación, métricas en tiempo real, accesos directos a todos los módulos, generador de links de WhatsApp y muro de felicitaciones).
+- `/[coupleSlug]/admin/invitations`: Pantalla CRUD completa para crear, editar, buscar y eliminar invitaciones y pases familiares o individuales.
 - `/[coupleSlug]/[uuid]`: Invitación digital principal (cuenta regresiva, música, historia/fotos, ubicación con mapa, itinerario, mesa de regalos, código de vestimenta, acceso a RSVP y pase digital).
 - `/[coupleSlug]/[uuid]/confirm`: Formulario interactivo de RSVP para cada miembro del grupo + mensaje de felicitación.
 - `/[coupleSlug]/view_pass/[uuid]`: Pase digital de entrada con código QR dinámico.
@@ -60,7 +76,20 @@ La aplicación implementa un sistema híbrido resiliente:
 - `/[coupleSlug]/checkout_list`: Dashboard de guardias/recepción para monitoreo de llegadas y check-in manual con filtros.
 - `/[coupleSlug]/table`: Dashboard administrativo para novios/organizadores con estadísticas de RSVP y listado general.
 
-### Endpoints API (`app/api/[coupleSlug]/`)
+### Endpoints API Globales (`app/api/auth/`)
+- `POST /api/auth/login`: Autentica cualquier usuario/pareja globalmente y retorna su URL de redirección a `/[coupleSlug]/admin`.
+- `GET /api/auth/me`: Retorna la sesión activa global.
+- `POST /api/auth/logout`: Cierra la sesión activa global.
+
+### Endpoints API por Pareja (`app/api/[coupleSlug]/`)
+- `POST /api/[coupleSlug]/auth/login`: Autentica usuario y emite cookie HTTP-only `auth_session`.
+- `POST /api/[coupleSlug]/auth/logout`: Cierra sesión activa eliminando cookie.
+- `GET /api/[coupleSlug]/auth/me`: Retorna usuario autenticado y datos de la boda.
+- `GET /api/[coupleSlug]/invitations`: Obtiene todas las invitaciones y grupos de la pareja.
+- `POST /api/[coupleSlug]/invitations`: Crea una nueva invitación con sus pases/integrantes.
+- `GET /api/[coupleSlug]/invitations/[uuid]`: Obtiene el detalle de una invitación individual.
+- `PUT /api/[coupleSlug]/invitations/[uuid]`: Actualiza los datos de una invitación y sus integrantes.
+- `DELETE /api/[coupleSlug]/invitations/[uuid]`: Elimina la invitación y sus integrantes.
 - `GET /api/[coupleSlug]/invitation/[uuid]`: Devuelve datos de invitación (`couple`, `group`, `guests`).
 - `POST /api/[coupleSlug]/confirm`: Procesa confirmación de asistencia individual y mensaje.
 - `POST /api/[coupleSlug]/arrival/check-password`: Valida contraseña administrativa/guardia (`access_password`).
@@ -73,10 +102,10 @@ La aplicación implementa un sistema híbrido resiliente:
 ## 5. Roles y Convenciones Clave
 - **Multi-Tenant (`[coupleSlug]`)**: Todas las rutas operan bajo el slug de la pareja (ej. `silva-arce`, `garcia-zentella`).
 - **UUID de Invitación**: Cada familia/grupo posee un UUID único de acceso directo sin necesidad de login.
-- **Flags de Grupo**:
-  - `is_couple`: Marca el grupo de los novios.
-  - `is_guard`: Identifica personal de puerta con acceso a vistas de recepción.
-- **Seguridad de Dashboards**: Protegidos mediante `access_password` definido en la entidad `Couple`.
+- **Flags de Grupo / Roles de Usuario**:
+  - `is_couple` / `role: 'couple'`: Marca el grupo/usuario de los novios con acceso al panel `/admin`.
+  - `is_guard` / `role: 'guard'`: Identifica personal de puerta con acceso a vistas de recepción y llegadas.
+- **Seguridad de Dashboards**: Protegidos mediante sesión de usuario o `access_password` definido en la entidad `Couple`.
 
 ---
 
@@ -86,6 +115,7 @@ La aplicación implementa un sistema híbrido resiliente:
 - `npm run init-db`: Crea tablas e índices en Neon PostgreSQL (`scripts/init-db.ts`).
 - `npm run migrate:places`: Ejecuta la migración DDL para agregar `ceremony_place` y `reception_place` en la tabla `couples` (`scripts/migrate-add-places.ts`).
 - `npm run migrate-data`: Migra datos de `DEFAULT_COUPLES` y JSONs locales hacia Neon DB (`scripts/migrate-data.ts`).
+- `npm run migrate:users`: Crea la tabla `users` e inicializa los usuarios para las parejas registradas (`scripts/migrate-add-users.ts`).
 
 ---
 

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import { Search, Lock, ShieldCheck, CheckCircle2, XCircle, Clock, UserCheck } from 'lucide-react';
+import { Search, Lock, ShieldCheck, CheckCircle2, XCircle, Clock, UserCheck, LayoutDashboard } from 'lucide-react';
 
 export default function CheckoutListPage({
   params,
@@ -163,9 +163,18 @@ export default function CheckoutListPage({
           <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
             <div className="max-w-xl mx-auto p-4">
               <div className="flex items-center justify-between mb-3">
-                <h1 className="font-cormorant text-2xl font-bold text-[#3F5241]">
-                  Control de Llegadas en Vivo
-                </h1>
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/${coupleSlug}/admin`}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#3F5241] bg-[#E8F0E7] hover:bg-[#d8e6d7] px-3 py-1.5 rounded-full transition"
+                  >
+                    <LayoutDashboard className="w-3.5 h-3.5" />
+                    Panel Novios
+                  </Link>
+                  <h1 className="font-cormorant text-xl font-bold text-[#3F5241]">
+                    Control de Llegadas en Vivo
+                  </h1>
+                </div>
                 <span className="text-[10px] uppercase font-bold bg-[#E8F0E7] text-[#3F5241] px-2.5 py-1 rounded-full">
                   Recepción Activa
                 </span>

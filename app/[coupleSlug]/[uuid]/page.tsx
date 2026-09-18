@@ -541,11 +541,18 @@ export default function InvitationPage({
               {group.group_name}
             </h3>
 
-            <div className="inline-flex items-center justify-center px-4 py-1 rounded-md border border-[#9FB99E]/50 bg-white mb-4">
-              <span className="font-cormorant font-bold text-base text-[#3F5241] mr-1.5">{reservedSeats}</span>
-              <span className="text-[10px] uppercase tracking-widest font-semibold text-[#586959]">
-                {reservedSeats === 1 ? 'Lugar' : 'Lugares'}
-              </span>
+            <div className="flex flex-col items-center justify-center gap-1.5 mb-4">
+              <div className="inline-flex items-center justify-center px-4 py-1 rounded-md border border-[#9FB99E]/50 bg-white">
+                <span className="font-cormorant font-bold text-base text-[#3F5241] mr-1.5">{reservedSeats}</span>
+                <span className="text-[10px] uppercase tracking-widest font-semibold text-[#586959]">
+                  {reservedSeats === 1 ? 'Lugar Adulto' : 'Lugares Adultos'}
+                </span>
+              </div>
+              {Number(group.kids_count) > 0 && (
+                <span className="text-[11px] font-medium text-[#6E836F] bg-[#E8F0E7] px-3 py-0.5 rounded-full border border-[#6E836F]/20">
+                  🧒 +{group.kids_count} {Number(group.kids_count) === 1 ? 'niño permitido' : 'niños permitidos'}
+                </span>
+              )}
             </div>
 
             <div>

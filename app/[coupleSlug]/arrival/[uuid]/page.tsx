@@ -154,6 +154,11 @@ export default function ArrivalPage({
               <h2 className="font-cormorant text-2xl font-bold text-[#3F5241]">
                 {data?.group?.group_name || 'Invitado'}
               </h2>
+              {Number(data?.group?.kids_count) > 0 && (
+                <span className="inline-block mt-1 text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-0.5 rounded-full">
+                  🧒 +{data?.group?.kids_count} {Number(data?.group?.kids_count) === 1 ? 'niño permitido' : 'niños permitidos'}
+                </span>
+              )}
             </div>
             <div className="w-10 h-10 rounded-full bg-[#E8F0E7] flex items-center justify-center text-[#3F5241]">
               <ShieldCheck className="w-5 h-5" />

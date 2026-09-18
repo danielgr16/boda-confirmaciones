@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import { Search, Filter, Users, CheckCircle2, XCircle, Clock, ExternalLink } from 'lucide-react';
+import { Search, Filter, Users, CheckCircle2, XCircle, Clock, ExternalLink, LayoutDashboard } from 'lucide-react';
 
 export default function TableDashboardPage({
   params,
@@ -80,9 +80,18 @@ export default function TableDashboardPage({
       {/* Sticky Header with Stats and Filters */}
       <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
         <div className="max-w-xl mx-auto p-4">
-          <h1 className="font-cormorant text-2xl font-bold text-[#3F5241] text-center mb-3">
-            Control de Confirmaciones
-          </h1>
+          <div className="flex items-center justify-between mb-3">
+            <Link
+              href={`/${coupleSlug}/admin`}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#3F5241] bg-[#E8F0E7] hover:bg-[#d8e6d7] px-3 py-1.5 rounded-full transition"
+            >
+              <LayoutDashboard className="w-3.5 h-3.5" />
+              Panel Novios
+            </Link>
+            <h1 className="font-cormorant text-xl font-bold text-[#3F5241] text-center flex-1 pr-14">
+              Control de Confirmaciones
+            </h1>
+          </div>
 
           {/* Stats Badges */}
           <div className="grid grid-cols-4 gap-2 mb-4">
