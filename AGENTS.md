@@ -62,9 +62,10 @@ La aplicación implementa un sistema híbrido resiliente:
 ## 4. Estructura de Rutas y Páginas
 
 ### Vistas Globales
-- `/`: Página principal con enlaces a las invitaciones y botón de acceso al portal de novios.
+- `/`: Pantalla principal del sistema que renderiza el Login global cuando no se accede mediante un enlace con UUID.
 - `/login`: Pantalla de inicio de sesión global e independiente de la URL para cualquier pareja/usuario.
 - `/admin`: Acceso centralizado administrativo que detecta la sesión activa o redirige a `/login`.
+- `/[coupleSlug]`: Redirección automática a `/login` si se accede al slug de la pareja sin especificar UUID.
 
 ### Vistas por Pareja (`app/[coupleSlug]/`)
 - `/[coupleSlug]/admin`: Panel de control y vista administrativa para los novios (autenticación, métricas en tiempo real, accesos directos a todos los módulos, generador de links de WhatsApp y muro de felicitaciones).

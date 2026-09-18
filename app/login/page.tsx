@@ -227,12 +227,9 @@ export default function GlobalLoginPage() {
             </form>
 
             <div className="mt-8 pt-6 border-t border-stone-100 text-center">
-              <Link
-                href="/"
-                className="text-xs text-[#6E836F] hover:underline font-medium"
-              >
-                ← Volver a la Página Principal
-              </Link>
+              <p className="text-[11px] text-stone-400">
+                Sistema de confirmación y control de acceso para bodas.
+              </p>
             </div>
           </>
         )}
