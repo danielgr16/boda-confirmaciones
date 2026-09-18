@@ -224,12 +224,12 @@ export default function InvitationPage({
             </span>
           </div>
 
-          <p className="text-[10px] tracking-[0.35em] uppercase font-bold text-[#6E836F] mt-2">
+          <p className="text-[10px] tracking-[0.35em] uppercase font-bold text-[#3F5241] mt-2">
             NUESTRA BODA
           </p>
 
-          <div className="flex justify-center items-center my-3 opacity-60">
-            <Heart className="w-3.5 h-3.5 text-[#6E836F] fill-[#6E836F]" />
+          <div className="flex justify-center items-center my-3 opacity-70">
+            <Heart className="w-3.5 h-3.5 text-[#6E836F] fill-[#3F5241]" />
           </div>
         </header>
 
@@ -778,7 +778,7 @@ export default function InvitationPage({
               <img
                 src={albumPhotos[activePhotoIndex]}
                 alt={`Momento ${activePhotoIndex + 1}`}
-                className="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-102"
+                className="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-102"
               />
               <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
                 <Maximize2 className="w-8 h-8 drop-shadow-md" />
