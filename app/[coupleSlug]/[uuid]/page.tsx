@@ -285,8 +285,8 @@ export default function InvitationPage({
               </span>
             </div>
 
-            <p className="text-xs font-cormorant italic text-[#6E836F] mt-3">
-              {eventDateObj.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' })} • Culiacán Rosales, Sinaloa
+            <p className="text-sm font-cormorant italic text-[#6E836F] mt-3">
+              2:30 • Culiacán Rosales, Sinaloa
             </p>
 
             {/* Countdown timer */}
